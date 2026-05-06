@@ -44,7 +44,7 @@
    ─────────────────────────────────────────────────────── */
 .rss-btn--amber {
   background: var(--rss-amber);
-  color: #ffffff;
+  color: var(--rss-card);
   border-color: var(--rss-amber);
 }
 .rss-btn--amber:hover {
@@ -116,7 +116,7 @@
 .adm-topbar__logo-main {
   font-size: var(--rss-font-sm);   /* 13px */
   font-weight: 700;
-  color: #ffffff;
+  color: var(--rss-card);
   white-space: nowrap;
 }
 .adm-topbar__logo-sub {
@@ -166,7 +166,7 @@
 }
 .adm-topbar__icon-btn:hover {
   background: rgba(255,255,255,0.16);
-  color: #ffffff;
+  color: var(--rss-card);
 }
 /* 모바일 사이드바 토글 버튼 */
 .adm-topbar__menu-btn {
@@ -435,7 +435,7 @@
   vertical-align: middle;
 }
 .adm-form-table .required {
-  color: #dc2626;
+  color: var(--rss-danger);
   margin-left: 2px;
 }
 
@@ -583,7 +583,7 @@
   color: var(--rss-muted);
   padding: 4px 2px;
 }
-.no-work-calendar__day-label.sun { color: #dc2626; }
+.no-work-calendar__day-label.sun { color: var(--rss-danger); }
 .no-work-calendar__day-label.sat { color: #3b82f6; }
 .no-work-calendar__cell {
   text-align: center;
@@ -600,14 +600,14 @@
 }
 .no-work-calendar__cell.selected {
   background: var(--rss-amber);
-  color: #fff;
+  color: var(--rss-card);
   font-weight: 700;
 }
 .no-work-calendar__cell.empty { cursor: default; }
-.no-work-calendar__cell.sun { color: #dc2626; }
+.no-work-calendar__cell.sun { color: var(--rss-danger); }
 .no-work-calendar__cell.sat { color: #3b82f6; }
 .no-work-calendar__cell.selected.sun,
-.no-work-calendar__cell.selected.sat { color: #fff; }
+.no-work-calendar__cell.selected.sat { color: var(--rss-card); }
 
 /* 선택된 공사없음일 태그 */
 .no-work-tags {
@@ -689,7 +689,7 @@
   transition: background 0.15s;
 }
 .adm-modal-box__close:hover {
-  background: #f3f4f6;
+  background: var(--rss-gray-100);
   color: var(--rss-text);
 }
 .adm-modal-box__search {
