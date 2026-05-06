@@ -15,7 +15,7 @@
       font-weight: 700;
       color: var(--rss-text);
       padding: 18px 24px 10px;
-      border-bottom: 1px solid #f3f4f6;
+      border-bottom: 1px solid var(--rss-gray-100);
     }
 
     /* ── 공지 행 ── */
@@ -24,7 +24,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 13px 24px;
-      border-bottom: 1px solid #f3f4f6;
+      border-bottom: 1px solid var(--rss-gray-100);
       cursor: pointer;
       transition: background 0.15s;
       gap: 12px;
@@ -43,7 +43,7 @@
     }
     .notice-row__date {
       font-size: var(--rss-font-sm);
-      color: #9ca3af;
+      color: var(--rss-gray-400);
       white-space: nowrap;
       flex-shrink: 0;
     }
@@ -71,7 +71,7 @@
 
     /* ── 모달 본체 ── */
     .notice-modal {
-      background: #fff;
+      background: var(--rss-card);
       border-radius: 12px;
       width: 100%;
       max-width: 640px;
@@ -86,7 +86,7 @@
       align-items: flex-start;
       justify-content: space-between;
       padding: 20px 24px 16px;
-      border-bottom: 1px solid #f3f4f6;
+      border-bottom: 1px solid var(--rss-gray-100);
       gap: 12px;
     }
     .notice-modal__title {
@@ -100,7 +100,7 @@
       background: none;
       border: none;
       cursor: pointer;
-      color: #9ca3af;
+      color: var(--rss-gray-400);
       padding: 2px;
       flex-shrink: 0;
       display: flex;
@@ -113,9 +113,9 @@
       gap: 16px;
       padding: 10px 24px;
       background: #fafafa;
-      border-bottom: 1px solid #f3f4f6;
+      border-bottom: 1px solid var(--rss-gray-100);
       font-size: var(--rss-font-sm);
-      color: #6b7280;
+      color: var(--rss-muted);
     }
     .notice-modal__body {
       padding: 20px 24px;
@@ -123,7 +123,7 @@
       flex: 1;
       min-height: 0;
       font-size: var(--rss-font-base);
-      color: #374151;
+      color: var(--rss-gray-700);
       line-height: 1.8;
       word-break: break-word;
       overflow-wrap: break-word;
@@ -138,17 +138,17 @@
     }
     .notice-modal__attach {
       padding: 12px 24px 16px;
-      border-top: 1px solid #f3f4f6;
+      border-top: 1px solid var(--rss-gray-100);
     }
     .notice-modal__attach-label {
       font-size: var(--rss-font-xs);
       font-weight: 600;
-      color: #9ca3af;
+      color: var(--rss-gray-400);
       margin-bottom: 6px;
     }
     .notice-modal__footer {
       padding: 12px 24px;
-      border-top: 1px solid #f3f4f6;
+      border-top: 1px solid var(--rss-gray-100);
       display: flex;
       justify-content: flex-end;
     }
