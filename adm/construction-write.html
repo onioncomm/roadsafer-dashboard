@@ -95,33 +95,7 @@
     .tel-split-wrap .rss-input { width:72px; text-align:center; }
     .tel-split-sep { color:var(--rss-gray-400); font-weight:600; flex-shrink:0; }
 
-    /* 캘린더 모달 */
-    .adm-modal-overlay {
-      display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4);
-      z-index:9000; align-items:center; justify-content:center;
-    }
-    .adm-modal-overlay.open { display:flex; }
-    .adm-modal-box {
-      background:var(--rss-card); border-radius:10px; box-shadow:0 8px 32px rgba(0,0,0,0.18);
-      width:420px; max-width:95vw; display:flex; flex-direction:column;
-    }
-    .adm-modal-box--wide { width:640px; }
-    .adm-modal-box__head {
-      display:flex; align-items:center; justify-content:space-between;
-      padding:14px 18px; border-bottom:1px solid #e2e8f0;
-    }
-    .adm-modal-box__title { font-size:15px; font-weight:700; color:#1e293b; margin:0; }
-    .adm-modal-box__close {
-      background:none; border:none; cursor:pointer; padding:4px;
-      color:var(--rss-gray-400); border-radius:4px; line-height:1;
-    }
-    .adm-modal-box__close:hover { background:#f1f5f9; color:var(--rss-gray-700); }
-    .adm-modal-box__body { padding:16px 18px; overflow-y:auto; max-height:60vh; }
-    .adm-modal-box__search { display:flex; gap:8px; padding:12px 18px; border-bottom:1px solid #f1f5f9; }
-    .adm-modal-box__foot {
-      display:flex; justify-content:flex-end; gap:8px;
-      padding:12px 18px; border-top:1px solid #e2e8f0;
-    }
+    /* 모달 — adm-common-v2.css 참조 (adm-modal-overlay, adm-modal-box, adm-modal-box--wide 등) */
 
     /* 캘린더 */
     .cal-wrap { user-select:none; }

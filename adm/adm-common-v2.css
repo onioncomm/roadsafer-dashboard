@@ -642,7 +642,11 @@
 .adm-modal-overlay {
   display: none;
   position: fixed;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  /* 사이드바(240px) 오른쪽 영역만 덮어 모달이 콘텐츠 영역 정중앙에 오도록 보정 */
+  left: var(--rss-sidebar-w, 240px);
   background: rgba(0,0,0,0.45);
   z-index: 200;
   align-items: center;
@@ -650,6 +654,12 @@
 }
 .adm-modal-overlay.open {
   display: flex;
+}
+/* 모바일: 사이드바 숨김 → 전체 뷰포트 기준 */
+@media (max-width: 1023px) {
+  .adm-modal-overlay {
+    left: 0;
+  }
 }
 .adm-modal-box {
   background: var(--rss-card);
@@ -706,4 +716,8 @@
   padding: 12px 20px;
   border-top: 1px solid var(--rss-border);
   text-align: right;
+}
+/* 넓은 모달 (업체찾기 등 테이블 포함 모달) */
+.adm-modal-box--wide {
+  width: 770px;
 }

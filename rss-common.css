@@ -21,8 +21,8 @@
 
 /* ─── 디자인 토큰 ─────────────────────────────────────── */
 :root {
-  --rss-amber:        var(--rss-amber);
-  --rss-amber-dark:   var(--rss-amber-dark);
+  --rss-amber:        #F59E0B;
+  --rss-amber-dark:   #D97706;
   --rss-amber-light:  rgba(245,158,11,0.10);
   --rss-amber-ring:   rgba(245,158,11,0.25);
   --rss-sidebar-bg:   #1a1d27;
@@ -31,25 +31,25 @@
   --rss-header-h:     60px;
   --rss-radius:       8px;
   --rss-radius-lg:    12px;
-  --rss-border:       var(--rss-border);
-  --rss-text:         var(--rss-text);
-  --rss-muted:        var(--rss-muted);
-  --rss-bg:           var(--rss-bg);
-  --rss-card:         var(--rss-card);
+  --rss-border:       #e5e7eb;
+  --rss-text:         #1a1c23;
+  --rss-muted:        #6b7280;
+  --rss-bg:           #f4f5f7;
+  --rss-card:         #ffffff;
   --rss-shadow:       0 1px 4px rgba(0,0,0,0.08);
   --rss-shadow-md:    0 4px 16px rgba(0,0,0,0.10);
 
   /* 상태 색상 토큰 */
-  --rss-danger:       var(--rss-danger);   /* 위험/오류/긴급 */
-  --rss-danger-bg:    var(--rss-danger-bg);   /* 위험 배경 */
-  --rss-danger-dark:  var(--rss-danger-dark);   /* 위험 강조 */
-  --rss-success:      var(--rss-success);   /* 성공/완료 */
-  --rss-success-bg:   var(--rss-success-bg);   /* 성공 배경 */
-  --rss-info:         var(--rss-info);   /* 정보/안내 */
-  --rss-info-bg:      var(--rss-info-bg);   /* 정보 배경 */
-  --rss-gray-100:     var(--rss-gray-100);   /* 연한 배경 */
-  --rss-gray-400:     var(--rss-gray-400);   /* 중간 회색 */
-  --rss-gray-700:     var(--rss-gray-700);   /* 진한 텍스트 */
+  --rss-danger:       #ef4444;   /* 위험/오류/긴급 */
+  --rss-danger-bg:    #fef2f2;   /* 위험 배경 */
+  --rss-danger-dark:  #dc2626;   /* 위험 강조 */
+  --rss-success:      #22c55e;   /* 성공/완료 */
+  --rss-success-bg:   #f0fdf4;   /* 성공 배경 */
+  --rss-info:         #3b82f6;   /* 정보/안내 */
+  --rss-info-bg:      #eff6ff;   /* 정보 배경 */
+  --rss-gray-100:     #f3f4f6;   /* 연한 배경 */
+  --rss-gray-400:     #9ca3af;   /* 중간 회색 */
+  --rss-gray-700:     #374151;   /* 진한 텍스트 */
 
   /* 폰트 크기 토큰 */
   --rss-font-xs:   12px;
@@ -1394,7 +1394,7 @@ select.rss-form-input,
 /* 방향 열 */
 .rss-col-dir    { width: 5%; }
 /* 사업자 번호 열 */
-.rss-col-bizno  { width: 15%; }
+.rss-col-bizno  { width: 20%; }
 /* 사업장 주소 열 — 나머지 공간 차지 */
 .rss-col-addr   { /* width: auto */ }
 /* 선택 버튼 열 — 모달 내 단일 액션 */
