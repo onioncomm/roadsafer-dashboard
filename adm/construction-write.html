@@ -6,8 +6,8 @@
   <!-- [Java] th:text="${mode == 'edit'} ? '공사 수정' : '공사 등록'" -->
   <title>공사 등록 — 로드세이프티시스템 관리자</title>
   <!-- 공통 CSS — Tailwind보다 먼저 로드 -->
-  <link rel="stylesheet" href="../rss-common.css?v=20260506b" />
-  <link rel="stylesheet" href="adm-common-v2.css?v=20260506b" />
+  <link rel="stylesheet" href="../rss-common.css?v=20260506c" />
+  <link rel="stylesheet" href="adm-common-v2.css?v=20260506c" />
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Lucide 아이콘 CDN -->
@@ -19,27 +19,27 @@
     .adm-form-table { width:100%; border-collapse:collapse; }
     .adm-form-table th {
       width:160px; padding:10px 16px; background:#f8f9fa;
-      border:1px solid #e2e8f0; font-size:13px; font-weight:600;
+      border:1px solid #e2e8f0; font-weight:600;
       color:#374151; text-align:left; vertical-align:middle; white-space:nowrap;
     }
     .adm-form-table td {
       padding:8px 12px; border:1px solid #e2e8f0;
-      font-size:13px; vertical-align:middle;
+      vertical-align:middle;
     }
     .adm-form-table th .required { color:#ef4444; margin-left:2px; }
 
     /* 인라인 그룹 */
     .adm-inline-group { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
-    .adm-inline-sep { color:#6b7280; font-size:13px; white-space:nowrap; }
+    .adm-inline-sep { color:#6b7280; white-space:nowrap; }
 
     /* 라디오 그룹 */
     .adm-radio-group { display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
-    .adm-radio-group label { display:flex; align-items:center; gap:5px; font-size:13px; cursor:pointer; }
+    .adm-radio-group label { display:flex; align-items:center; gap:5px; cursor:pointer; }
     .adm-radio-group input[type="radio"] { cursor:pointer; }
 
     /* 체크박스 그룹 */
     .adm-check-group { display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
-    .adm-check-group label { display:flex; align-items:center; gap:5px; font-size:13px; cursor:pointer; }
+    .adm-check-group label { display:flex; align-items:center; gap:5px; cursor:pointer; }
     .adm-check-group input[type="checkbox"] { cursor:pointer; }
 
     /* 업체찾기 그룹 */
@@ -59,10 +59,6 @@
       border-bottom:1px solid #e2e8f0;
     }
     .write-section__title { font-size:14px; font-weight:700; color:#1e293b; margin:0; }
-    .write-section__badge {
-      font-size:11px; color:#ef4444; background:#fef2f2;
-      border:1px solid #fecaca; border-radius:4px; padding:1px 6px; margin-left:4px;
-    }
     .write-section__body { padding:0; }
 
     /* 품목 수량 — 가로 1줄 */
@@ -71,20 +67,33 @@
       padding:12px 16px; flex-wrap:wrap;
     }
     .equip-row__item { display:flex; align-items:center; gap:6px; }
-    .equip-row__label { font-size:13px; font-weight:600; color:#374151; white-space:nowrap; min-width:44px; }
-    .equip-row__unit { font-size:12px; color:#9ca3af; }
+    .equip-row__label { font-weight:600; color:#374151; white-space:nowrap; min-width:44px; }
+    .equip-row__unit { color:#9ca3af; }
 
-    /* 공사 단가 테이블 */
-    .price-table { width:100%; border-collapse:collapse; }
-    .price-table th, .price-table td {
-      padding:8px 12px; border:1px solid #e2e8f0; font-size:13px; text-align:center;
+    /* 단가 1줄 표시 영역 */
+    .price-row {
+      display:flex; align-items:center; gap:0;
+      padding:10px 16px; flex-wrap:wrap;
+      background:#f8fafc; border-top:1px solid #f1f5f9;
     }
-    .price-table th { background:#f1f5f9; font-weight:600; color:#374151; }
-    .price-table td:first-child { font-weight:600; text-align:left; padding-left:20px; }
-    .price-table .price-input { width:120px; text-align:right; }
-    .price-table .price-unit { color:#9ca3af; font-size:12px; }
-    .price-table .price-auto { background:#f0fdf4; color:#166534; font-weight:600; }
-    .price-note { font-size:12px; color:#6b7280; padding:8px 16px 12px; }
+    .price-row__label {
+      font-weight:600; color:#374151; white-space:nowrap;
+      margin-right:12px; min-width:60px;
+    }
+    .price-row__items { display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+    .price-row__item { display:flex; align-items:center; gap:6px; }
+    .price-row__item-label { color:#6b7280; white-space:nowrap; }
+    .price-row__item-val {
+      width:110px; text-align:right;
+    }
+    .price-row__item-unit { color:#9ca3af; white-space:nowrap; }
+    .price-row--auto .price-row__item-val { background:#f0fdf4; color:#166534; font-weight:600; }
+    .price-row__sub { font-size:12px; color:#6b7280; margin-left:8px; }
+
+    /* 전화번호 3분할 입력 */
+    .tel-split-wrap { display:flex; align-items:center; gap:6px; }
+    .tel-split-wrap .rss-input { width:72px; text-align:center; }
+    .tel-split-sep { color:#9ca3af; font-weight:600; flex-shrink:0; }
 
     /* 캘린더 모달 */
     .adm-modal-overlay {
@@ -175,7 +184,7 @@
 
     /* 권역 체크박스 */
     .region-group { display:flex; flex-wrap:wrap; gap:12px; }
-    .region-group label { display:flex; align-items:center; gap:4px; font-size:13px; cursor:pointer; }
+    .region-group label { display:flex; align-items:center; gap:4px; cursor:pointer; }
 
     /* 차단업체 태그 */
     .block-corp-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
@@ -234,13 +243,12 @@
         <!-- [Java] <input type="hidden" name="mode" th:value="${mode}"> -->
 
         <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-             섹션 1. 기본 정보 — 모든 항목 필수
+             섹션 1. 기본 정보
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
         <section class="write-section" aria-labelledby="sec1Title">
           <div class="write-section__head">
             <i data-lucide="clipboard-list" style="width:16px;height:16px;color:var(--rss-amber);flex-shrink:0;"></i>
             <h2 class="write-section__title" id="sec1Title">기본 정보</h2>
-            <span class="write-section__badge">모든 항목 필수 입력</span>
           </div>
           <div class="write-section__body">
             <table class="adm-form-table">
@@ -267,27 +275,41 @@
                   </td>
                 </tr>
 
-                <!-- 담당자명 + 담당자 연락처 — 동일 행 2열 구성 (스토리보드 §1 기준) -->
-                <!-- 용어사전 §10-2 order_contact → orderContactNm / orderContactTel -->
+                <!-- 담당자명 — 용어사전 §10-2 order_contact → orderContactNm -->
                 <tr>
                   <th scope="row">담당자명<span class="required">*</span></th>
                   <td>
-                    <div class="adm-inline-group">
-                      <!-- [Java] th:value="${construction.orderContactNm}" -->
-                      <input type="text" id="orderContactNm" name="orderContactNm"
-                             class="rss-input" style="width:180px;"
-                             placeholder="담당자명"
-                             value="홍길동" />
-                      <span class="adm-inline-sep" style="color:#9ca3af;">|</span>
-                      <label for="orderContactTel" style="font-size:13px;font-weight:600;color:#374151;white-space:nowrap;">
-                        담당자 연락처<span class="required">*</span>
-                      </label>
-                      <!-- [Java] th:value="${construction.orderContactTel}" -->
-                      <!-- 용어사전 §22 orderContactTel — 숫자만 허용 -->
-                      <input type="tel" id="orderContactTel" name="orderContactTel"
-                             class="rss-input" style="width:160px;"
-                             placeholder="숫자만 입력"
-                             value="01012345678"
+                    <!-- [Java] th:value="${construction.orderContactNm}" -->
+                    <input type="text" id="orderContactNm" name="orderContactNm"
+                           class="rss-input" style="width:220px;"
+                           placeholder="담당자명"
+                           value="홍길동" />
+                  </td>
+                </tr>
+
+                <!-- 담당자 연락처 — 3분할 입력 방식
+                     용어사전 §22 orderContactTel1 / orderContactTel2 / orderContactTel3 -->
+                <tr>
+                  <th scope="row">담당자 연락처<span class="required">*</span></th>
+                  <td>
+                    <!-- [Java] th:value="${construction.orderContactTel1}" 등 -->
+                    <div class="tel-split-wrap">
+                      <input type="text" id="orderContactTel1" name="orderContactTel1"
+                             class="rss-input" style="width:72px;text-align:center;"
+                             value="010"
+                             maxlength="4" inputmode="numeric" aria-label="연락처 앞자리"
+                             oninput="this.value=this.value.replace(/[^0-9]/g,'')" />
+                      <span class="tel-split-sep">-</span>
+                      <input type="text" id="orderContactTel2" name="orderContactTel2"
+                             class="rss-input" style="width:72px;text-align:center;"
+                             value="1234"
+                             maxlength="4" inputmode="numeric" aria-label="연락처 가운데"
+                             oninput="this.value=this.value.replace(/[^0-9]/g,'')" />
+                      <span class="tel-split-sep">-</span>
+                      <input type="text" id="orderContactTel3" name="orderContactTel3"
+                             class="rss-input" style="width:72px;text-align:center;"
+                             value="5678"
+                             maxlength="4" inputmode="numeric" aria-label="연락처 끝자리"
                              oninput="this.value=this.value.replace(/[^0-9]/g,'')" />
                     </div>
                   </td>
@@ -339,12 +361,12 @@
                       <div class="adm-check-group">
                         <label>
                           <input type="checkbox" id="workShiftDay" name="workShiftDay" value="Y" checked
-                                 onchange="updateBlockStartTimeOptions()" />
+                                 onchange="updateBlockStartTimeOptions(); updatePriceRow();" />
                           주간
                         </label>
                         <label>
                           <input type="checkbox" id="workShiftNight" name="workShiftNight" value="Y"
-                                 onchange="updateBlockStartTimeOptions()" />
+                                 onchange="updateBlockStartTimeOptions(); updatePriceRow();" />
                           야간
                         </label>
                       </div>
@@ -365,13 +387,12 @@
         </section>
 
         <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-             섹션 2. 도로 정보 — 모든 항목 필수
+             섹션 2. 도로 정보
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
         <section class="write-section" aria-labelledby="sec2Title">
           <div class="write-section__head">
             <i data-lucide="map-pin" style="width:16px;height:16px;color:var(--rss-amber);flex-shrink:0;"></i>
             <h2 class="write-section__title" id="sec2Title">도로 정보</h2>
-            <span class="write-section__badge">모든 항목 필수 입력</span>
           </div>
           <div class="write-section__body">
             <table class="adm-form-table">
@@ -446,14 +467,14 @@
         </section>
 
         <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-             섹션 3. 공사 구분 + 품목별 수량 + 공사 단가
+             섹션 3. 공사 구분 + 단가
              스토리보드: 일반/긴급 선택 → 일반 시 단가 자동입력
+             단가는 시간(주간/야간) 선택에 따라 1세트 1줄 표시
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
         <section class="write-section" aria-labelledby="sec3Title">
           <div class="write-section__head">
             <i data-lucide="circle-dollar-sign" style="width:16px;height:16px;color:var(--rss-amber);flex-shrink:0;"></i>
-            <h2 class="write-section__title" id="sec3Title">공사 구분 · 품목 수량 · 단가</h2>
-            <span class="write-section__badge">모든 항목 필수 입력</span>
+            <h2 class="write-section__title" id="sec3Title">공사 구분 · 단가</h2>
           </div>
           <div class="write-section__body">
 
@@ -485,134 +506,140 @@
               </tbody>
             </table>
 
-            <!-- 품목별 수량 — 가로 1줄 배치, 드롭다운 0~20 선택
-                 용어사전 §22 tma1Qty / tma3Qty / plcsQty / signalerQty -->
-            <div style="padding:4px 0 0; border-top:1px solid #f1f5f9;">
-              <div style="padding:8px 16px 4px; font-size:12px; font-weight:600; color:#6b7280; letter-spacing:0.05em;">
-                품목별 수량 <span style="font-weight:400;color:#9ca3af;">(각 항목 옆 드롭다운에서 0~20 선택)</span>
-              </div>
-              <div class="equip-row">
+            <!-- 단가 1줄 표시 영역
+                 시간 체크박스(주간/야간) 선택에 따라 해당 단가 세트 1줄로 표시
+                 용어사전 §22 tma1PriceDay/Night/Both, tma3PriceDay/Night/Both,
+                              plcsPriceDay/Night/Both, signalerPriceDay/Night/Both -->
+            <div id="priceRowWrap" class="price-row price-row--auto">
+              <span class="price-row__label">
+                단가
+                <span id="priceSubLabel" style="font-size:12px;font-weight:400;color:#16a34a;">(일반)</span>
+              </span>
+              <div class="price-row__items">
                 <!-- TMA1 -->
-                <div class="equip-row__item">
-                  <span class="equip-row__label">TMA1</span>
-                  <!-- [Java] th:value="${construction.tma1Qty}" -->
-                  <select id="tma1Qty" name="tma1Qty" class="rss-select" style="width:72px;">
-                    <!-- JS로 0~20 옵션 생성 -->
-                  </select>
-                  <span class="equip-row__unit">대</span>
+                <div class="price-row__item">
+                  <span class="price-row__item-label">TMA1</span>
+                  <!-- [Java] th:value="${construction.tma1Price}" -->
+                  <input type="text" id="tma1Price" name="tma1Price"
+                         class="rss-input price-row__item-val"
+                         value="450,000" readonly
+                         oninput="formatPrice(this)" />
+                  <span class="price-row__item-unit">원</span>
                 </div>
                 <!-- TMA3 -->
-                <div class="equip-row__item">
-                  <span class="equip-row__label">TMA3</span>
-                  <!-- [Java] th:value="${construction.tma3Qty}" -->
-                  <select id="tma3Qty" name="tma3Qty" class="rss-select" style="width:72px;">
-                  </select>
-                  <span class="equip-row__unit">대</span>
+                <div class="price-row__item">
+                  <span class="price-row__item-label">TMA3</span>
+                  <!-- [Java] th:value="${construction.tma3Price}" -->
+                  <input type="text" id="tma3Price" name="tma3Price"
+                         class="rss-input price-row__item-val"
+                         value="800,000" readonly
+                         oninput="formatPrice(this)" />
+                  <span class="price-row__item-unit">원</span>
                 </div>
                 <!-- PLCS -->
-                <div class="equip-row__item">
-                  <span class="equip-row__label">PLCS</span>
-                  <!-- [Java] th:value="${construction.plcsQty}" -->
-                  <select id="plcsQty" name="plcsQty" class="rss-select" style="width:72px;">
-                  </select>
-                  <span class="equip-row__unit">대</span>
+                <div class="price-row__item">
+                  <span class="price-row__item-label">PLCS</span>
+                  <!-- [Java] th:value="${construction.plcsPrice}" -->
+                  <input type="text" id="plcsPrice" name="plcsPrice"
+                         class="rss-input price-row__item-val"
+                         value="650,000" readonly
+                         oninput="formatPrice(this)" />
+                  <span class="price-row__item-unit">원</span>
                 </div>
-                <!-- 신호수 — 용어사전 §10 signaler → signalerQty -->
-                <div class="equip-row__item">
-                  <span class="equip-row__label">신호수</span>
-                  <!-- [Java] th:value="${construction.signalerQty}" -->
-                  <select id="signalerQty" name="signalerQty" class="rss-select" style="width:72px;">
-                  </select>
-                  <span class="equip-row__unit">명</span>
+                <!-- 신호수 — 용어사전 §10 signaler → signalerPrice -->
+                <div class="price-row__item">
+                  <span class="price-row__item-label">신호수</span>
+                  <!-- [Java] th:value="${construction.signalerPrice}" -->
+                  <input type="text" id="signalerPrice" name="signalerPrice"
+                         class="rss-input price-row__item-val"
+                         value="150,000" readonly
+                         oninput="formatPrice(this)" />
+                  <span class="price-row__item-unit">원</span>
                 </div>
               </div>
+              <!-- 시간 선택 상태 표시 -->
+              <span class="price-row__sub" id="priceShiftLabel">주간 단가</span>
             </div>
+            <p class="adm-hint" style="padding:4px 16px 10px;">
+              - 반공수 시연회 : 단가의 50% / 공수 시연회 : 단가의 100% 적용
+            </p>
 
-            <!-- 공사 단가 테이블
-                 일반: 주간/야간/주야간 자동입력 (스토리보드 단가표 기준)
-                 긴급: 직접 입력
-                 용어사전 §22 tma1PriceDay / tma1PriceNight / tma1PriceBoth 등 -->
-            <div style="padding:4px 0 0; border-top:1px solid #f1f5f9;">
-              <div style="padding:8px 16px 4px; font-size:12px; font-weight:600; color:#6b7280; letter-spacing:0.05em;">
-                공사 단가 <span id="priceSubLabel" style="font-weight:400;color:#16a34a;">(일반 — 자동 적용)</span>
-              </div>
-              <div style="padding:0 16px 12px;">
-                <table class="price-table">
-                  <colgroup>
-                    <col style="width:100px;" />
-                    <col />
-                    <col />
-                    <col />
-                    <col style="width:200px;" />
-                  </colgroup>
-                  <thead>
-                    <tr>
-                      <th rowspan="2">품목</th>
-                      <th colspan="3">공사 단가 (원/일)</th>
-                      <th rowspan="2">비고</th>
-                    </tr>
-                    <tr>
-                      <th>주간</th>
-                      <th>야간</th>
-                      <th>주간+야간</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <!-- TMA1 -->
-                    <tr>
-                      <td>TMA1</td>
-                      <!-- [Java] th:value="${construction.tma1PriceDay}" -->
-                      <td><input type="text" id="tma1PriceDay" name="tma1PriceDay" class="rss-input price-input price-auto" value="450,000" readonly oninput="formatPrice(this)" /></td>
-                      <!-- [Java] th:value="${construction.tma1PriceNight}" -->
-                      <td><input type="text" id="tma1PriceNight" name="tma1PriceNight" class="rss-input price-input price-auto" value="550,000" readonly oninput="formatPrice(this)" /></td>
-                      <!-- [Java] th:value="${construction.tma1PriceBoth}" -->
-                      <td><input type="text" id="tma1PriceBoth" name="tma1PriceBoth" class="rss-input price-input price-auto" value="1,000,000" readonly oninput="formatPrice(this)" /></td>
-                      <td rowspan="4" class="price-unit" style="vertical-align:middle;text-align:center;line-height:1.6;">
-                        주간, 야간 모두 체크했다면,<br>2개 요금을 합하여 적용함
-                      </td>
-                    </tr>
-                    <!-- TMA3 -->
-                    <tr>
-                      <td>TMA-2</td>
-                      <td><input type="text" id="tma3PriceDay" name="tma3PriceDay" class="rss-input price-input price-auto" value="800,000" readonly oninput="formatPrice(this)" /></td>
-                      <td><input type="text" id="tma3PriceNight" name="tma3PriceNight" class="rss-input price-input price-auto" value="900,000" readonly oninput="formatPrice(this)" /></td>
-                      <td><input type="text" id="tma3PriceBoth" name="tma3PriceBoth" class="rss-input price-input price-auto" value="1,700,000" readonly oninput="formatPrice(this)" /></td>
-                    </tr>
-                    <!-- PLCS -->
-                    <tr>
-                      <td>PLCS</td>
-                      <td><input type="text" id="plcsPriceDay" name="plcsPriceDay" class="rss-input price-input price-auto" value="650,000" readonly oninput="formatPrice(this)" /></td>
-                      <td><input type="text" id="plcsPriceNight" name="plcsPriceNight" class="rss-input price-input price-auto" value="750,000" readonly oninput="formatPrice(this)" /></td>
-                      <td><input type="text" id="plcsPriceBoth" name="plcsPriceBoth" class="rss-input price-input price-auto" value="1,400,000" readonly oninput="formatPrice(this)" /></td>
-                    </tr>
-                    <!-- 신호수 — 용어사전 §10 signaler → signalerPriceDay 등 -->
-                    <tr>
-                      <td>신호수</td>
-                      <td><input type="text" id="signalerPriceDay" name="signalerPriceDay" class="rss-input price-input price-auto" value="150,000" readonly oninput="formatPrice(this)" /></td>
-                      <td><input type="text" id="signalerPriceNight" name="signalerPriceNight" class="rss-input price-input price-auto" value="200,000" readonly oninput="formatPrice(this)" /></td>
-                      <td><input type="text" id="signalerPriceBoth" name="signalerPriceBoth" class="rss-input price-input price-auto" value="350,000" readonly oninput="formatPrice(this)" /></td>
-                    </tr>
-                  </tbody>
-                </table>
-                <p class="price-note">
-                  - 반공수 시연회 : 단가의 50% / 공수 시연회 : 단가의 100% 적용. 즉, 시연회도 공사와 같은 개념으로 이해함
-                </p>
-              </div>
-            </div>
+            <!-- 히든 인풋: 실제 단가 전송용 (Day/Night/Both 구분)
+                 [Java] 서버에서 workShiftDay/workShiftNight 조합으로 적절한 필드 사용 -->
+            <input type="hidden" id="tma1PriceDay"      name="tma1PriceDay"      value="450,000" />
+            <input type="hidden" id="tma1PriceNight"    name="tma1PriceNight"    value="550,000" />
+            <input type="hidden" id="tma1PriceBoth"     name="tma1PriceBoth"     value="1,000,000" />
+            <input type="hidden" id="tma3PriceDay"      name="tma3PriceDay"      value="800,000" />
+            <input type="hidden" id="tma3PriceNight"    name="tma3PriceNight"    value="900,000" />
+            <input type="hidden" id="tma3PriceBoth"     name="tma3PriceBoth"     value="1,700,000" />
+            <input type="hidden" id="plcsPriceDay"      name="plcsPriceDay"      value="650,000" />
+            <input type="hidden" id="plcsPriceNight"    name="plcsPriceNight"    value="750,000" />
+            <input type="hidden" id="plcsPriceBoth"     name="plcsPriceBoth"     value="1,400,000" />
+            <input type="hidden" id="signalerPriceDay"  name="signalerPriceDay"  value="150,000" />
+            <input type="hidden" id="signalerPriceNight" name="signalerPriceNight" value="200,000" />
+            <input type="hidden" id="signalerPriceBoth" name="signalerPriceBoth" value="350,000" />
 
           </div>
         </section>
 
         <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-             섹션 4. 시연회
-             스토리보드: 없음/있음 선택 → 있음 시 날짜/시간대/시연대금 활성화 (1줄)
-             용어사전 §10-2 rehearsal 도메인 / §22 rehearsalYn
+             섹션 4. 품목별 수량
+             용어사전 §22 tma1Qty / tma3Qty / plcsQty / signalerQty
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
         <section class="write-section" aria-labelledby="sec4Title">
           <div class="write-section__head">
+            <i data-lucide="package" style="width:16px;height:16px;color:var(--rss-amber);flex-shrink:0;"></i>
+            <h2 class="write-section__title" id="sec4Title">품목별 수량</h2>
+          </div>
+          <div class="write-section__body">
+            <!-- 품목별 수량 — 가로 1줄 배치, 드롭다운 0~20 선택 -->
+            <div class="equip-row">
+              <!-- TMA1 -->
+              <div class="equip-row__item">
+                <span class="equip-row__label">TMA1</span>
+                <!-- [Java] th:value="${construction.tma1Qty}" -->
+                <select id="tma1Qty" name="tma1Qty" class="rss-select" style="width:72px;">
+                  <!-- JS로 0~20 옵션 생성 -->
+                </select>
+                <span class="equip-row__unit">대</span>
+              </div>
+              <!-- TMA3 -->
+              <div class="equip-row__item">
+                <span class="equip-row__label">TMA3</span>
+                <!-- [Java] th:value="${construction.tma3Qty}" -->
+                <select id="tma3Qty" name="tma3Qty" class="rss-select" style="width:72px;">
+                </select>
+                <span class="equip-row__unit">대</span>
+              </div>
+              <!-- PLCS -->
+              <div class="equip-row__item">
+                <span class="equip-row__label">PLCS</span>
+                <!-- [Java] th:value="${construction.plcsQty}" -->
+                <select id="plcsQty" name="plcsQty" class="rss-select" style="width:72px;">
+                </select>
+                <span class="equip-row__unit">대</span>
+              </div>
+              <!-- 신호수 — 용어사전 §10 signaler → signalerQty -->
+              <div class="equip-row__item">
+                <span class="equip-row__label">신호수</span>
+                <!-- [Java] th:value="${construction.signalerQty}" -->
+                <select id="signalerQty" name="signalerQty" class="rss-select" style="width:72px;">
+                </select>
+                <span class="equip-row__unit">명</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+             섹션 5. 시연회
+             스토리보드: 없음/있음 선택 → 있음 시 날짜/시간대/시연대금 활성화 (1줄)
+             용어사전 §10-2 rehearsal 도메인 / §22 rehearsalYn
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+        <section class="write-section" aria-labelledby="sec5Title">
+          <div class="write-section__head">
             <i data-lucide="calendar-check" style="width:16px;height:16px;color:var(--rss-amber);flex-shrink:0;"></i>
-            <h2 class="write-section__title" id="sec4Title">시연회</h2>
-            <span class="write-section__badge">필수 선택</span>
+            <h2 class="write-section__title" id="sec5Title">시연회</h2>
           </div>
           <div class="write-section__body">
             <table class="adm-form-table">
@@ -646,14 +673,14 @@
                         </button>
                         <!-- [Java] th:value="${construction.rehearsalDt}" -->
                         <input type="hidden" id="rehearsalDt" name="rehearsalDt" value="" />
-                        <span id="rehearsalDtDisplay" style="font-size:13px;color:#374151;min-width:80px;">
+                        <span id="rehearsalDtDisplay" style="color:#374151;min-width:80px;">
                           날짜 미선택
                         </span>
 
                         <span class="rehearsal-detail__sep">|</span>
 
                         <!-- 시간대 — 용어사전 §10-2 rehearsal + §8-4 Cd → rehearsalTimeCd -->
-                        <span style="font-size:13px;font-weight:600;color:#374151;">시간대:</span>
+                        <span style="font-weight:600;color:#374151;">시간대:</span>
                         <div class="adm-radio-group">
                           <!-- [Java] th:field="*{rehearsalTimeCd}" -->
                           <label><input type="radio" name="rehearsalTimeCd" value="day" checked /> 주간</label>
@@ -664,7 +691,7 @@
 
                         <!-- 시연대금 — 용어사전 §22 rehearsalFeeType (공수/반공수)
                                        스토리보드: 공수 / 반공수 선택 -->
-                        <span style="font-size:13px;font-weight:600;color:#374151;">시연대금:</span>
+                        <span style="font-weight:600;color:#374151;">시연대금:</span>
                         <div class="adm-radio-group">
                           <!-- [Java] th:field="*{rehearsalFeeType}" -->
                           <label><input type="radio" name="rehearsalFeeType" value="full" checked /> 공수</label>
@@ -680,15 +707,14 @@
         </section>
 
         <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-             섹션 5. 권역
+             섹션 6. 권역
              스토리보드: 다중 체크박스, 3개까지 선택 가능
              용어사전 §10 region / §19-2 권역 코드 → regionCds[]
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-        <section class="write-section" aria-labelledby="sec5Title">
+        <section class="write-section" aria-labelledby="sec6Title">
           <div class="write-section__head">
             <i data-lucide="map" style="width:16px;height:16px;color:var(--rss-amber);flex-shrink:0;"></i>
-            <h2 class="write-section__title" id="sec5Title">권역</h2>
-            <span class="write-section__badge">필수 선택 (최대 3개)</span>
+            <h2 class="write-section__title" id="sec6Title">권역</h2>
           </div>
           <div class="write-section__body">
             <table class="adm-form-table">
@@ -718,14 +744,13 @@
         </section>
 
         <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-             섹션 6. 공개 여부
+             섹션 7. 공개 여부
              용어사전 §22 publicYn (Y/N)
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-        <section class="write-section" aria-labelledby="sec6Title">
+        <section class="write-section" aria-labelledby="sec7Title">
           <div class="write-section__head">
             <i data-lucide="eye" style="width:16px;height:16px;color:var(--rss-amber);flex-shrink:0;"></i>
-            <h2 class="write-section__title" id="sec6Title">공개 여부</h2>
-            <span class="write-section__badge">필수 선택</span>
+            <h2 class="write-section__title" id="sec7Title">공개 여부</h2>
           </div>
           <div class="write-section__body">
             <table class="adm-form-table">
@@ -748,14 +773,14 @@
         </section>
 
         <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-             섹션 7. 차단업체 지정
+             섹션 8. 차단업체 지정
              스토리보드 ②: M2-1 팝업 연동 → 선택한 업체 태그 표시
              용어사전 §22 blockCorpSeq / blockCorpNm
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-        <section class="write-section" aria-labelledby="sec7Title">
+        <section class="write-section" aria-labelledby="sec8Title">
           <div class="write-section__head">
             <i data-lucide="building-2" style="width:16px;height:16px;color:var(--rss-amber);flex-shrink:0;"></i>
-            <h2 class="write-section__title" id="sec7Title">차단업체 지정</h2>
+            <h2 class="write-section__title" id="sec8Title">차단업체 지정</h2>
           </div>
           <div class="write-section__body">
             <table class="adm-form-table">
@@ -1002,7 +1027,7 @@
   var DAY_LABELS = ['일','월','화','수','목','금','토'];
 
   /* ══════════════════════════════════════════════════
-     차단 시작 시간 드롭다운 (00:00 ~ 24:00, 30분 단위)
+     차단 시작 시간 드롭다운 (00:00 ~ 23:30, 30분 단위)
   ══════════════════════════════════════════════════ */
   (function buildBlockStartTimeOptions() {
     var sel = document.getElementById('blockStartTime');
@@ -1037,41 +1062,99 @@
   })();
 
   /* ══════════════════════════════════════════════════
-     공사 구분 변경 (일반/긴급)
-     일반: 단가 자동입력(readonly), 긴급: 직접 입력
-     스토리보드 단가표 기준 (§M1-4-1 두 번째 슬라이드)
+     일반 단가 기준표
+     주간만: Day / 야간만: Night / 주야간: Both
   ══════════════════════════════════════════════════ */
-  /* 일반 단가 기준표 */
   var NORMAL_PRICES = {
-    tma1PriceDay: '450,000',  tma1PriceNight: '550,000',  tma1PriceBoth: '1,000,000',
-    tma3PriceDay: '800,000',  tma3PriceNight: '900,000',  tma3PriceBoth: '1,700,000',
-    plcsPriceDay: '650,000',  plcsPriceNight: '750,000',  plcsPriceBoth: '1,400,000',
-    signalerPriceDay: '150,000', signalerPriceNight: '200,000', signalerPriceBoth: '350,000'
+    tma1:     { day: '450,000',   night: '550,000',   both: '1,000,000' },
+    tma3:     { day: '800,000',   night: '900,000',   both: '1,700,000' },
+    plcs:     { day: '650,000',   night: '750,000',   both: '1,400,000' },
+    signaler: { day: '150,000',   night: '200,000',   both: '350,000'   }
   };
-  var PRICE_IDS = Object.keys(NORMAL_PRICES);
 
+  /* ══════════════════════════════════════════════════
+     단가 1줄 갱신
+     workShiftDay / workShiftNight 체크 상태에 따라
+     해당 단가 세트를 price-row에 반영
+  ══════════════════════════════════════════════════ */
+  function updatePriceRow() {
+    var dayChk   = document.getElementById('workShiftDay').checked;
+    var nightChk = document.getElementById('workShiftNight').checked;
+    var isNormal = document.getElementById('typeNormal').checked;
+    var wrap     = document.getElementById('priceRowWrap');
+    var shiftLbl = document.getElementById('priceShiftLabel');
+
+    /* 시간 구분 결정 */
+    var shiftKey = 'day'; /* 기본: 주간 */
+    var shiftText = '주간 단가';
+    if (dayChk && nightChk) {
+      shiftKey  = 'both';
+      shiftText = '주야간 단가';
+    } else if (nightChk) {
+      shiftKey  = 'night';
+      shiftText = '야간 단가';
+    } else {
+      shiftKey  = 'day';
+      shiftText = '주간 단가';
+    }
+    shiftLbl.textContent = shiftText;
+
+    /* 일반: 자동 입력 (readonly + 녹색 배경) */
+    if (isNormal) {
+      wrap.classList.add('price-row--auto');
+      var items = [
+        { id: 'tma1Price',     key: 'tma1'     },
+        { id: 'tma3Price',     key: 'tma3'     },
+        { id: 'plcsPrice',     key: 'plcs'     },
+        { id: 'signalerPrice', key: 'signaler' }
+      ];
+      items.forEach(function(item) {
+        var el = document.getElementById(item.id);
+        el.value    = NORMAL_PRICES[item.key][shiftKey];
+        el.readOnly = true;
+        /* 히든 인풋 동기화 */
+        var hDay   = document.getElementById(item.key === 'signaler' ? 'signalerPriceDay'   : item.key + 'PriceDay');
+        var hNight = document.getElementById(item.key === 'signaler' ? 'signalerPriceNight' : item.key + 'PriceNight');
+        var hBoth  = document.getElementById(item.key === 'signaler' ? 'signalerPriceBoth'  : item.key + 'PriceBoth');
+        if (hDay)   hDay.value   = NORMAL_PRICES[item.key].day;
+        if (hNight) hNight.value = NORMAL_PRICES[item.key].night;
+        if (hBoth)  hBoth.value  = NORMAL_PRICES[item.key].both;
+      });
+    } else {
+      /* 긴급: 직접 입력 */
+      wrap.classList.remove('price-row--auto');
+      ['tma1Price','tma3Price','plcsPrice','signalerPrice'].forEach(function(id) {
+        var el = document.getElementById(id);
+        el.value    = '';
+        el.readOnly = false;
+      });
+    }
+  }
+
+  /* ══════════════════════════════════════════════════
+     공사 구분 변경 (일반/긴급)
+  ══════════════════════════════════════════════════ */
   function onConstructionTypeChange() {
     var isNormal = document.getElementById('typeNormal').checked;
     var subLabel = document.getElementById('priceSubLabel');
     if (isNormal) {
-      subLabel.textContent = '(일반 — 자동 적용)';
+      subLabel.textContent = '(일반)';
       subLabel.style.color = '#16a34a';
-      PRICE_IDS.forEach(function(id) {
-        var el = document.getElementById(id);
-        el.value = NORMAL_PRICES[id];
-        el.readOnly = true;
-        el.classList.add('price-auto');
-      });
+      document.getElementById('typeHint').textContent = '일반 선택 시 품목별 기본 공사 단가가 자동 적용됩니다.';
     } else {
-      subLabel.textContent = '(긴급 — 직접 입력)';
+      subLabel.textContent = '(긴급)';
       subLabel.style.color = '#dc2626';
-      PRICE_IDS.forEach(function(id) {
-        var el = document.getElementById(id);
-        el.value = '';
-        el.readOnly = false;
-        el.classList.remove('price-auto');
-      });
+      document.getElementById('typeHint').textContent = '긴급 선택 시 단가를 직접 입력하세요.';
     }
+    updatePriceRow();
+  }
+
+  /* ══════════════════════════════════════════════════
+     차단 시작 시간 드롭다운 갱신
+     (주간/야간 변경 시 단가도 함께 갱신)
+  ══════════════════════════════════════════════════ */
+  function updateBlockStartTimeOptions() {
+    /* 시작 시간 드롭다운 로직은 현재 정적 — 추후 주간/야간 기준 필터 추가 가능 */
   }
 
   /* ══════════════════════════════════════════════════
@@ -1311,9 +1394,8 @@
 
   /* ══════════════════════════════════════════════════
      폼 유효성 검사 및 제출
-  ══════════════════════════════════════════════════ -->
-  스토리보드 ③: 저장하시겠습니까? → 예 → 저장 후 목록(M1)으로 이동
-  빠진 항목이 있을 경우: 모든 항목을 빠짐없이 입력하세요.
+     스토리보드 ③: 저장하시겠습니까? → 예 → 저장 후 목록(M1)으로 이동
+     빠진 항목이 있을 경우: 모든 항목을 빠짐없이 입력하세요.
   ══════════════════════════════════════════════════ */
   function submitConstructionForm(e) {
     e.preventDefault();
@@ -1322,7 +1404,6 @@
     var textRequired = [
       { id: 'orderCorpNm',       label: '발주업체' },
       { id: 'orderContactNm',    label: '담당자명' },
-      { id: 'orderContactTel',   label: '담당자 연락처' },
       { id: 'constructionNm',    label: '공사명' },
       { id: 'roadNm',            label: '도로명' },
       { id: 'direction',         label: '방향' },
@@ -1335,6 +1416,16 @@
         if (el) el.focus();
         return false;
       }
+    }
+
+    /* 담당자 연락처 3분할 필수 검사 */
+    var tel1 = document.getElementById('orderContactTel1').value.trim();
+    var tel2 = document.getElementById('orderContactTel2').value.trim();
+    var tel3 = document.getElementById('orderContactTel3').value.trim();
+    if (!tel1 || !tel2 || !tel3) {
+      alert('모든 항목을 빠짐없이 입력하세요.\n(담당자 연락처 누락)');
+      document.getElementById('orderContactTel1').focus();
+      return false;
     }
 
     /* 공사 날짜 필수 검사 */
@@ -1361,8 +1452,9 @@
     /* 긴급 선택 시 단가 입력 검사 */
     var isUrgent = document.getElementById('typeUrgent').checked;
     if (isUrgent) {
-      for (var j = 0; j < PRICE_IDS.length; j++) {
-        var pel = document.getElementById(PRICE_IDS[j]);
+      var priceIds = ['tma1Price','tma3Price','plcsPrice','signalerPrice'];
+      for (var j = 0; j < priceIds.length; j++) {
+        var pel = document.getElementById(priceIds[j]);
         if (!pel || !pel.value.trim()) {
           alert('모든 항목을 빠짐없이 입력하세요.\n(긴급 공사 단가를 모두 입력하세요)');
           if (pel) pel.focus();
@@ -1395,6 +1487,13 @@
       alert('삭제 처리되었습니다.\n[Java] DELETE /adm/construction/{id} 로 전송됩니다.');
     }
   }
+
+  /* ══════════════════════════════════════════════════
+     페이지 초기화 — 단가 행 초기 렌더링
+  ══════════════════════════════════════════════════ */
+  (function initPage() {
+    updatePriceRow();
+  })();
 </script>
 </body>
 </html>
