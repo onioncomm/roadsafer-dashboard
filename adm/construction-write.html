@@ -7,7 +7,7 @@
   <title>공사 등록 — 로드세이프티시스템 관리자</title>
   <!-- 공통 CSS — Tailwind보다 먼저 로드 -->
   <link rel="stylesheet" href="../rss-common.css?v=20260506c" />
-  <link rel="stylesheet" href="adm-common-v2.css?v=20260506c" />
+  <link rel="stylesheet" href="adm-common-v2.css?v=20260506d" />
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Lucide 아이콘 CDN -->
@@ -261,7 +261,7 @@
                     <div class="adm-find-group">
                       <!-- [Java] th:value="${construction.orderCorpNm}" -->
                       <input type="text" id="orderCorpNm" name="orderCorpNm"
-                             class="rss-input" style="max-width:280px;"
+                             class="rss-input"
                              placeholder="업체찾기 버튼으로 선택하세요"
                              value="한국개발(주)" readonly />
                       <!-- [Java] th:value="${construction.orderCorpSeq}" -->
@@ -321,7 +321,7 @@
                   <td>
                     <!-- [Java] th:value="${construction.constructionNm}" -->
                     <input type="text" id="constructionNm" name="constructionNm"
-                           class="rss-input" style="max-width:480px;"
+                           class="rss-input"
                            placeholder="공사명을 입력하세요"
                            value="호남선 순천방향 포장공사" />
                   </td>
@@ -430,7 +430,7 @@
                   <td>
                     <!-- [Java] th:value="${construction.roadNm}" -->
                     <input type="text" id="roadNm" name="roadNm"
-                           class="rss-input" style="max-width:280px;"
+                           class="rss-input"
                            placeholder="예: 호남고속도로"
                            value="호남고속도로" />
                   </td>
@@ -442,7 +442,7 @@
                   <td>
                     <!-- [Java] th:value="${construction.direction}" -->
                     <input type="text" id="direction" name="direction"
-                           class="rss-input" style="max-width:200px;"
+                           class="rss-input"
                            placeholder="예: 순천, 서울, 부산"
                            value="순천" />
                   </td>
@@ -455,7 +455,7 @@
                   <td>
                     <!-- [Java] th:value="${construction.sectionNm}" -->
                     <input type="text" id="sectionNm" name="sectionNm"
-                           class="rss-input" style="max-width:400px;"
+                           class="rss-input"
                            placeholder="예: 120km ~ 135km, 순천IC ~ 광양IC"
                            value="120km ~ 135km" />
                   </td>
