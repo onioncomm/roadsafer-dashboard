@@ -824,6 +824,28 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23ef4444' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='3 6 5 6 21 6'/%3E%3Cpath d='M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6'/%3E%3Cpath d='M10 11v6'/%3E%3Cpath d='M14 11v6'/%3E%3Cpath d='M9 6V4h6v2'/%3E%3C/svg%3E");
 }
 
+/* 승인 버튼 — amber(blue) 배경, 아이콘 없음 */
+.adm-btn--approve {
+  background: var(--rss-amber);
+  border-color: var(--rss-amber);
+  color: #ffffff;
+}
+.adm-btn--approve:hover {
+  background: var(--rss-amber-dark);
+  border-color: var(--rss-amber-dark);
+}
+/* 반려 버튼 — 흰 배경, 빨간 테두리/텍스트, 아이콘 없음 */
+.adm-btn--reject {
+  background: #ffffff;
+  border: 1.5px solid #ef4444;
+  color: #ef4444;
+}
+.adm-btn--reject:hover {
+  background: #fef2f2;
+  border-color: #dc2626;
+  color: #dc2626;
+}
+
 /* ═══════════════════════════════════════════════════════════════════
    §A. 차단불이행내역 (non-performance-list.html) 전용 스타일
    ═══════════════════════════════════════════════════════════════════ */
@@ -1192,3 +1214,180 @@
 
 /* 비활성화 상태 */
 .field-disabled { opacity: 0.4; pointer-events: none; }
+
+/* M4 기업관리 테이블은 rss-common.css의 rss-col-* 클래스를 사용합니다.
+   별도 adm-col-* 클래스를 정의하지 않습니다. */
+
+/* 기업관리 상태 배지 */
+.adm-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.adm-badge--pending  { background: #fef3c7; color: #d97706; }   /* 대기 */
+.adm-badge--normal   { background: #f0fdf4; color: #16a34a; }   /* 정상 */
+.adm-badge--suspend  { background: #f1f5f9; color: #64748b; }   /* 사용 정지 */
+.adm-badge--reject   { background: #fef2f2; color: #dc2626; }   /* 반려 */
+
+/* 목록 하단: 액션 버튼이 있는 페이지네이션 래퍼
+   rss-pagination의 padding/높이를 그대로 유지하면서
+   좌측(승인/반려)와 우측(엑셀)을 absolute로 배치 */
+.rss-pagination--with-actions {
+  position: relative;
+}
+.rss-pagination--with-actions .adm-pagination-left {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.rss-pagination--with-actions .adm-pagination-right {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+/* 엑셀 다운로드 버튼 — 초록 outline (Excel 컬러) */
+.adm-btn--excel {
+  background: #ffffff;
+  border: 1.5px solid #217346;
+  color: #217346;
+}
+.adm-btn--excel:hover {
+  background: #f0faf4;
+  border-color: #1a5c38;
+  color: #1a5c38;
+}
+.adm-btn--excel::before {
+  content: '';
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-right: 5px;
+  vertical-align: middle;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23217346' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/%3E%3Cpolyline points='7 10 12 15 17 10'/%3E%3Cline x1='12' y1='15' x2='12' y2='3'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+}/* 날짜 셀 줄바꾸음 방지 */
+.rss-col-date,
+.rss-table td.nowrap {
+  white-space: nowrap;
+}
+
+/* 사용 정지 기간 설정 모달 */
+.adm-suspend-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.45);
+}
+.adm-suspend-modal.is-open { display: flex; }
+.adm-suspend-modal__box {
+  background: #fff;
+  border-radius: 10px;
+  padding: 28px 32px;
+  width: 420px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+}
+.adm-suspend-modal__title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--rss-text);
+}
+.adm-suspend-modal__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.adm-suspend-modal__label {
+  font-size: 13px;
+  color: #64748b;
+  white-space: nowrap;
+  min-width: 80px;
+}
+.adm-suspend-modal__footer {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rss-border);
+}
+
+/* ─── 관리 열 버튼 래퍼 ─────────────────────────────────────────────────────
+   테이블 관리 열(td)에서 수정/삭제 등 버튼을 한 줄로 정렬할 때 사용
+   사용: <td class="adm-td-actions"> ... </td>
+──────────────────────────────────────────────────────────────────────────── */
+.adm-td-actions {
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* ─── 파일 첨부 그룹 ────────────────────────────────────────────────────────
+   파일첨부 버튼 + 파일명 링크 + X(삭제) 버튼을 한 줄로 묶을 때 사용
+   사용: <div class="adm-file-group"> ... </div>
+──────────────────────────────────────────────────────────────────────────── */
+.adm-file-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+/* ─── 라디오/체크박스 인라인 label ─────────────────────────────────────────
+   SMS 수신, 이메일 수신 등 라디오 버튼 label에 사용
+   사용: <label class="adm-radio-label"> <input type="radio" /> 수신 </label>
+──────────────────────────────────────────────────────────────────────────── */
+.adm-radio-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--rss-font-sm); /* 13px */
+  cursor: pointer;
+}
+
+/* ─── 필드 보조 안내 텍스트 ─────────────────────────────────────────────────
+   * SMS 수신: / * 이메일 수신: 등 인풋 옆 안내 텍스트에 사용
+   사용: <span class="adm-field-note">* SMS 수신:</span>
+──────────────────────────────────────────────────────────────────────────── */
+.adm-field-note {
+  font-size: var(--rss-font-sm); /* 13px */
+  color: var(--rss-muted);       /* #64748b */
+  margin-left: 12px;
+  white-space: nowrap;
+}
+
+/* ─── TMA 차량번호 인풋 너비 ────────────────────────────────────────────────
+   TMA 테이블 차량번호 인풋 고정 너비
+   사용: <input class="rss-input rss-input--sm adm-input--vhcl-no" />
+──────────────────────────────────────────────────────────────────────────── */
+.adm-input--vhcl-no {
+  width: 100px;
+}
+
+/* ─── 카드 간격 유틸리티 ────────────────────────────────────────────────────
+   rss-card 사이 상단 여백
+   사용: <div class="rss-card adm-card--mt"> ... </div>
+──────────────────────────────────────────────────────────────────────────── */
+.adm-card--mt {
+  margin-top: 20px;
+}

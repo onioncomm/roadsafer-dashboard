@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>기업 상세 정보 — 로드세이프티시스템 관리자</title>
+  <!-- 공통 CSS -->
+  <link rel="stylesheet" href="../rss-common.css?v=20260507" />
+  <link rel="stylesheet" href="adm-common-v2.css?v=20260507" />
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide 아이콘 CDN -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════
+     관리자 레이아웃
+══════════════════════════════════════════════════ -->
+<div id="adm-topbar-wrap"></div>
+<div class="adm-layout">
+  <div id="adm-sidebar-wrap"></div>
+  <div class="adm-main">
+
+    <!-- 브레드크럼 -->
+    <div class="adm-breadcrumb">
+      <h1 class="adm-breadcrumb__title">차단기업 관리</h1>
+      <nav class="adm-breadcrumb__nav" aria-label="breadcrumb">
+        <a href="#">로그인</a>
+        <span class="adm-breadcrumb__sep">›</span>
+        <a href="#">기업 관리</a>
+        <span class="adm-breadcrumb__sep">›</span>
+        <a href="company-list.html">차단기업 관리</a>
+        <span class="adm-breadcrumb__sep">›</span>
+        <span class="adm-breadcrumb__current">상세정보</span>
+      </nav>
+    </div>
+
+    <main class="rss-content">
+
+      <!-- ══════════════════════════════════════════════════
+           기업 정보 카드 (M4-1-1)
+      ══════════════════════════════════════════════════ -->
+      <div class="rss-card">
+
+        <!-- ─── 기업 정보 섹션 ─────────────────────────────── -->
+        <div class="write-section">
+          <div class="write-section__head">
+            <h2 class="write-section__title">기업 정보</h2>
+            <!-- [Java] th:text="${company.statusNm}" -->
+            <span class="adm-badge adm-badge--normal" id="companyStatusBadge">정상</span>
+          </div>
+          <div class="write-section__body">
+
+            <!-- [Java] th:object="${company}" -->
+            <table class="adm-form-table">
+              <colgroup>
+                <col style="width:140px;" />
+                <col />
+                <col style="width:140px;" />
+                <col />
+              </colgroup>
+              <tbody>
+                <!-- 행 1: 상태 / 아이디 -->
+                <tr>
+                  <th>상태</th>
+                  <td>
+                    <!-- [Java] th:text="${company.statusNm}" — 수정 불가 -->
+                    <span id="companyStatusText">정상</span>
+                  </td>
+                  <th>아이디</th>
+                  <td>
+                    <!-- [Java] th:text="${company.loginId}" — 수정 불가 -->
+                    <span>roadace</span>
+                  </td>
+                </tr>
+                <!-- 행 2: 상호 / 대표자명 -->
+                <tr>
+                  <th>상호</th>
+                  <td>
+                    <!-- [Java] th:value="${company.corpNm}" -->
+                    <input type="text" class="rss-input" id="corpNm" value="잘한도로차단" style="width:100%;" />
+                  </td>
+                  <th>대표자명</th>
+                  <td>
+                    <!-- [Java] th:value="${company.ceoNm}" -->
+                    <input type="text" class="rss-input" id="ceoNm" value="나잘난" style="width:100%;" />
+                  </td>
+                </tr>
+                <!-- 행 3: 사업자번호 / 사업자등록증 -->
+                <tr>
+                  <th>사업자번호</th>
+                  <td>
+                    <!-- [Java] th:value="${company.bizNo}" — 수정 불가 -->
+                    <span>000-00-00000</span>
+                  </td>
+                  <th>사업자 등록증</th>
+                  <td>
+                    <div class="adm-inline-group">
+                      <button type="button" class="rss-btn rss-btn--outline rss-btn--sm"
+                              onclick="triggerFileInput('bizRegFile')">파일첨부</button>
+                      <!-- [Java] th:if="${company.bizRegFile != null}" -->
+                      <a href="#" class="rss-link" id="bizRegFileLink">사업자등록증.pdf</a>
+                      <button type="button" class="reg-file-item__remove" id="bizRegFileDel"
+                              onclick="removeFile('bizRegFile')" title="삭제"></button>
+                      <input type="file" id="bizRegFile" style="display:none;"
+                             onchange="handleFileChange(this,'bizRegFileLink','bizRegFileDel')" />
+                    </div>
+                  </td>
+                </tr>
+                <!-- 행 4: 직원 / 통장사본 -->
+                <tr>
+                  <th>직원</th>
+                  <td>
+                    <!-- [Java] th:text="${company.staffCnt}+'명'" — 클릭 시 M4-2 직원 목록 -->
+                    <a href="company-staff-list.html?corpSeq=1" class="rss-link">3명</a>
+                  </td>
+                  <th>통장사본</th>
+                  <td>
+                    <div class="adm-inline-group">
+                      <button type="button" class="rss-btn rss-btn--outline rss-btn--sm"
+                              onclick="triggerFileInput('bankbookFile')">파일첨부</button>
+                      <!-- [Java] th:if="${company.bankbookFile != null}" -->
+                      <a href="#" class="rss-link" id="bankbookFileLink">tongjang.png</a>
+                      <button type="button" class="reg-file-item__remove" id="bankbookFileDel"
+                              onclick="removeFile('bankbookFile')" title="삭제"></button>
+                      <input type="file" id="bankbookFile" style="display:none;"
+                             onchange="handleFileChange(this,'bankbookFileLink','bankbookFileDel')" />
+                    </div>
+                  </td>
+                </tr>
+                <!-- 행 5: 공사 수 / 차단불이행횟수 -->
+                <tr>
+                  <th>공사 수</th>
+                  <td>
+                    <!-- [Java] th:text="${company.constCnt}+'개'" — 클릭 시 M1 공사 목록 -->
+                    <a href="construction-list.html?corpSeq=1" class="rss-link">7개</a>
+                  </td>
+                  <th>차단불이행 횟수</th>
+                  <td>
+                    <!-- [Java] th:text="${company.blockFailCnt}+'회'" — 클릭 시 M2 차단불이행 -->
+                    <a href="non-performance-list.html?corpSeq=1" class="rss-link">3회</a>
+                  </td>
+                </tr>
+                <!-- 행 6: 대표 휴대폰 번호 -->
+                <tr>
+                  <th>대표 휴대폰 번호</th>
+                  <td colspan="3">
+                    <div class="adm-inline-group">
+                      <!-- [Java] th:value="${company.ceoHpNo1}" -->
+                      <input type="text" class="rss-input" id="ceoHpNo1" value="010"
+                             style="width:70px;" maxlength="4" />
+                      <span class="adm-inline-sep">-</span>
+                      <!-- [Java] th:value="${company.ceoHpNo2}" -->
+                      <input type="text" class="rss-input" id="ceoHpNo2" value="0000"
+                             style="width:80px;" maxlength="4" />
+                      <span class="adm-inline-sep">-</span>
+                      <!-- [Java] th:value="${company.ceoHpNo3}" -->
+                      <input type="text" class="rss-input" id="ceoHpNo3" value="1111"
+                             style="width:80px;" maxlength="4" />
+                      <span class="adm-field-note">* SMS 수신:</span>
+                      <!-- [Java] th:checked="${company.smsYn == 'Y'}" -->
+                      <label class="adm-radio-label">
+                        <input type="radio" name="smsYn" value="Y" checked /> 수신
+                      </label>
+                      <label class="adm-radio-label">
+                        <input type="radio" name="smsYn" value="N" /> 거부
+                      </label>
+                    </div>
+                  </td>
+                </tr>
+                <!-- 행 7: 이메일 주소 -->
+                <tr>
+                  <th>이메일 주소</th>
+                  <td colspan="3">
+                    <div class="adm-inline-group">
+                      <!-- [Java] th:value="${company.emailId}" -->
+                      <input type="text" class="rss-input" id="emailId" value="jalnan"
+                             style="width:140px;" />
+                      <span class="adm-inline-sep">@</span>
+                      <!-- [Java] th:value="${company.emailDomain}" -->
+                      <input type="text" class="rss-input" id="emailDomain" value="naver.com"
+                             style="width:140px;" />
+                      <!-- [Java] th:value="${company.emailDomainSel}" -->
+                      <select class="rss-select" id="emailDomainSel" onchange="setEmailDomain(this)"
+                              style="width:140px;">
+                        <option value="">선택</option>
+                        <option value="naver.com">naver.com</option>
+                        <option value="gmail.com">gmail.com</option>
+                        <option value="daum.net">daum.net</option>
+                        <option value="kakao.com">kakao.com</option>
+                        <option value="direct">직접입력</option>
+                      </select>
+                      <span class="adm-field-note">* 이메일 수신:</span>
+                      <!-- [Java] th:checked="${company.emailYn == 'Y'}" -->
+                      <label class="adm-radio-label">
+                        <input type="radio" name="emailYn" value="Y" checked /> 수신
+                      </label>
+                      <label class="adm-radio-label">
+                        <input type="radio" name="emailYn" value="N" /> 거부
+                      </label>
+                    </div>
+                  </td>
+                </tr>
+                <!-- 행 8: 사업장 주소 -->
+                <tr>
+                  <th>사업장 주소</th>
+                  <td colspan="3">
+                    <div class="adm-inline-group" style="margin-bottom:6px;">
+                      <!-- [Java] th:value="${company.bizZipCd}" -->
+                      <input type="text" class="rss-input" id="bizZipCd" value="13383"
+                             style="width:90px;" readonly />
+                      <button type="button" class="rss-btn rss-btn--outline rss-btn--sm"
+                              onclick="openAddrSearch()">주소 찾기</button>
+                    </div>
+                    <div class="adm-inline-group">
+                      <!-- [Java] th:value="${company.bizAddr}" -->
+                      <input type="text" class="rss-input" id="bizAddr"
+                             value="경기도 부천시 조마루로 111" style="flex:1;" readonly />
+                      <!-- [Java] th:value="${company.bizAddrDetail}" -->
+                      <input type="text" class="rss-input" id="bizAddrDetail"
+                             value="1401호(부천나나빌딩)" style="flex:1;" />
+                    </div>
+                  </td>
+                </tr>
+                <!-- 행 9: 권역 설정 -->
+                <tr>
+                  <th>권역 설정</th>
+                  <td colspan="3">
+                    <div class="adm-check-group region-group" id="regionGroup">
+                      <!-- [Java] th:each="region : ${regionList}" -->
+                      <label><input type="checkbox" name="region" value="서울" checked /> 서울</label>
+                      <label><input type="checkbox" name="region" value="경기" checked /> 경기</label>
+                      <label><input type="checkbox" name="region" value="강원" /> 강원</label>
+                      <label><input type="checkbox" name="region" value="충북" /> 충북</label>
+                      <label><input type="checkbox" name="region" value="대전,세종,충남" /> 대전,세종,충남</label>
+                      <label><input type="checkbox" name="region" value="전북" /> 전북</label>
+                      <label><input type="checkbox" name="region" value="광주,전남" /> 광주,전남</label>
+                      <label><input type="checkbox" name="region" value="대구,경북" /> 대구,경북</label>
+                      <label><input type="checkbox" name="region" value="부산,울산,경남" /> 부산,울산,경남</label>
+                      <label><input type="checkbox" name="region" value="제주" /> 제주</label>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div><!-- /write-section__body -->
+        </div><!-- /write-section -->
+
+        <!-- ─── 하단 버튼 영역 ────────────────────────────────
+             스토리보드 ②: 상태에 따라 버튼 다름
+               - 대기: 승인, 반려
+               - 정상: 사용 정지
+               - 사용 정지: 사용정지 설정
+             ③ 저장 / ④ 취소 / ⑤ 비밀번호 변경
+        ──────────────────────────────────────────────────────── -->
+        <div class="rss-page-actions">
+          <!-- 상태별 버튼 — [Java] th:if 로 조건부 렌더링 -->
+          <!-- [Java] th:if="${company.status == 'normal'}" -->
+          <button type="button" class="rss-btn adm-btn--delete" id="btnSuspend"
+                  onclick="openSuspendModal()">사용 정지</button>
+          <!-- [Java] th:if="${company.status == 'suspend'}" — 현재는 숨김 -->
+          <button type="button" class="rss-btn adm-btn--delete" id="btnSuspendSetting"
+                  onclick="openSuspendModal()" style="display:none;">사용정지 설정</button>
+          <!-- [Java] th:if="${company.status == 'pending'}" — 현재는 숨김 -->
+          <button type="button" class="rss-btn adm-btn--save" id="btnApprove"
+                  onclick="approveCompany()" style="display:none;">승인</button>
+          <button type="button" class="rss-btn adm-btn--cancel" id="btnReject"
+                  onclick="rejectCompany()" style="display:none;">반려</button>
+
+          <!-- 저장 / 취소 / 비밀번호 변경 -->
+          <button type="button" class="rss-btn adm-btn--save" onclick="saveCompany()">저장</button>
+          <button type="button" class="rss-btn adm-btn--cancel" onclick="goBack()">취소</button>
+          <button type="button" class="rss-btn rss-btn--outline" onclick="openPwModal()">비밀번호 변경</button>
+        </div>
+
+      </div><!-- /rss-card -->
+
+      <!-- ══════════════════════════════════════════════════
+           TMA 카드 섹션
+      ══════════════════════════════════════════════════ -->
+      <div class="rss-card adm-card--mt">
+        <div class="write-section">
+          <div class="write-section__head" style="justify-content:space-between;">
+            <h2 class="write-section__title">TMA 카드</h2>
+            <!-- ⑥ 신규 등록 버튼 -->
+            <button type="button" class="rss-btn rss-btn--amber" onclick="addTmaNewRow()">
+              신규 등록
+            </button>
+          </div>
+          <div class="write-section__body" style="padding:0;">
+
+            <div style="overflow-x:auto;">
+              <table class="rss-table" id="tmaCardTable">
+                <colgroup>
+                  <col class="rss-col-select" />   <!-- 체크박스 5% -->
+                  <col class="rss-col-no" />        <!-- 번호 5% -->
+                  <col class="rss-col-mgmt" />      <!-- 종류 10% -->
+                  <col class="rss-col-tel" />       <!-- 차량 번호 10% -->
+                  <col class="rss-col-block-corp" /> <!-- 소유주 auto -->
+                  <col style="width:28%;" />         <!-- 파일(파일첨부+파일명+X) 28% — TODO: rss-col-file 클래스 추가 시 교체 -->
+                  <col class="rss-col-mgmt--wide" /> <!-- 관리 18% -->
+                </colgroup>
+                <thead>
+                  <tr>
+                    <th><input type="checkbox" id="tmaSelectAll" onchange="toggleTmaSelectAll(this)"></th>
+                    <th>번호</th>
+                    <th>종류</th>
+                    <th>차량 번호</th>
+                    <th>소유주</th>
+                    <th>파일</th>
+                    <th>관리</th>
+                  </tr>
+                </thead>
+                <tbody id="tmaCardBody">
+                  <!-- [Java] th:each="tma : ${tmaList}" -->
+                  <tr>
+                    <td class="text-center"><input type="checkbox" class="tma-chk" value="1"></td>
+                    <td class="text-center">1</td>
+                    <td class="text-center">
+                      <!-- [Java] th:text="${tma.tmaTypeNm}" -->
+                      <select class="rss-select rss-select--sm">
+                        <option selected>TMA1</option>
+                        <option>TMA3</option>
+                        <option>PLCS</option>
+                      </select>
+                    </td>
+                    <td class="text-center">
+                      <!-- [Java] th:value="${tma.vhclNo}" -->
+                      <input type="text" class="rss-input rss-input--sm adm-input--vhcl-no" value="11누1111" />
+                    </td>
+                    <td class="text-center">
+                      <!-- [Java] th:value="${tma.ownerNm}" -->
+                      <input type="text" class="rss-input rss-input--sm" id="tmaOwner1" value="한국도로차단" style="width:100%;" />
+                    </td>
+                    <td class="text-center">
+                      <div class="adm-file-group">
+                        <button type="button" class="rss-btn rss-btn--outline rss-btn--sm"
+                                onclick="triggerFileInput('tmaFile1')">파일첨부</button>
+                        <input type="file" id="tmaFile1" style="display:none;" />
+                        <!-- [Java] th:text="${tma.fileName}" -->
+                        <a href="#" class="rss-link">11누1111.pdf</a>
+                        <button type="button" class="reg-file-item__remove" title="삭제"
+                                onclick="removeTmaFile(this)"></button>
+                      </div>
+                    </td>
+                    <td class="adm-td-actions">
+                      <button type="button" class="rss-btn rss-btn--outline rss-btn--sm"
+                              onclick="saveTmaRow(this)">수정</button>
+                      <button type="button" class="rss-btn adm-btn--delete rss-btn--sm"
+                              onclick="deleteTmaRow(this)">삭제</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-center"><input type="checkbox" class="tma-chk" value="2"></td>
+                    <td class="text-center">2</td>
+                    <td class="text-center">
+                      <select class="rss-select rss-select--sm">
+                        <option>TMA1</option>
+                        <option selected>TMA3</option>
+                        <option>PLCS</option>
+                      </select>
+                    </td>
+                    <td class="text-center">
+                      <input type="text" class="rss-input rss-input--sm adm-input--vhcl-no" value="55시3131" />
+                    </td>
+                    <td class="text-center">
+                      <!-- [Java] th:value="${tma.ownerNm}" -->
+                      <input type="text" class="rss-input rss-input--sm" id="tmaOwner2" value="김석진" style="width:100%;" />
+                    </td>
+                    <td class="text-center">
+                      <div class="adm-file-group">
+                        <button type="button" class="rss-btn rss-btn--outline rss-btn--sm"
+                                onclick="triggerFileInput('tmaFile2')">파일첨부</button>
+                        <input type="file" id="tmaFile2" style="display:none;" />
+                        <a href="#" class="rss-link">55시3131.pdf</a>
+                        <button type="button" class="reg-file-item__remove" title="삭제"
+                                onclick="removeTmaFile(this)"></button>
+                      </div>
+                    </td>
+                    <td class="adm-td-actions">
+                      <button type="button" class="rss-btn rss-btn--outline rss-btn--sm"
+                              onclick="saveTmaRow(this)">수정</button>
+                      <button type="button" class="rss-btn adm-btn--delete rss-btn--sm"
+                              onclick="deleteTmaRow(this)">삭제</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-center"><input type="checkbox" class="tma-chk" value="3"></td>
+                    <td class="text-center">3</td>
+                    <td class="text-center">
+                      <select class="rss-select rss-select--sm">
+                        <option>TMA1</option>
+                        <option>TMA3</option>
+                        <option selected>PLCS</option>
+                      </select>
+                    </td>
+                    <td class="text-center">
+                      <input type="text" class="rss-input rss-input--sm adm-input--vhcl-no" value="11머3333" />
+                    </td>
+                    <td class="text-center">
+                      <!-- [Java] th:value="${tma.ownerNm}" -->
+                      <input type="text" class="rss-input rss-input--sm" id="tmaOwner3" value="한국도로차단" style="width:100%;" />
+                    </td>
+                    <td class="text-center">
+                      <div class="adm-file-group">
+                        <button type="button" class="rss-btn rss-btn--outline rss-btn--sm"
+                                onclick="triggerFileInput('tmaFile3')">파일첨부</button>
+                        <input type="file" id="tmaFile3" style="display:none;" />
+                        <a href="#" class="rss-link">11머3333.pdf</a>
+                        <button type="button" class="reg-file-item__remove" title="삭제"
+                                onclick="removeTmaFile(this)"></button>
+                      </div>
+                    </td>
+                    <td class="adm-td-actions">
+                      <button type="button" class="rss-btn rss-btn--outline rss-btn--sm"
+                              onclick="saveTmaRow(this)">수정</button>
+                      <button type="button" class="rss-btn adm-btn--delete rss-btn--sm"
+                              onclick="deleteTmaRow(this)">삭제</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-center"><input type="checkbox" class="tma-chk" value="4"></td>
+                    <td class="text-center">4</td>
+                    <td class="text-center">
+                      <select class="rss-select rss-select--sm">
+                        <option selected>TMA1</option>
+                        <option>TMA3</option>
+                        <option>PLCS</option>
+                      </select>
+                    </td>
+                    <td class="text-center">
+                      <input type="text" class="rss-input rss-input--sm adm-input--vhcl-no" value="23소0909" />
+                    </td>
+                    <td class="text-center">
+                      <!-- [Java] th:value="${tma.ownerNm}" -->
+                      <input type="text" class="rss-input rss-input--sm" id="tmaOwner4" value="정호석" style="width:100%;" />
+                    </td>
+                    <td class="text-center">
+                      <div class="adm-file-group">
+                        <button type="button" class="rss-btn rss-btn--outline rss-btn--sm"
+                                onclick="triggerFileInput('tmaFile4')">파일첨부</button>
+                        <input type="file" id="tmaFile4" style="display:none;" />
+                        <a href="#" class="rss-link">차량등록증.pdf</a>
+                        <button type="button" class="reg-file-item__remove" title="삭제"
+                                onclick="removeTmaFile(this)"></button>
+                      </div>
+                    </td>
+                    <td class="adm-td-actions">
+                      <button type="button" class="rss-btn rss-btn--outline rss-btn--sm"
+                              onclick="saveTmaRow(this)">수정</button>
+                      <button type="button" class="rss-btn adm-btn--delete rss-btn--sm"
+                              onclick="deleteTmaRow(this)">삭제</button>
+                    </td>
+                  </tr>
+                  <!-- [Java] /th:each -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- ⑧ 선택 삭제 버튼 -->
+            <div style="padding:12px 20px;">
+              <button type="button" class="rss-btn adm-btn--delete" onclick="deleteSelectedTma()">선택 삭제</button>
+            </div>
+
+          </div><!-- /write-section__body -->
+        </div><!-- /write-section -->
+      </div><!-- /rss-card TMA -->
+
+    </main>
+
+    <div id="rss-footer-wrap"></div>
+  </div><!-- /adm-main -->
+</div><!-- /adm-layout -->
+
+<!-- ══════════════════════════════════════════════════
+     사용 정지 기간 설정 모달
+     스토리보드 프로세스: 정상 → 사용 정지 / 사용 정지 → 사용정지 설정
+══════════════════════════════════════════════════ -->
+<div class="adm-suspend-modal" id="suspendModal" role="dialog" aria-modal="true"
+     aria-labelledby="suspendModalTitle">
+  <div class="adm-suspend-modal__box">
+    <h3 class="adm-suspend-modal__title" id="suspendModalTitle">사용 정지 기간 설정</h3>
+
+    <div class="adm-suspend-modal__row">
+      <span class="adm-suspend-modal__label">기간</span>
+      <!-- [Java] th:value="${company.suspendStartDt}" -->
+      <input type="date" class="rss-input" id="suspendStartDt" style="width:140px;" />
+      <span style="color:#64748b;">~</span>
+      <!-- [Java] th:value="${company.suspendEndDt}" -->
+      <input type="date" class="rss-input" id="suspendEndDt" style="width:140px;" />
+    </div>
+    <div class="adm-suspend-modal__row">
+      <!-- [Java] th:checked="${company.suspendForeverYn == 'Y'}" -->
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;">
+        <input type="checkbox" id="suspendForeverChk" onchange="toggleSuspendForever(this)" />
+        영구 이용 정지
+      </label>
+      <!-- 사용정지 설정 모달에서만 표시 — [Java] th:if="${company.status == 'suspend'}" -->
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;margin-left:16px;"
+             id="suspendReleaseLabel">
+        <input type="checkbox" id="suspendReleaseChk" onchange="toggleSuspendRelease(this)" />
+        사용 정지 해제
+      </label>
+    </div>
+
+    <div class="adm-suspend-modal__footer">
+      <button type="button" class="rss-btn adm-btn--save" onclick="confirmSuspend()">확인</button>
+      <button type="button" class="rss-btn adm-btn--cancel" onclick="closeSuspendModal()">취소</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     공통 스크립트
+══════════════════════════════════════════════════ -->
+<script src="../rss-common.js?v=20260507"></script>
+<script src="adm-common.js?v=20260507"></script>
+<script>
+lucide.createIcons();
+
+/* ── 이메일 도메인 선택 ─────────────────────────── */
+function setEmailDomain(sel) {
+  var domainInput = document.getElementById('emailDomain');
+  if (sel.value === 'direct') {
+    domainInput.value = '';
+    domainInput.removeAttribute('readonly');
+    domainInput.focus();
+  } else if (sel.value) {
+    domainInput.value = sel.value;
+  }
+}
+
+/* ── 파일 첨부 ──────────────────────────────────── */
+function triggerFileInput(inputId) {
+  document.getElementById(inputId).click();
+}
+function handleFileChange(input, linkId, delId) {
+  if (input.files && input.files[0]) {
+    document.getElementById(linkId).textContent = input.files[0].name;
+    document.getElementById(delId).style.display = 'inline-flex';
+  }
+}
+function removeFile(inputId) {
+  // [Java] 파일 삭제 처리
+  var linkId = inputId + 'Link';
+  var delId  = inputId + 'Del';
+  document.getElementById(inputId).value = '';
+  document.getElementById(linkId).textContent = '';
+  document.getElementById(delId).style.display = 'none';
+}
+function removeTmaFile(btn) {
+  // [Java] TMA 파일 삭제 처리
+  var td = btn.closest('td');
+  td.querySelector('a').textContent = '';
+  btn.style.display = 'none';
+}
+
+/* ── 저장 ③ ─────────────────────────────────────── */
+function saveCompany() {
+  if (!confirm('저장하시겠습니까?')) return;
+  // [Java] /adm/company/save POST
+  alert('저장되었습니다.');
+  location.reload();
+}
+
+/* ── 취소 ④ ─────────────────────────────────────── */
+function goBack() {
+  location.href = 'company-list.html';
+}
+
+/* ── 비밀번호 변경 ⑤ ────────────────────────────── */
+function openPwModal() {
+  // adm-common.js의 비밀번호 변경 모달 열기
+  var modal = document.getElementById('admPwModal');
+  if (modal) modal.classList.add('is-open');
+}
+
+/* ── 승인 (대기 상태) ──────────────────────────── */
+function approveCompany() {
+  if (confirm('가입을 승인하시겠습니까?')) {
+    // [Java] 승인 처리 → 카톡 전송(P01)
+    alert('가입 승인되었습니다.');
+    location.href = 'company-list.html';
+  }
+}
+
+/* ── 반려 (대기 상태) ──────────────────────────── */
+function rejectCompany() {
+  if (confirm('가입을 반려하시겠습니까?')) {
+    // [Java] 반려 처리 → 카톡 전송(P02) → 개인정보 삭제
+    alert('가입 반려되었습니다.');
+    location.href = 'company-list.html';
+  }
+}
+
+/* ── 사용 정지 모달 ─────────────────────────────── */
+function openSuspendModal() {
+  document.getElementById('suspendModal').classList.add('is-open');
+}
+function closeSuspendModal() {
+  document.getElementById('suspendModal').classList.remove('is-open');
+}
+function toggleSuspendForever(chk) {
+  var startDt = document.getElementById('suspendStartDt');
+  var endDt   = document.getElementById('suspendEndDt');
+  startDt.disabled = chk.checked;
+  endDt.disabled   = chk.checked;
+}
+function toggleSuspendRelease(chk) {
+  // 사용 정지 해제 체크 시 날짜 비활성화
+  var foreverChk = document.getElementById('suspendForeverChk');
+  var startDt    = document.getElementById('suspendStartDt');
+  var endDt      = document.getElementById('suspendEndDt');
+  if (chk.checked) {
+    foreverChk.disabled = true;
+    startDt.disabled    = true;
+    endDt.disabled      = true;
+  } else {
+    foreverChk.disabled = false;
+    startDt.disabled    = false;
+    endDt.disabled      = false;
+  }
+}
+function confirmSuspend() {
+  var releaseChk = document.getElementById('suspendReleaseChk');
+  if (releaseChk && releaseChk.checked) {
+    // [Java] 사용 정지 해제 → 정상 상태로 변경
+    alert('사용 정지가 해제되어 정상 상태로 변경됩니다.');
+  } else {
+    // [Java] 사용 정지 처리
+    alert('사용 정지 처리되었습니다.');
+  }
+  closeSuspendModal();
+  location.reload();
+}
+
+/* ── TMA 카드 관리 ──────────────────────────────── */
+function toggleTmaSelectAll(masterChk) {
+  document.querySelectorAll('.tma-chk').forEach(function(chk) {
+    chk.checked = masterChk.checked;
+  });
+}
+function saveTmaRow(btn) {
+  if (!confirm('수정하시겠습니까?')) return;
+  // [Java] 해당 행 수정 처리
+  alert('수정되었습니다.');
+}
+function deleteTmaRow(btn) {
+  if (!confirm('삭제하시겠습니까?')) return;
+  // [Java] 해당 행 삭제 처리
+  btn.closest('tr').remove();
+}
+function deleteSelectedTma() {
+  var checked = document.querySelectorAll('.tma-chk:checked');
+  if (checked.length === 0) {
+    alert('1개 이상을 선택하세요.');
+    return;
+  }
+  if (!confirm('삭제하시겠습니까?')) return;
+  // [Java] 선택된 TMA 삭제 처리
+  checked.forEach(function(chk) { chk.closest('tr').remove(); });
+}
+/* ── TMA 신규 행 추가 ────────────────────────────── */
+function addTmaNewRow() {
+  // 이미 신규 입력 행이 있으면 중복 추가 방지
+  if (document.getElementById('tmaNewRow')) {
+    document.getElementById('tmaNewRow').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
+  var tbody = document.getElementById('tmaCardBody');
+  var newFileId = 'tmaNewFile';
+
+  var tr = document.createElement('tr');
+  tr.id = 'tmaNewRow';
+  tr.style.background = '#fffbeb'; // 신규 행 강조 (연노랑)
+  tr.innerHTML = [
+    '<td class="text-center"></td>',
+    '<td class="text-center">-</td>',
+    '<td class="text-center">',
+      '<select class="rss-select rss-select--sm" id="tmaNewType">',
+        '<option value="">선택</option>',
+        '<option value="TMA1">TMA1</option>',
+        '<option value="TMA3">TMA3</option>',
+        '<option value="PLCS">PLCS</option>',
+      '</select>',
+    '</td>',
+    '<td class="text-center">',
+      '<input type="text" class="rss-input rss-input--sm" id="tmaNewCarNo" placeholder="차량번호" style="width:100%;" />',
+    '</td>',
+    '<td class="text-center">',
+      '<input type="text" class="rss-input rss-input--sm" id="tmaNewOwner" placeholder="소유주" style="width:100%;" />',
+    '</td>',
+    '<td class="text-center" style="white-space:nowrap;">',
+      '<div style="display:inline-flex;align-items:center;gap:6px;flex-wrap:nowrap;">',
+        '<button type="button" class="rss-btn rss-btn--outline rss-btn--sm"',
+                'onclick="document.getElementById(\'tmaNewFile\').click()">파일첨부</button>',
+        '<input type="file" id="tmaNewFile" style="display:none;"',
+               'onchange="tmaNewFileChange(this)" />',
+        '<a href="#" class="rss-link" id="tmaNewFileName"></a>',
+        '<button type="button" class="reg-file-item__remove" id="tmaNewFileDel"',
+                'style="display:none;" title="삭제" onclick="tmaNewFileRemove()"></button>',
+      '</div>',
+    '</td>',
+    '<td class="text-center" style="white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:6px;">',
+      '<button type="button" class="rss-btn rss-btn--amber rss-btn--sm"',
+              'onclick="registerTmaNewRow()">등록</button>',
+      '<button type="button" class="rss-btn adm-btn--cancel rss-btn--sm"',
+              'onclick="cancelTmaNewRow()">취소</button>',
+    '</td>'
+  ].join('');
+
+  // 맨 위에 삽입
+  tbody.insertBefore(tr, tbody.firstChild);
+  tr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function tmaNewFileChange(input) {
+  if (input.files && input.files[0]) {
+    document.getElementById('tmaNewFileName').textContent = input.files[0].name;
+    document.getElementById('tmaNewFileDel').style.display = 'inline-flex';
+  }
+}
+function tmaNewFileRemove() {
+  document.getElementById('tmaNewFile').value = '';
+  document.getElementById('tmaNewFileName').textContent = '';
+  document.getElementById('tmaNewFileDel').style.display = 'none';
+}
+
+function registerTmaNewRow() {
+  var type   = document.getElementById('tmaNewType').value;
+  var carNo  = document.getElementById('tmaNewCarNo').value.trim();
+  var owner  = document.getElementById('tmaNewOwner').value.trim();
+  var file   = document.getElementById('tmaNewFile').files[0];
+
+  if (!type)  { alert('종류를 선택하세요.'); return; }
+  if (!carNo) { alert('차량 번호를 입력하세요.'); return; }
+  if (!owner) { alert('소유주를 입력하세요.'); return; }
+  if (!file)  { alert('파일을 첨부하세요.'); return; }
+
+  if (!confirm('등록하시겠습니까?')) return;
+  // [Java] /adm/tma/register POST
+  alert('등록되었습니다.');
+  location.reload();
+}
+
+function cancelTmaNewRow() {
+  var row = document.getElementById('tmaNewRow');
+  if (row) row.remove();
+}
+
+/* ── 주소 찾기 ──────────────────────────────────── */
+function openAddrSearch() {
+  // [Java] 카카오 주소 API 연동
+  alert('주소 찾기 기능은 Java 연동 후 처리됩니다.');
+}
+</script>
+
+</body>
+</html>
