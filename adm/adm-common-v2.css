@@ -935,6 +935,18 @@
    §C. 공사 등록/수정 (construction-write.html) 전용 스타일
    ═══════════════════════════════════════════════════════════════════ */
 
+/* 품목 수량 — 가로 1줄 */
+.equip-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 16px;
+  flex-wrap: wrap;
+}
+.equip-row__item { display: flex; align-items: center; gap: 6px; }
+.equip-row__label { font-weight: 600; color: var(--rss-gray-700); white-space: nowrap; min-width: 44px; }
+.equip-row__unit { color: var(--rss-gray-400); }
+
 /* 단가 행 */
 .price-row {
   display: flex;
