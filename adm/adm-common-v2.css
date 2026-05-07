@@ -750,3 +750,345 @@
   color: var(--rss-muted);
   background: #f9fafb;
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   §A. 차단불이행내역 (non-performance-list.html) 전용 스타일
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* 관리 버튼 셀 — 버튼 2개 가로 배치 */
+.non-perf-mgmt-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* 완료 상태 텍스트 — 회색 */
+.non-perf-done {
+  color: var(--rss-muted);
+  font-size: var(--rss-font-sm);
+}
+
+/* 기간·불이행기간 셀 — 날짜 범위 줄바꿈 방지 */
+#nonPerfTable td:nth-child(5),
+#nonPerfTable td:nth-child(6) { white-space: nowrap; }
+
+/* 완료 상태 업체명 링크 — 앰버 계열 */
+.non-perf-done-link {
+  color: var(--rss-amber-dark);
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: var(--rss-font-sm);
+}
+.non-perf-done-link:hover {
+  color: var(--rss-amber);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   §B. 취소 내역 (cancel-list.html) 전용 스타일
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* 관리 열 — 금액 조정 버튼 또는 완료 금액 텍스트 */
+.cancel-mgmt-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* 완료 금액 텍스트 — 앰버 강조 */
+.cancel-done-amount {
+  color: var(--rss-amber-dark);
+  font-size: var(--rss-font-sm);
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.cancel-done-amount:hover {
+  color: var(--rss-amber);
+}
+
+/* 취소일 셀 줄바꿈 방지 */
+#cancelListTable td:nth-child(5) { white-space: nowrap; }
+
+/* M3-1 취소 금액 조정 모달 — 시간대 정보 행 */
+.cancel-modal-info-row {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border: 1px solid var(--rss-border);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+.cancel-modal-info-row__label {
+  background: var(--rss-bg-subtle);
+  padding: 10px 20px;
+  font-size: var(--rss-font-sm);
+  font-weight: 600;
+  color: var(--rss-text);
+  border-right: 1px solid var(--rss-border);
+  min-width: 80px;
+  text-align: center;
+}
+.cancel-modal-info-row__value {
+  padding: 10px 20px;
+  font-size: var(--rss-font-sm);
+  color: var(--rss-text);
+  flex: 1;
+}
+
+/* M3-1 품목 테이블 래퍼 */
+.cancel-modal-table-wrap {
+  border: 1px solid var(--rss-border);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 0;
+}
+
+/* M3-1 품목 테이블 */
+.cancel-modal-item-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 0;
+}
+.cancel-modal-item-table thead th {
+  background: var(--rss-bg-subtle);
+  padding: 8px 12px;
+  font-size: var(--rss-font-sm);
+  font-weight: 600;
+  color: var(--rss-text);
+  border: 1px solid var(--rss-border);
+  text-align: center;
+}
+.cancel-modal-item-table tbody td {
+  padding: 8px 12px;
+  font-size: var(--rss-font-sm);
+  color: var(--rss-text);
+  border: 1px solid var(--rss-border);
+  text-align: center;
+}
+.cancel-modal-item-table tbody td:last-child { text-align: right; }
+.cancel-modal-item-table tfoot td {
+  padding: 8px 12px;
+  font-size: var(--rss-font-sm);
+  font-weight: 700;
+  color: var(--rss-text);
+  border: 1px solid var(--rss-border);
+  background: var(--rss-bg-subtle);
+}
+.cancel-modal-item-table tfoot td:last-child {
+  text-align: right;
+  color: var(--rss-amber-dark);
+}
+
+/* M3-1 취소 금액 입력 행 */
+.cancel-modal-amount-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: var(--rss-bg-subtle);
+  border: 1px solid var(--rss-border);
+  border-radius: 6px;
+}
+.cancel-modal-amount-row__label {
+  font-size: var(--rss-font-sm);
+  font-weight: 600;
+  color: var(--rss-text);
+  white-space: nowrap;
+  min-width: 72px;
+}
+.cancel-modal-amount-row__input {
+  flex: 1;
+  height: 36px;
+  border: 1px solid var(--rss-border);
+  border-radius: 6px;
+  padding: 0 10px;
+  font-size: var(--rss-font-sm);
+  color: var(--rss-text);
+  text-align: right;
+  background: #fff;
+}
+.cancel-modal-amount-row__input:focus {
+  outline: none;
+  border-color: var(--rss-primary);
+  box-shadow: 0 0 0 2px rgba(59,130,246,.15);
+}
+.cancel-modal-amount-row__unit {
+  font-size: var(--rss-font-sm);
+  color: var(--rss-text-muted);
+  white-space: nowrap;
+}
+
+/* M3-1 협의 경고 문구 */
+.cancel-modal-warning {
+  margin-top: 10px;
+  font-size: var(--rss-font-sm);
+  color: var(--rss-danger, #ef4444);
+  font-weight: 600;
+  text-align: center;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   §C. 공사 등록/수정 (construction-write.html) 전용 스타일
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* 단가 행 */
+.price-row {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--rss-border);
+}
+.price-row:last-child { border-bottom: none; }
+.price-row__label {
+  font-size: var(--rss-font-sm);
+  font-weight: 600;
+  color: var(--rss-gray-700);
+  white-space: nowrap;
+  margin-right: 12px;
+  min-width: 60px;
+}
+.price-row__items { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.price-row__item { display: flex; align-items: center; gap: 6px; }
+.price-row__item-label { color: var(--rss-muted); white-space: nowrap; }
+.price-row__item-val { width: 110px; text-align: right; }
+.price-row__item-unit { color: var(--rss-gray-400); white-space: nowrap; }
+.price-row--auto .price-row__item-val { background: var(--rss-success-bg); color: #166534; font-weight: 600; }
+.price-row__sub { font-size: 12px; color: var(--rss-muted); margin-left: 8px; }
+
+/* 전화번호 3분할 입력 */
+.tel-split-wrap { display: flex; align-items: center; gap: 6px; }
+.tel-split-wrap .rss-input { width: 72px; text-align: center; }
+.tel-split-sep { color: var(--rss-gray-400); font-weight: 600; flex-shrink: 0; }
+
+/* 캘린더 */
+.cal-wrap { user-select: none; }
+.cal-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0 12px;
+}
+.cal-nav__btn {
+  background: none;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+  color: var(--rss-gray-700);
+  font-size: 13px;
+}
+.cal-nav__btn:hover { background: #f1f5f9; }
+.cal-nav__label { font-size: 14px; font-weight: 700; color: #1e293b; }
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+.cal-grid__head {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--rss-muted);
+  padding: 4px 0;
+}
+.cal-grid__head.sun { color: var(--rss-danger-dark); }
+.cal-grid__head.sat { color: #3b82f6; }
+.cal-grid__cell {
+  text-align: center;
+  padding: 6px 2px;
+  font-size: 13px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--rss-gray-700);
+}
+.cal-grid__cell:hover { background: #f1f5f9; }
+.cal-grid__cell.sun { color: var(--rss-danger-dark); }
+.cal-grid__cell.sat { color: #3b82f6; }
+.cal-grid__cell.empty { cursor: default; }
+.cal-grid__cell.selected {
+  background: #1d4ed8;
+  color: var(--rss-card) !important;
+  font-weight: 700;
+  border-radius: 50%;
+}
+.cal-hint { font-size: 12px; color: var(--rss-muted); margin-top: 8px; line-height: 1.5; }
+
+/* 선택된 날짜 태그 */
+.work-date-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.work-date-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--rss-info-bg);
+  border: 1px solid #bfdbfe;
+  color: #1d4ed8;
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 12px;
+}
+.work-date-tag button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #93c5fd;
+  padding: 0;
+  line-height: 1;
+  font-size: 14px;
+  font-weight: 700;
+}
+.work-date-tag button:hover { color: #1d4ed8; }
+
+/* 날짜 선택 버튼 */
+.btn-cal-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: var(--rss-card);
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--rss-gray-700);
+}
+.btn-cal-open:hover { background: #f9fafb; border-color: var(--rss-gray-400); }
+
+/* 시연회 상세 행 */
+.rehearsal-detail { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.rehearsal-detail__sep { color: #d1d5db; }
+
+/* 권역 체크박스 */
+.region-group { display: flex; flex-wrap: wrap; gap: 12px; }
+.region-group label { display: flex; align-items: center; gap: 4px; cursor: pointer; }
+
+/* 차단업체 태그 */
+.block-corp-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.block-corp-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--rss-success-bg);
+  border: 1px solid #bbf7d0;
+  color: #166534;
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 12px;
+}
+.block-corp-tag button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #86efac;
+  padding: 0;
+  line-height: 1;
+  font-size: 14px;
+  font-weight: 700;
+}
+.block-corp-tag button:hover { color: #166534; }
+
+/* 비활성화 상태 */
+.field-disabled { opacity: 0.4; pointer-events: none; }

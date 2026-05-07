@@ -11,38 +11,6 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Lucide 아이콘 CDN -->
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-  <style>
-    /* ── 차단불이행내역 전용 스타일 ── */
-
-    /* 관리 버튼 셀 — 버튼 2개 가로 배치 */
-    .non-perf-mgmt-cell {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-    }
-
-    /* 완료 상태 텍스트 — 회색 */
-    .non-perf-done {
-      color: var(--rss-muted);
-      font-size: var(--rss-font-sm);
-    }
-
-    /* 기간·불이행기간 셀 — 날짜 범위 줄바꿈 방지 */
-    #nonPerfTable td:nth-child(5),
-    #nonPerfTable td:nth-child(6) { white-space: nowrap; }
-
-    /* 완료 상태 업체명 링크 — 앰버 계열 */
-    .non-perf-done-link {
-      color: var(--rss-amber-dark);
-      text-decoration: underline;
-      cursor: pointer;
-      font-size: var(--rss-font-sm);
-    }
-    .non-perf-done-link:hover {
-      color: var(--rss-amber);
-    }
-  </style>
 </head>
 <body>
 <!-- ══════════════════════════════════════════════════
@@ -115,13 +83,13 @@
           <div style="overflow-x:auto;">
           <table class="rss-table" id="nonPerfTable" style="min-width:1100px;">
             <colgroup>
-              <col style="width:5%" />     <!-- 번호 -->
-              <col style="width:11%" />    <!-- 발주업체명 -->
-              <col style="width:14%" />    <!-- 공사명 -->
-              <col style="width:10%" />    <!-- 차단업체명 -->
-              <col style="width:21%" />    <!-- 기간 -->
-              <col style="width:21%" />    <!-- 불이행 기간 -->
-              <col style="width:18%" />    <!-- 관리 -->
+              <col class="rss-col-no" />               <!-- 번호 -->
+              <col class="rss-col-owner" />            <!-- 발주업체명 -->
+              <col />                                  <!-- 공사명 — 가변 -->
+              <col class="rss-col-block-corp" />       <!-- 차단업체명 -->
+              <col class="rss-col-period" />           <!-- 기간 -->
+              <col class="rss-col-violation-period" /> <!-- 불이행 기간 -->
+              <col class="rss-col-mgmt--wide" />       <!-- 관리 -->
             </colgroup>
             <thead>
               <tr>

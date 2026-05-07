@@ -1437,6 +1437,12 @@ select.rss-form-input,
 .rss-col-violation-period { width: 20%; }
 /* 선택 버튼 열 — 모달 내 단일 액션 (버튼 + 좌우 여백 확보) */
 .rss-col-select { width: 90px; }
+/* 차단업체명 열 */
+.rss-col-block-corp { width: 10%; }
+/* 취소사유/불이행사유 등 사유 열 */
+.rss-col-reason { width: 20%; }
+/* 관리 열 wide — 버튼 2개 이상 필요 시 */
+.rss-col-mgmt--wide { width: 18%; }
 
 /* 긴급 행 강조 */
 .rss-table tr.row-urgent td           { background: #fff7f7; }
