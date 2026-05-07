@@ -268,9 +268,8 @@
           <a href="community-write.html" class="rss-btn rss-btn--outline rss-btn--sm">
             <i data-lucide="pencil" style="width:13px;height:13px;"></i>수정
           </a>
-          <button type="button" class="rss-btn rss-btn--outline-danger rss-btn--sm"
-                  onclick="deleteCommunity()">
-            <i data-lucide="trash-2" style="width:13px;height:13px;"></i>삭제
+          <button type="button" class="rss-btn rss-btn--delete rss-btn--sm"
+                  onclick="deleteCommunity()">삭제
           </button>
         </div>
 
@@ -343,8 +342,7 @@
                     <i data-lucide="pencil" style="width:13px;height:13px;"></i>수정
                   </button>
                   <!-- 삭제: 경고창 → 예 → 처리 → 새로고침 -->
-                  <button type="button" class="danger" onclick="deleteComment(1)">
-                    <i data-lucide="trash-2" style="width:13px;height:13px;"></i>삭제
+                  <button type="button" class="danger" onclick="deleteComment(1)">삭제
                   </button>
                 </div>
               </div>
@@ -380,8 +378,7 @@
                       <button type="button" onclick="editComment('1-1', 'song***', '@Paee*** 제도를 잘 활용한다면 괜찮을 것 같아요.')">
                         <i data-lucide="pencil" style="width:13px;height:13px;"></i>수정
                       </button>
-                      <button type="button" class="danger" onclick="deleteComment('1-1')">
-                        <i data-lucide="trash-2" style="width:13px;height:13px;"></i>삭제
+                      <button type="button" class="danger" onclick="deleteComment('1-1')">삭제
                       </button>
                     </div>
                   </div>
@@ -413,8 +410,7 @@
                       <button type="button" onclick="editComment('1-2', 'yang***', '@song*** 차라리 없어야 할 제도도 있어요.')">
                         <i data-lucide="pencil" style="width:13px;height:13px;"></i>수정
                       </button>
-                      <button type="button" class="danger" onclick="deleteComment('1-2')">
-                        <i data-lucide="trash-2" style="width:13px;height:13px;"></i>삭제
+                      <button type="button" class="danger" onclick="deleteComment('1-2')">삭제
                       </button>
                     </div>
                   </div>
@@ -467,8 +463,7 @@
                   <button type="button" onclick="editComment(2, 'Now1***', '이런 지원안을 기다려왔어요.')">
                     <i data-lucide="pencil" style="width:13px;height:13px;"></i>수정
                   </button>
-                  <button type="button" class="danger" onclick="deleteComment(2)">
-                    <i data-lucide="trash-2" style="width:13px;height:13px;"></i>삭제
+                  <button type="button" class="danger" onclick="deleteComment(2)">삭제
                   </button>
                 </div>
               </div>

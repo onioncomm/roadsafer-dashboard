@@ -221,14 +221,6 @@
       font-weight: 700;
       color: var(--rss-text);
     }
-    .company-modal__close {
-      background: none; border: none; cursor: pointer;
-      color: var(--rss-muted); padding: 4px;
-      display: flex; align-items: center;
-      transition: color 0.15s;
-    }
-    .company-modal__close:hover { color: var(--rss-text); }
-    .company-modal__close svg { width: 20px; height: 20px; }
     .company-modal__body { padding: 20px; }
     .company-modal__guide {
       font-size: var(--rss-font-sm);
@@ -545,9 +537,7 @@
   <div class="company-modal__box">
     <div class="company-modal__header">
       <span class="company-modal__title" id="companyModalTitle">기업 찾기</span>
-      <button type="button" class="company-modal__close" onclick="closeCompanyModal()" aria-label="닫기">
-        <i data-lucide="x"></i>
-      </button>
+      <button type="button" class="company-modal__close" onclick="closeCompanyModal()" aria-label="닫기"></button>
     </div>
     <div class="company-modal__body">
       <p class="company-modal__guide">소속 기업을 선택하세요</p>

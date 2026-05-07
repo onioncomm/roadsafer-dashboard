@@ -243,9 +243,7 @@ var _blockCorpModalSeq      = null; /* non-performance-list 전용 시퀀스 */
   <div class="adm-modal-box adm-modal-box--wide">
     <div class="adm-modal-box__head">
       <h3 class="adm-modal-box__title" id="modalBlockCorpSearchTitle">차단업체</h3>
-      <button type="button" class="adm-modal-box__close" onclick="closeBlockCorpModal()" aria-label="닫기">
-        <i data-lucide="x" style="width:16px;height:16px;"></i>
-      </button>
+      <button type="button" class="adm-modal-box__close" onclick="closeBlockCorpModal()" aria-label="닫기"></button>
     </div>
     <div class="adm-modal-box__search">
       <!-- [Java] GET /adm/block-corp/search?keyword= -->

@@ -631,20 +631,15 @@
         <div class="rss-page-actions">
           <!-- [Java] 수정 모드에서만 표시: th:if="${mode == 'edit'}" -->
           <div class="rss-page-actions--left">
-            <button type="button" class="rss-btn rss-btn--outline-danger"
-                    onclick="confirmDelete()">
-              <i data-lucide="trash-2" style="width:14px;height:14px;margin-right:4px;"></i>
-              삭제
+            <button type="button" class="rss-btn adm-btn--delete"
+                    onclick="confirmDelete()">삭제
             </button>
           </div>
           <button type="button" class="rss-btn adm-btn--cancel"
-                  onclick="location.href='construction-list.html'">
-            <i data-lucide="x" style="width:14px;height:14px;margin-right:4px;"></i>
-            취소
+                  onclick="location.href='construction-list.html'">취소
           </button>
-          <button type="submit" class="rss-btn rss-btn--amber"
+          <button type="submit" class="rss-btn adm-btn--save"
                   onclick="return submitConstructionForm(event)">
-            <i data-lucide="save" style="width:14px;height:14px;margin-right:4px;"></i>
             <!-- [Java] th:text="${mode == 'edit'} ? '수정 저장' : '저장'" -->
             저장
           </button>
@@ -666,9 +661,7 @@
   <div class="adm-modal-box adm-modal-box--wide">
     <div class="adm-modal-box__head">
       <h3 class="adm-modal-box__title" id="modalOrderCorpSearchTitle">발주업체 찾기</h3>
-      <button type="button" class="adm-modal-box__close" onclick="closeOrderCorpModal()" aria-label="닫기">
-        <i data-lucide="x" style="width:16px;height:16px;"></i>
-      </button>
+      <button type="button" class="adm-modal-box__close" onclick="closeOrderCorpModal()" aria-label="닫기"></button>
     </div>
     <div class="adm-modal-box__search">
       <!-- [Java] GET /adm/construction/order-corp/search?keyword= -->
@@ -763,9 +756,7 @@
   <div class="adm-modal-box">
     <div class="adm-modal-box__head">
       <h3 class="adm-modal-box__title" id="modalWorkDateCalTitle">공사 날짜 선택</h3>
-      <button type="button" class="adm-modal-box__close" onclick="closeWorkDateModal()" aria-label="닫기">
-        <i data-lucide="x" style="width:16px;height:16px;"></i>
-      </button>
+      <button type="button" class="adm-modal-box__close" onclick="closeWorkDateModal()" aria-label="닫기"></button>
     </div>
     <div class="adm-modal-box__body">
       <div class="cal-wrap">
@@ -803,9 +794,7 @@
   <div class="adm-modal-box">
     <div class="adm-modal-box__head">
       <h3 class="adm-modal-box__title" id="modalRehearsalDateCalTitle">시연회 날짜 선택</h3>
-      <button type="button" class="adm-modal-box__close" onclick="closeRehearsalDateModal()" aria-label="닫기">
-        <i data-lucide="x" style="width:16px;height:16px;"></i>
-      </button>
+      <button type="button" class="adm-modal-box__close" onclick="closeRehearsalDateModal()" aria-label="닫기"></button>
     </div>
     <div class="adm-modal-box__body">
       <div class="cal-wrap">
@@ -1210,10 +1199,8 @@
         tag.className = 'block-corp-tag';
         tag.dataset.seq = blockCorpSeq;
         tag.innerHTML = blockCorpNm +
-          ' <button type="button" class="block-corp-tag__remove" onclick="removeBlockCorp(this)" aria-label="제거">' +
-          '<i data-lucide="x" style="width:10px;height:10px;"></i></button>';
+          ' <button type="button" class="block-corp-tag__remove" onclick="removeBlockCorp(this)" aria-label="제거"></button>';
         blockCorpArea.appendChild(tag);
-        if (window.lucide) lucide.createIcons();
       }
     }
     console.log('[M2-1] 차단업체 강제 지정:', blockCorpSeq, blockCorpNm);

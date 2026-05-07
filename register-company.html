@@ -165,15 +165,6 @@
       font-size: var(--rss-font-sm);
       color: var(--rss-text);
     }
-    .reg-file-item__remove {
-      background: none; border: none; cursor: pointer;
-      color: #9ca3af; padding: 0;
-      display: flex; align-items: center;
-      transition: color 0.15s;
-    }
-    .reg-file-item__remove:hover { color: #ef4444; }
-    .reg-file-item__remove svg { width: 13px; height: 13px; }
-
     /* 분할 입력 (사업자번호, 전화번호) */
     .split-wrap {
       display: flex;
@@ -293,15 +284,6 @@
     }
     .tma-add-btn:hover { background: rgba(245,158,11,0.10); }
     .tma-add-btn svg { width: 14px; height: 14px; }
-    .tma-del-btn {
-      background: none; border: none; cursor: pointer;
-      color: #9ca3af; padding: 4px;
-      display: flex; align-items: center; justify-content: center;
-      transition: color 0.15s;
-    }
-    .tma-del-btn:hover { color: #ef4444; }
-    .tma-del-btn svg { width: 16px; height: 16px; }
-
     /* TMA 모바일 카드 UI (640px 이하) */
     @media (max-width: 640px) {
       .tma-table-scroll { overflow: visible; }
@@ -460,9 +442,7 @@
             <div class="reg-file-item" id="bizRegFileItem" style="display:none;">
               <span id="bizRegFileName">이니인등록증.pdf</span>
               <button type="button" class="reg-file-item__remove"
-                      onclick="removeFile('bizRegFile','bizRegFileItem','bizRegFileName')">
-                <i data-lucide="x"></i>
-              </button>
+                      onclick="removeFile('bizRegFile','bizRegFileItem','bizRegFileName')"></button>
             </div>
           </div>
           <p class="reg-input-hint">* 사업자등록증을 첨부해 주세요.</p>
@@ -581,9 +561,7 @@
             <div class="reg-file-item" id="bankFileItem" style="display:none;">
               <span id="bankFileName"></span>
               <button type="button" class="reg-file-item__remove"
-                      onclick="removeFile('bankFile','bankFileItem','bankFileName')">
-                <i data-lucide="x"></i>
-              </button>
+                      onclick="removeFile('bankFile','bankFileItem','bankFileName')"></button>
             </div>
           </div>
           <p class="reg-input-hint">* 통장사본을 첨부해 주세요. 마이페이지에서 정보를 수정할 수 있습니다.</p>
@@ -634,9 +612,7 @@
                       <div class="reg-file-item" id="tmaFileItem_1" style="display:none;">
                         <span id="tmaFileName_1"></span>
                         <button type="button" class="reg-file-item__remove"
-                                onclick="removeFile('tmaFile_1','tmaFileItem_1','tmaFileName_1')">
-                          <i data-lucide="x"></i>
-                        </button>
+                                onclick="removeFile('tmaFile_1','tmaFileItem_1','tmaFileName_1')"></button>
                       </div>
                     </div>
                   </td>
@@ -725,7 +701,6 @@
       if (fileNameEl) fileNameEl.textContent = file.name;
       if (itemEl) itemEl.style.display = 'inline-flex';
     }
-    lucide.createIcons();
   }
 
   function removeFile(inputId, itemId, nameId) {
@@ -891,19 +866,14 @@
           '<input type="file" id="tmaFile_' + n + '" name="tmaFile_' + n + '" accept=".pdf,.jpg,.jpeg,.png" style="display:none;" onchange="handleFileSelect(this,\'tmaFileWrap_' + n + '\',\'tmaFile_' + n + '\')" />' +
           '<div class="reg-file-item" id="tmaFileItem_' + n + '" style="display:none;">' +
             '<span id="tmaFileName_' + n + '"></span>' +
-            '<button type="button" class="reg-file-item__remove" onclick="removeFile(\'tmaFile_' + n + '\',\'tmaFileItem_' + n + '\',\'tmaFileName_' + n + '\')">' +
-              '<i data-lucide="x"></i>' +
-            '</button>' +
+            '<button type="button" class="reg-file-item__remove" onclick="removeFile(\'tmaFile_' + n + '\',\'tmaFileItem_' + n + '\',\'tmaFileName_' + n + '\')">' + '</button>' +
           '</div>' +
         '</div>' +
       '</td>' +
       '<td class="tma-del-cell">' +
-        '<button type="button" class="tma-del-btn" onclick="deleteTmaRow(' + n + ')" aria-label="행 삭제">' +
-          '<i data-lucide="trash-2"></i>' +
-        '</button>' +
+        '<button type="button" class="tma-del-btn" onclick="deleteTmaRow(' + n + ')" aria-label="행 삭제">' + '</button>' +
       '</td>';
     tbody.appendChild(tr);
-    lucide.createIcons();
   }
 
   function deleteTmaRow(n) {

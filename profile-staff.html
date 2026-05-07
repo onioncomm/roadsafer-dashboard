@@ -261,9 +261,8 @@
           <div class="profile-btn-spacer" style="flex:1;"></div>
 
           <!-- 저장 버튼 (중앙) -->
-          <button type="button" class="rss-btn rss-btn--amber"
-                  onclick="submitStaffProfile()">
-            <i data-lucide="save"></i> 저장
+          <button type="button" class="rss-btn rss-btn--save"
+                  onclick="submitStaffProfile()">저장
           </button>
 
           <!-- 우측 버튼 그룹 -->
@@ -310,16 +309,14 @@
 <div class="reg-alert-modal" id="modalSaveConfirm" role="alertdialog" aria-modal="true">
   <div class="reg-alert-modal__box">
     <p class="reg-alert-modal__title reg-alert-modal__title--info">
-      <i data-lucide="save"></i>
       <span>저장하시겠습니까?</span>
     </p>
     <div class="reg-alert-modal__body">
       입력하신 정보를 저장합니다.
     </div>
     <div class="reg-alert-modal__footer">
-      <button type="button" class="rss-btn rss-btn--outline"
-              onclick="closeSaveConfirm()">
-        <i data-lucide="x"></i> 취소
+      <button type="button" class="rss-btn rss-btn--cancel"
+              onclick="closeSaveConfirm()">취소
       </button>
       <button type="button" class="rss-btn rss-btn--amber"
               onclick="doSaveProfile()">

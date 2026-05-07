@@ -48,14 +48,6 @@
       font-size: var(--rss-font-sm);
       color: var(--rss-text);
     }
-    .reg-file-item__remove {
-      background: none; border: none; cursor: pointer;
-      color: #9ca3af; padding: 0;
-      display: flex; align-items: center;
-      transition: color 0.15s;
-    }
-    .reg-file-item__remove:hover { color: #ef4444; }
-    .reg-file-item__remove svg { width: 13px; height: 13px; }
 
     /* 분할 입력 (register-company.html의 .split-wrap과 동일) */
     .split-wrap {
@@ -338,9 +330,7 @@
                   <!-- [Java] th:text="${loginUser.bankFileNm}" -->
                   <span id="bankFileName">tongjang.png</span>
                   <button type="button" class="reg-file-item__remove"
-                          onclick="removeBankFile()" title="파일 제거">
-                    <i data-lucide="x"></i>
-                  </button>
+                          onclick="removeBankFile()" title="파일 제거"></button>
                 </div>
               </div>
               <p class="rss-form-hint">PDF, JPG, PNG 지원 / 최대 5MB</p>
@@ -354,9 +344,8 @@
               <!-- spacer: 저장 버튼 중앙 고정용 -->
               <div class="profile-btn-spacer" style="flex:1;"></div>
               <!-- 중앙: 저장 -->
-              <button type="button" class="rss-btn rss-btn--amber"
-                      onclick="submitProfile()">
-                <i data-lucide="save"></i> 저장
+              <button type="button" class="rss-btn rss-btn--save"
+                      onclick="submitProfile()">저장
               </button>
               <!-- 우측: 비밀번호 변경 · 회원탈퇴 -->
               <div class="profile-btn-right" style="flex:1; display:flex; justify-content:flex-end; gap:8px;">
@@ -418,16 +407,14 @@
 <div class="reg-alert-modal" id="modalSaveConfirm" role="alertdialog" aria-modal="true">
   <div class="reg-alert-modal__box">
     <p class="reg-alert-modal__title reg-alert-modal__title--info">
-      <i data-lucide="save"></i>
       <span>저장하시겠습니까?</span>
     </p>
     <div class="reg-alert-modal__body">
       입력하신 정보를 저장합니다.
     </div>
     <div class="reg-alert-modal__footer">
-      <button type="button" class="rss-btn rss-btn--outline"
-              onclick="closeAlertModal('modalSaveConfirm')">
-        <i data-lucide="x"></i> 취소
+      <button type="button" class="rss-btn rss-btn--cancel"
+              onclick="closeAlertModal('modalSaveConfirm')">취소
       </button>
       <button type="button" class="rss-btn rss-btn--amber"
               onclick="confirmSave()">
