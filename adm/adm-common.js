@@ -213,5 +213,211 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
     closeAdmPwModal();
     closeAdmSidebar();
+    closeBlockCorpModal();
   }
 });
+
+/* ─── 10. 차단업체 선택 모달 (M2-1) ─────────────────────────
+   공통 모달 — non-performance-list, construction-write 공유
+   [Java] GET /adm/block-corp/search?keyword=
+   사용법:
+     openBlockCorpModal(seq, callback)
+       seq      : 대상 공사 시퀀스 (non-performance-list에서 사용)
+       callback : 선택 완료 시 호출 function(blockCorpSeq, blockCorpNm)
+─────────────────────────────────────────────────────────── */
+/* 현재 모달 컨텍스트 — IIFE 앞에 var로 선언하여 TDZ 방지 */
+var _blockCorpModalCallback = null; /* 선택 완료 시 호출할 콜백 */
+var _blockCorpModalSeq      = null; /* non-performance-list 전용 시퀀스 */
+
+(function injectBlockCorpModal() {
+  /* 이미 삽입된 경우 중복 방지 */
+  if (document.getElementById('modalBlockCorpSearch')) return;
+
+  const html = `
+<!-- ══════════════════════════════════════════════════
+     M2-1. 차단업체 선택 모달 (공통 — adm-common.js 자동 삽입)
+     용어사전 §22-3 modalBlockCorpSearch
+══════════════════════════════════════════════════ -->
+<div class="adm-modal-overlay" id="modalBlockCorpSearch" role="dialog"
+     aria-modal="true" aria-labelledby="modalBlockCorpSearchTitle">
+  <div class="adm-modal-box adm-modal-box--wide">
+    <div class="adm-modal-box__head">
+      <h3 class="adm-modal-box__title" id="modalBlockCorpSearchTitle">차단업체</h3>
+      <button type="button" class="adm-modal-box__close" onclick="closeBlockCorpModal()" aria-label="닫기">
+        <i data-lucide="x" style="width:16px;height:16px;"></i>
+      </button>
+    </div>
+    <div class="adm-modal-box__search">
+      <!-- [Java] GET /adm/block-corp/search?keyword= -->
+      <!-- 용어사전 §7 searchKeyword + block_corp → blockCorpSearchKeyword -->
+      <input type="text" id="blockCorpSearchKeyword" class="rss-input" style="flex:1;"
+             placeholder="업체명을 입력하세요"
+             onkeydown="if(event.key==='Enter') searchBlockCorp()" />
+      <button type="button" class="rss-btn rss-btn--amber" onclick="searchBlockCorp()">
+        <i data-lucide="search" style="width:14px;height:14px;margin-right:4px;"></i>
+        찾기
+      </button>
+    </div>
+    <div class="adm-modal-box__body">
+      <div class="rss-table-wrap" style="margin:0;">
+        <!-- [Java] th:if="\${#lists.isEmpty(blockCorpList)}" -->
+        <!-- <div class="rss-empty">검색 결과가 없습니다.</div> -->
+        <!-- [Java] th:unless="\${#lists.isEmpty(blockCorpList)}" -->
+        <table class="rss-table" id="blockCorpResultTable">
+          <colgroup>
+            <col class="rss-col-nm" />
+            <col class="rss-col-bizno" />
+            <col class="rss-col-addr" />
+            <col class="rss-col-select" />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>업체명</th>
+              <th>사업자 등록번호</th>
+              <th>사업장 주소</th>
+              <th>선택</th>
+            </tr>
+          </thead>
+          <tbody id="blockCorpResultBody">
+            <!-- ══════════════════════════════════════════════
+                 [Java] th:each="corp : \${blockCorpList}"
+                 더미 데이터 — 스토리보드 §M2-1 기준
+            ══════════════════════════════════════════════ -->
+            <tr>
+              <td>순희차단</td>
+              <td>000-00-00000</td>
+              <td>경기도 부천시 조마루로111 1401호</td>
+              <td>
+                <button type="button" class="rss-btn rss-btn--outline" style="padding:3px 10px;font-size:12px;"
+                        onclick="selectBlockCorpRow('1001','순희차단')">선택</button>
+              </td>
+            </tr>
+            <tr>
+              <td>우리국도차단</td>
+              <td>111-11-11111</td>
+              <td>경기도 안성시 단원1길 111</td>
+              <td>
+                <button type="button" class="rss-btn rss-btn--outline" style="padding:3px 10px;font-size:12px;"
+                        onclick="selectBlockCorpRow('1002','우리국도차단')">선택</button>
+              </td>
+            </tr>
+            <tr>
+              <td>프리마제일차단</td>
+              <td>222-22-22222</td>
+              <td>경기도 의정부시 의정부대로 331</td>
+              <td>
+                <button type="button" class="rss-btn rss-btn--outline" style="padding:3px 10px;font-size:12px;"
+                        onclick="selectBlockCorpRow('1003','프리마제일차단')">선택</button>
+              </td>
+            </tr>
+            <tr>
+              <td>한국도로차단</td>
+              <td>333-33-33333</td>
+              <td>경기도 수원시 장안대로13번길 1</td>
+              <td>
+                <button type="button" class="rss-btn rss-btn--outline" style="padding:3px 10px;font-size:12px;"
+                        onclick="selectBlockCorpRow('1004','한국도로차단')">선택</button>
+              </td>
+            </tr>
+            <!-- ══════════════════════════════════════════════
+                 [Java] /th:each 끝
+            ══════════════════════════════════════════════ -->
+          </tbody>
+        </table>
+      </div>
+      <div class="rss-pagination" style="margin-top:12px;">
+        <button class="rss-pagination__btn" disabled>&lt;&lt;</button>
+        <button class="rss-pagination__btn" disabled>&lt;</button>
+        <button class="rss-pagination__btn active" data-page="1">1</button>
+        <button class="rss-pagination__btn" data-page="2">2</button>
+        <button class="rss-pagination__btn" data-page="3">3</button>
+        <button class="rss-pagination__btn">&gt;</button>
+        <button class="rss-pagination__btn">&gt;&gt;</button>
+      </div>
+    </div>
+    <div class="adm-modal-box__foot">
+      <button type="button" class="rss-btn rss-btn--outline" onclick="closeBlockCorpModal()">닫기</button>
+    </div>
+  </div>
+</div>`;
+
+  document.body.insertAdjacentHTML('beforeend', html);
+
+  /* backdrop 클릭 시 닫기 */
+  document.getElementById('modalBlockCorpSearch').addEventListener('click', function(e) {
+    if (e.target === this) closeBlockCorpModal();
+  });
+})();
+
+function openBlockCorpModal(seq, callback) {
+  _blockCorpModalSeq      = seq      || null;
+  _blockCorpModalCallback = callback || null;
+
+  const modal = document.getElementById('modalBlockCorpSearch');
+  if (!modal) return;
+  modal.classList.add('open');
+
+  /* 검색창 초기화 */
+  const kw = document.getElementById('blockCorpSearchKeyword');
+  if (kw) { kw.value = ''; kw.focus(); }
+
+  /* 결과 행 전체 표시 초기화 */
+  document.querySelectorAll('#blockCorpResultBody tr').forEach(function(r) {
+    r.style.display = '';
+  });
+  const emptyRow = document.getElementById('blockCorpEmptyRow');
+  if (emptyRow) emptyRow.style.display = 'none';
+
+  if (window.lucide) lucide.createIcons();
+}
+
+function closeBlockCorpModal() {
+  const modal = document.getElementById('modalBlockCorpSearch');
+  if (modal) modal.classList.remove('open');
+  _blockCorpModalSeq      = null;
+  _blockCorpModalCallback = null;
+}
+
+/* [Java] GET /adm/block-corp/search?keyword= */
+function searchBlockCorp() {
+  const keyword = document.getElementById('blockCorpSearchKeyword').value.trim();
+  const rows    = document.querySelectorAll('#blockCorpResultBody tr:not(#blockCorpEmptyRow)');
+  let found = 0;
+
+  rows.forEach(function(row) {
+    const nm   = row.cells[0] ? row.cells[0].textContent.trim() : '';
+    const show = !keyword || nm.indexOf(keyword) !== -1;
+    row.style.display = show ? '' : 'none';
+    if (show) found++;
+  });
+
+  /* 결과 없음 처리 */
+  let emptyRow = document.getElementById('blockCorpEmptyRow');
+  if (!emptyRow) {
+    emptyRow = document.createElement('tr');
+    emptyRow.id = 'blockCorpEmptyRow';
+    emptyRow.innerHTML = '<td colspan="4" class="rss-empty" style="padding:24px 0;text-align:center;color:var(--rss-text-muted);">검색 결과가 없습니다.</td>';
+    document.getElementById('blockCorpResultBody').appendChild(emptyRow);
+  }
+  emptyRow.style.display = (found === 0 && keyword) ? '' : 'none';
+
+  console.log('[M2-1] 차단업체 검색:', keyword);
+}
+
+/* 선택 버튼 클릭 → 확인창 → 콜백 또는 기본 처리 */
+function selectBlockCorpRow(blockCorpSeq, blockCorpNm) {
+  if (!confirm(blockCorpNm + '을(를) 선택하시겠습니까?')) return;
+
+  if (typeof _blockCorpModalCallback === 'function') {
+    /* construction-write 등 콜백 방식 */
+    _blockCorpModalCallback(blockCorpSeq, blockCorpNm);
+  } else {
+    /* non-performance-list 기본 처리 */
+    /* [Java] POST /adm/non-perf/assign-block-corp */
+    /* { constructionSeq: _blockCorpModalSeq, blockCorpSeq, blockCorpNm } */
+    console.log('[M2-1] 차단업체 지정:', _blockCorpModalSeq, blockCorpSeq, blockCorpNm);
+    alert('차단업체가 지정되었습니다.\n발주·차단업체에 카카오 알림톡이 발송됩니다.');
+  }
+
+  closeBlockCorpModal();
+}
