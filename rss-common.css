@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /**
  * rss-common.css
  * 로드세이프티시스템 (RSS) — 공통 커스텀 스타일
@@ -37,6 +38,18 @@
   --rss-card:         #ffffff;
   --rss-shadow:       0 1px 4px rgba(0,0,0,0.08);
   --rss-shadow-md:    0 4px 16px rgba(0,0,0,0.10);
+
+  /* 상태 색상 토큰 */
+  --rss-danger:       #ef4444;   /* 위험/오류/긴급 */
+  --rss-danger-bg:    #fef2f2;   /* 위험 배경 */
+  --rss-danger-dark:  #dc2626;   /* 위험 강조 */
+  --rss-success:      #22c55e;   /* 성공/완료 */
+  --rss-success-bg:   #f0fdf4;   /* 성공 배경 */
+  --rss-info:         #3b82f6;   /* 정보/안내 */
+  --rss-info-bg:      #eff6ff;   /* 정보 배경 */
+  --rss-gray-100:     #f3f4f6;   /* 연한 배경 */
+  --rss-gray-400:     #9ca3af;   /* 중간 회색 */
+  --rss-gray-700:     #374151;   /* 진한 텍스트 */
 
   /* 폰트 크기 토큰 */
   --rss-font-xs:   12px;
@@ -497,7 +510,7 @@ img { max-width: 100%; display: block; }
   border-radius: var(--rss-radius);
   font-size: var(--rss-font-base) !important; /* 15px */
   font-weight: 600;
-  border: 1px solid transparent;
+  border: 1.5px solid transparent;
   cursor: pointer;
   transition: all 0.15s;
   white-space: nowrap;
@@ -550,6 +563,25 @@ img { max-width: 100%; display: block; }
   border-color: #dc2626;
   color: #dc2626;
 }
+/* 전체보기 버튼 — 검색 결과 초기화용, outline-only 스타일
+   .rss-board-toolbar 또는 .rss-search-wrap 내에서 사용
+   기본 숨김, .is-searched 클래스 추가 시 표시 */
+.rss-btn--view-all {
+  background: #ffffff;
+  border: 1.5px solid var(--rss-border);
+  color: var(--rss-muted);
+  display: none;  /* 기본 숨김 — JS에서 .is-searched 토글로 제어 */
+}
+/* 사용자 기본: 주황 계열 hover (관리자는 adm-common-v2.css에서 파란 계열로 오버라이드) */
+.rss-btn--view-all:hover {
+  border-color: var(--rss-amber);
+  color: var(--rss-amber-dark);
+  background: var(--rss-amber-light);
+}
+/* 검색 실행 후 toolbar에 .is-searched 클래스 추가 시 표시 */
+.rss-board-toolbar.is-searched .rss-btn--view-all,
+.rss-search-wrap.is-searched .rss-btn--view-all,
+.list-toolbar.is-searched .rss-btn--view-all { display: inline-flex; }
 .rss-btn--sm {
   height: 32px;
   padding: 0 13px;
@@ -574,7 +606,7 @@ img { max-width: 100%; display: block; }
 .rss-select,
 .rss-textarea {
   width: 100%;
-  padding: 10px 13px;
+  padding: 8px 13px;          /* 10px → 8px: 전체 높이 38px 기준으로 버튼·드롭다운과 통일 */
   border: 1.5px solid var(--rss-border);
   border-radius: var(--rss-radius);
   font-size: var(--rss-font-base) !important; /* 15px */
@@ -582,7 +614,8 @@ img { max-width: 100%; display: block; }
   background: #fff;
   outline: none;
   transition: border-color 0.15s, box-shadow 0.15s;
-  line-height: 1.5;
+  line-height: 1.4;
+  box-sizing: border-box;
 }
 
 /* 드롭다운 화살표 여백 개선 — 모든 select 공통 적용 */
@@ -932,10 +965,13 @@ select.rss-form-input,
 .rss-search-wrap input {
   border: none;
   outline: none;
-  padding: 8px 11px;
+  padding: 0 11px;
+  height: 38px;           /* 드롭다운·버튼과 높이 통일 */
+  line-height: 38px;
   font-size: var(--rss-font-base); /* 15px */
   width: 200px;
   background: transparent;
+  box-sizing: border-box;
 }
 .rss-search-wrap button {
   padding: 0 11px;
@@ -962,6 +998,18 @@ select.rss-form-input,
   height: 38px;
   line-height: 1.4;
   font-size: var(--rss-font-base) !important; /* 15px */
+}
+/* 검색 툴바 내 rss-input도 38px로 통일 — 버튼·드롭다운과 높이 일치 */
+.rss-board-toolbar .rss-input,
+.list-toolbar .rss-input,
+.info-toolbar .rss-input,
+.market-toolbar .rss-input,
+.adm-modal-box__search .rss-input {
+  height: 38px;
+  padding-top: 0;
+  padding-bottom: 0;
+  line-height: 38px;
+  box-sizing: border-box;
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -1359,11 +1407,12 @@ select.rss-form-input,
 /* 상태 열 — 배지 표시용 */
 .rss-col-status { width: 10%; }
 /* 공사명/제목 등 주요 데이터 열 — 나머지 공간 차지 (auto) */
-.rss-col-nm     { /* width: auto — colgroup에서 지정 안 하면 자동 */ }
+.rss-col-nm     { width: 20%; }  /* 모달 업체명 열 고정 */
 /* 발주업체명 열 */
 .rss-col-owner  { width: 15%; }
 /* 기간 열 — 날짜 범위가 1줄로 들어갈 너비 */
 .rss-col-period { width: 20%; }
+
 /* 금액 열 */
 .rss-col-price  { width: 10%; }
 /* 관리 열 — 버튼 1~2개 */
@@ -1380,6 +1429,14 @@ select.rss-form-input,
 .rss-col-road   { width: 10%; }
 /* 방향 열 */
 .rss-col-dir    { width: 5%; }
+/* 사업자 번호 열 */
+.rss-col-bizno  { width: 20%; }
+/* 사업장 주소 열 — 나머지 공간 차지 */
+.rss-col-addr   { /* width: auto */ }
+/* 불이행 기간 열 — rss-col-period와 동일 너비 */
+.rss-col-violation-period { width: 20%; }
+/* 선택 버튼 열 — 모달 내 단일 액션 (버튼 + 좌우 여백 확보) */
+.rss-col-select { width: 90px; }
 
 /* 긴급 행 강조 */
 .rss-table tr.row-urgent td           { background: #fff7f7; }

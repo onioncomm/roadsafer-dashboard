@@ -233,11 +233,17 @@
             <option value="orderCompanyNm">발주업체명</option>
           </select>
           <div class="rss-search-wrap">
-            <input type="text" name="searchKeyword" id="listSearchKeyword" placeholder="검색어 입력" />
+            <input type="text" name="searchKeyword" id="listSearchKeyword" placeholder="검색어 입력"
+                   onkeydown="if(event.key==='Enter') doSearch()" />
             <button type="button" onclick="doSearch()" aria-label="검색">
               <i data-lucide="search" style="width:15px;height:15px;"></i>
             </button>
           </div>
+          <!-- 전체보기 버튼 — 검색 실행 후 .is-searched 클래스에 의해 표시됨 -->
+          <button type="button" class="rss-btn rss-btn--view-all" onclick="resetListSearch()">
+            <i data-lucide="list" style="width:14px;height:14px;"></i>
+            전체보기
+          </button>
         </div>
 
         <!-- ══════════════════════════════════════════════════
@@ -580,8 +586,20 @@
   function doSearch() {
     var type = document.getElementById('listSearchType').value;
     var kw   = document.getElementById('listSearchKeyword').value.trim();
+    if (!kw) return;
+    // 검색 실행 후 toolbar에 .is-searched 추가 → 전체보기 버튼 표시
+    document.querySelector('.list-toolbar').classList.add('is-searched');
+    if (window.lucide) lucide.createIcons();
     /* [Java] 실제 환경: location.href = '/construction?year='+currentYear+'&month='+currentMonth+'&searchType='+type+'&searchKeyword='+encodeURIComponent(kw); */
-    alert('검색: ' + type + ' = ' + kw);
+    console.log('[M1] 검색:', type, kw);
+  }
+  /* 전체보기 — 검색 초기화 */
+  function resetListSearch() {
+    document.getElementById('listSearchType').value = '';
+    document.getElementById('listSearchKeyword').value = '';
+    document.querySelector('.list-toolbar').classList.remove('is-searched');
+    /* [Java] 실제 환경: location.href = '/construction?year='+currentYear+'&month='+currentMonth; */
+    console.log('[M1] 전체보기 — 검색 초기화');
   }
 
   /* 차단취소 · 오늘완료 모달은 RSS.action (공통)으로 처리됩니다 */

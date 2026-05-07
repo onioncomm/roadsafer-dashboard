@@ -1,0 +1,752 @@
+@charset "UTF-8";
+/**
+ * adm-common.css
+ * 로드세이프티시스템 (RSS) — 관리자 사이트 전용 스타일
+ * ============================================================
+ * [사용 방법]
+ *   rss-common.css 다음에 반드시 이 파일을 로드하세요.
+ *   <link rel="stylesheet" href="../../rss-common.css">
+ *   <link rel="stylesheet" href="../adm-common.css">
+ *
+ * [설계 원칙]
+ *   - rss-common.css의 CSS 변수(:root)만 오버라이드하여 컬러 테마를 변경
+ *   - 컴포넌트 클래스명(rss-btn, rss-card 등)은 그대로 사용
+ *   - 관리자 전용 레이아웃(adm-layout, adm-topbar, adm-sidebar)은 별도 정의
+ *   - 임의 스타일 생성 금지 — 없는 스타일은 이 파일 하단에 추가 후 인용
+ *
+ * 작성일: 2026-04
+ * 개발환경: Java + MariaDB (프레임워크 비종속)
+ */
+
+/* ─── 관리자 테마 컬러 변수 오버라이드 ────────────────────
+   rss-common.css의 amber 계열을 blue 계열로 교체
+   사이드바 배경은 네이비(#1e2a4a)로 변경
+   ─────────────────────────────────────────────────────── */
+:root {
+  /* Primary: amber → blue */
+  --rss-amber:        #3b82f6;
+  --rss-amber-dark:   #1d4ed8;
+  --rss-amber-light:  rgba(59,130,246,0.10);
+  --rss-amber-ring:   rgba(59,130,246,0.25);
+
+  /* 사이드바: 다크 차콜(#1a1d27) → 네이비(#1e2a4a) */
+  --rss-sidebar-bg:   #1e2a4a;
+
+  /* 관리자 전용 상단 바 높이 */
+  --adm-topbar-h:     60px;
+
+  /* 관리자 전용 브레드크럼 */
+  --adm-breadcrumb-h: 48px;
+}
+
+/* ─── 버튼 — amber 계열 오버라이드 ───────────────────────
+   rss-btn--amber 클래스를 그대로 사용하되 blue로 렌더링
+   ─────────────────────────────────────────────────────── */
+.rss-btn--amber {
+  background: var(--rss-amber);
+  color: var(--rss-card);
+  border-color: var(--rss-amber);
+}
+.rss-btn--amber:hover {
+  background: var(--rss-amber-dark);
+  border-color: var(--rss-amber-dark);
+}
+.rss-btn--outline-amber {
+  border-color: var(--rss-amber);
+  color: var(--rss-amber);
+  background: transparent;
+}
+.rss-btn--outline-amber:hover {
+  background: var(--rss-amber-light);
+  color: var(--rss-amber-dark);
+}
+
+/* ─── 관리자 전체 레이아웃 ───────────────────────────────
+   구조: <body>
+           <header class="adm-topbar">
+           <div class="adm-layout">
+             <aside class="adm-sidebar">
+             <div class="adm-main">
+               <div class="adm-breadcrumb">
+               <main class="rss-content">
+   ─────────────────────────────────────────────────────── */
+.adm-layout {
+  display: flex;
+  min-height: calc(100vh - var(--adm-topbar-h));
+  padding-top: var(--adm-topbar-h);
+}
+
+/* ─── 상단 바 (adm-topbar) ───────────────────────────────
+   로고(좌) + 관리자명(권한) + 아이콘 3개(우)
+   ─────────────────────────────────────────────────────── */
+.adm-topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: var(--adm-topbar-h);
+  background: var(--rss-sidebar-bg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  gap: 12px;
+}
+
+/* 로고 영역 */
+.adm-topbar__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.adm-topbar__logo-img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+.adm-topbar__logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+.adm-topbar__logo-main {
+  font-size: var(--rss-font-sm);   /* 13px */
+  font-weight: 700;
+  color: var(--rss-card);
+  white-space: nowrap;
+}
+.adm-topbar__logo-sub {
+  font-size: var(--rss-font-xs);   /* 12px */
+  color: rgba(255,255,255,0.45);
+  white-space: nowrap;
+}
+
+/* 우측 사용자 정보 + 아이콘 */
+.adm-topbar__right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.adm-topbar__user-name {
+  font-size: var(--rss-font-sm);   /* 13px */
+  font-weight: 600;
+  color: rgba(255,255,255,0.9);
+  white-space: nowrap;
+}
+.adm-topbar__user-role {
+  font-size: var(--rss-font-xs);   /* 12px */
+  color: rgba(255,255,255,0.5);
+  white-space: nowrap;
+}
+.adm-topbar__user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1.3;
+}
+/* 아이콘 버튼 (로그아웃 / 비밀번호변경 / 홈) */
+.adm-topbar__icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  border: none;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.adm-topbar__icon-btn:hover {
+  background: rgba(255,255,255,0.16);
+  color: var(--rss-card);
+}
+/* 모바일 사이드바 토글 버튼 */
+.adm-topbar__menu-btn {
+  display: none;
+}
+@media (max-width: 1023px) {
+  .adm-topbar__menu-btn {
+    display: flex;
+  }
+  .adm-topbar__logo-sub,
+  .adm-topbar__user-info {
+    display: none;
+  }
+}
+
+/* ─── 사이드바 (adm-sidebar) ─────────────────────────────
+   rss-sidebar 스타일을 기반으로 하되 topbar 높이만큼 아래로
+   ─────────────────────────────────────────────────────── */
+.adm-sidebar {
+  position: fixed;
+  top: var(--adm-topbar-h);
+  left: 0;
+  bottom: 0;
+  width: var(--rss-sidebar-w);        /* 240px */
+  background: var(--rss-sidebar-bg);  /* 네이비 */
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 90;
+  transition: transform 0.25s ease, width 0.25s ease;
+}
+.adm-sidebar::-webkit-scrollbar { width: 4px; }
+.adm-sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 2px; }
+
+/* 모바일: 기본 숨김, mobile-open 시 표시 */
+@media (max-width: 1023px) {
+  .adm-sidebar {
+    transform: translateX(-100%);
+  }
+  .adm-sidebar.mobile-open {
+    transform: translateX(0);
+  }
+}
+
+/* 사이드바 내 내비게이션 — rss-nav 클래스 재사용 */
+.adm-sidebar .rss-nav {
+  flex: 1;
+  padding: 8px 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.adm-sidebar .rss-nav__link.active {
+  background: rgba(59,130,246,0.18);  /* blue 계열 active */
+  color: #93c5fd;
+}
+.adm-sidebar .rss-nav__link:hover {
+  background: rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.9);
+}
+
+/* ─── 메인 콘텐츠 영역 (adm-main) ───────────────────────
+   사이드바 너비만큼 왼쪽 여백
+   ─────────────────────────────────────────────────────── */
+.adm-main {
+  flex: 1;
+  margin-left: var(--rss-sidebar-w);  /* 240px */
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  transition: margin-left 0.25s ease;
+}
+@media (max-width: 1023px) {
+  .adm-main {
+    margin-left: 0;
+  }
+}
+
+/* ─── 브레드크럼 (adm-breadcrumb) ───────────────────────
+   홈 > 메뉴 > 서브메뉴
+   ─────────────────────────────────────────────────────── */
+.adm-breadcrumb {
+  height: var(--adm-breadcrumb-h);
+  background: var(--rss-bg);
+  border-bottom: 1px solid var(--rss-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  gap: 12px;
+}
+.adm-breadcrumb__title {
+  font-size: var(--rss-font-xl);   /* 20px */
+  font-weight: 700;
+  color: var(--rss-text);
+  white-space: nowrap;
+}
+.adm-breadcrumb__nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--rss-font-sm);   /* 13px */
+  color: var(--rss-muted);
+  flex-shrink: 0;
+}
+.adm-breadcrumb__nav a {
+  color: var(--rss-muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.adm-breadcrumb__nav a:hover {
+  color: var(--rss-amber);
+}
+.adm-breadcrumb__sep {
+  color: var(--rss-muted);
+  font-size: var(--rss-font-xs);
+}
+.adm-breadcrumb__current {
+  color: var(--rss-text);
+  font-weight: 600;
+}
+@media (max-width: 640px) {
+  .adm-breadcrumb {
+    padding: 0 16px;
+  }
+  .adm-breadcrumb__title {
+    font-size: var(--rss-font-md);  /* 16px */
+  }
+  .adm-breadcrumb__nav {
+    display: none;  /* 모바일에서 브레드크럼 숨김 */
+  }
+}
+
+/* ─── 비밀번호 변경 모달 (adm-pw-modal) ─────────────────
+   헤더 비밀번호 변경 아이콘 클릭 시 표시
+   필드: 현재 비밀번호 / 변경할 비밀번호 / 변경할 비밀번호 확인
+   ─────────────────────────────────────────────────────── */
+.adm-pw-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0,0,0,0.45);
+  align-items: center;
+  justify-content: center;
+}
+.adm-pw-modal.is-open {
+  display: flex;
+}
+.adm-pw-modal__box {
+  background: var(--rss-card);
+  border-radius: var(--rss-radius-lg);
+  box-shadow: var(--rss-shadow-md);
+  width: 100%;
+  max-width: 400px;
+  padding: 28px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.adm-pw-modal__title {
+  font-size: var(--rss-font-lg);   /* 18px */
+  font-weight: 700;
+  color: var(--rss-text);
+}
+.adm-pw-modal__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.adm-pw-modal__field label {
+  display: block;
+  font-size: var(--rss-font-sm);   /* 13px */
+  font-weight: 600;
+  color: var(--rss-text);
+  margin-bottom: 6px;
+}
+.adm-pw-modal__field .rss-input {
+  width: 100%;
+}
+.adm-pw-modal__actions {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* ─── 모바일 오버레이 ─────────────────────────────────── */
+.adm-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: rgba(0,0,0,0.45);
+}
+.adm-overlay.is-open {
+  display: block;
+}
+@media (min-width: 1024px) {
+  .adm-overlay { display: none !important; }
+}
+
+/* ─── 공사 등록·수정 공통 컴포넌트 ─────────────────────
+   construction-write.html 및 향후 등록·수정 폼 공통 사용
+   ─────────────────────────────────────────────────────── */
+
+/* 섹션 카드 */
+.write-section {
+  background: var(--rss-card);
+  border: 1px solid var(--rss-border);
+  border-radius: 10px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.write-section__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 20px;
+  background: #f8fafc;
+  border-bottom: 1px solid var(--rss-border);
+}
+.write-section__title {
+  font-size: var(--rss-font-md);
+  font-weight: 700;
+  color: var(--rss-text);
+}
+.write-section__badge {
+  font-size: var(--rss-font-xs);
+  background: var(--rss-amber-light);
+  color: var(--rss-amber-dark);
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+.write-section__body {
+  padding: 20px;
+}
+
+/* 폼 테이블 — PC 전용 등록/수정 폼 키-값 구조 */
+.adm-form-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;           /* th 너비 고정 → td가 나머지 전체 차지 */
+}
+.adm-form-table th {
+  width: 140px;
+  min-width: 140px;
+  height: 56px;                  /* 테이블 셀에서 height는 min-height처럼 동작 — 인풋박스 행 기준 */
+  padding: 12px 16px;
+  background: #f9fafb;
+  border: 1px solid var(--rss-border);
+  font-size: var(--rss-font-sm);
+  font-weight: 600;
+  color: var(--rss-muted);
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.adm-form-table td {
+  width: 100%;                   /* th 제외 나머지 너비 전부 사용 */
+  height: 56px;                  /* 테이블 셀에서 height는 min-height처럼 동작 — 인풋박스 행 기준 */
+  padding: 10px 14px;
+  border: 1px solid var(--rss-border);
+  font-size: var(--rss-font-base);
+  color: var(--rss-text);
+  vertical-align: middle;
+}
+.adm-form-table .required {
+  color: var(--rss-danger);
+  margin-left: 2px;
+}
+
+/* 인라인 그룹 (라벨 + 인풋 가로 배치) */
+.adm-inline-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.adm-inline-sep {
+  color: var(--rss-muted);
+  font-size: var(--rss-font-sm);
+  white-space: nowrap;
+}
+
+/* 업체찾기 버튼 그룹 */
+.adm-find-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.adm-find-group .rss-input {
+  flex: 1;
+}
+
+/* 라디오/체크박스 그룹 */
+.adm-radio-group,
+.adm-check-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.adm-radio-group label,
+.adm-check-group label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: var(--rss-font-base);
+  color: var(--rss-text);
+  cursor: pointer;
+}
+
+/* 안내 텍스트 */
+.adm-hint {
+  font-size: var(--rss-font-xs);
+  color: var(--rss-muted);
+  margin-top: 4px;
+}
+
+/* 품목 수량 테이블 */
+.equip-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 4px;
+}
+.equip-table th {
+  padding: 8px 12px;
+  background: #f9fafb;
+  border: 1px solid var(--rss-border);
+  font-size: var(--rss-font-sm);
+  font-weight: 600;
+  color: var(--rss-muted);
+  text-align: center;
+  white-space: nowrap;
+}
+.equip-table td {
+  padding: 8px 12px;
+  border: 1px solid var(--rss-border);
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* 단가 테이블 */
+.price-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 4px;
+}
+.price-table th {
+  padding: 8px 12px;
+  background: #f9fafb;
+  border: 1px solid var(--rss-border);
+  font-size: var(--rss-font-sm);
+  font-weight: 600;
+  color: var(--rss-muted);
+  text-align: center;
+  white-space: nowrap;
+}
+.price-table td {
+  padding: 8px 12px;
+  border: 1px solid var(--rss-border);
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* 공사없음일 캘린더 */
+.no-work-calendar {
+  border: 1px solid var(--rss-border);
+  border-radius: 8px;
+  overflow: hidden;
+  display: inline-block;
+  min-width: 280px;
+}
+.no-work-calendar__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: #f8fafc;
+  border-bottom: 1px solid var(--rss-border);
+}
+.no-work-calendar__month {
+  font-size: var(--rss-font-sm);
+  font-weight: 700;
+  color: var(--rss-text);
+}
+.no-work-calendar__nav button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--rss-muted);
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.12s;
+}
+.no-work-calendar__nav button:hover {
+  background: var(--rss-amber-light);
+  color: var(--rss-amber-dark);
+}
+.no-work-calendar__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  padding: 8px;
+  gap: 2px;
+}
+.no-work-calendar__day-label {
+  text-align: center;
+  font-size: var(--rss-font-xs);
+  font-weight: 700;
+  color: var(--rss-muted);
+  padding: 4px 2px;
+}
+.no-work-calendar__day-label.sun { color: var(--rss-danger); }
+.no-work-calendar__day-label.sat { color: #3b82f6; }
+.no-work-calendar__cell {
+  text-align: center;
+  padding: 5px 2px;
+  font-size: var(--rss-font-sm);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.12s;
+  user-select: none;
+}
+.no-work-calendar__cell:hover:not(.empty) {
+  background: var(--rss-amber-light);
+  color: var(--rss-amber-dark);
+}
+.no-work-calendar__cell.selected {
+  background: var(--rss-amber);
+  color: var(--rss-card);
+  font-weight: 700;
+}
+.no-work-calendar__cell.empty { cursor: default; }
+.no-work-calendar__cell.sun { color: var(--rss-danger); }
+.no-work-calendar__cell.sat { color: #3b82f6; }
+.no-work-calendar__cell.selected.sun,
+.no-work-calendar__cell.selected.sat { color: var(--rss-card); }
+
+/* 선택된 공사없음일 태그 */
+.no-work-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+.no-work-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  background: var(--rss-amber-light);
+  color: var(--rss-amber-dark);
+  border: 1px solid var(--rss-amber);
+  border-radius: 20px;
+  font-size: var(--rss-font-sm);
+  font-weight: 600;
+}
+.no-work-tag button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--rss-amber-dark);
+  padding: 0;
+  line-height: 1;
+  margin-left: 2px;
+}
+
+/* 발주업체찾기 / 공통 팝업 모달 */
+.adm-modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  /* 사이드바(240px) 오른쪽 영역만 덮어 모달이 콘텐츠 영역 정중앙에 오도록 보정 */
+  left: var(--rss-sidebar-w, 240px);
+  background: rgba(0,0,0,0.45);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+}
+.adm-modal-overlay.open {
+  display: flex;
+}
+/* 모바일: 사이드바 숨김 → 전체 뷰포트 기준 */
+@media (max-width: 1023px) {
+  .adm-modal-overlay {
+    left: 0;
+  }
+}
+.adm-modal-box {
+  background: var(--rss-card);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(30,42,74,0.18);
+  width: 560px;
+  max-width: 96vw;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.adm-modal-box__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--rss-border);
+  background: #f8fafc;
+}
+.adm-modal-box__title {
+  font-size: var(--rss-font-md);
+  font-weight: 700;
+  color: var(--rss-text);
+}
+.adm-modal-box__close {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--rss-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+.adm-modal-box__close:hover {
+  background: var(--rss-gray-100);
+  color: var(--rss-text);
+}
+.adm-modal-box__search {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--rss-border);
+  display: flex;
+  gap: 8px;
+}
+.adm-modal-box__body {
+  flex: 1;
+  overflow-y: auto;
+}
+.adm-modal-box__foot {
+  padding: 12px 20px;
+  border-top: 1px solid var(--rss-border);
+  text-align: right;
+}
+/* 넓은 모달 (업체찾기 등 테이블 포함 모달) */
+.adm-modal-box--wide {
+  width: 770px;
+}
+
+/* ─── 관리자 전용 전체보기 버튼 hover 오버라이드 ──────────────────
+   rss-common.css의 주황 계열 hover를 파란 계열로 재정의
+   사용법: rss-btn--view-all 클래스 그대로 사용 (추가 클래스 불필요)
+──────────────────────────────────────────────────────────── */
+.rss-btn--view-all:hover {
+  border-color: var(--rss-amber);        /* 관리자에서 --rss-amber = #3b82f6 (파란색) */
+  color: var(--rss-amber-dark);          /* 관리자에서 --rss-amber-dark = #1d4ed8 */
+  background: var(--rss-amber-light);    /* 관리자에서 --rss-amber-light = rgba(59,130,246,0.10) */
+}
+
+/* ─── 관리자 전용 취소 버튼 ────────────────────────────────────
+   body 배경(#f4f5f7)과 구분되도록 흰색 배경 명시
+   rss-page-actions 내 삭제/저장과 너비 통일 (min-width: 88px)
+   사용법: <button class="rss-btn adm-btn--cancel">
+             <i data-lucide="x" ...></i> 취소
+           </button>
+──────────────────────────────────────────────────────────── */
+.adm-btn--cancel {
+  background: #ffffff;
+  border: 1.5px solid var(--rss-border);
+  color: var(--rss-text);
+  min-width: 88px;
+}
+.adm-btn--cancel:hover {
+  border-color: var(--rss-muted);
+  color: var(--rss-muted);
+  background: #f9fafb;
+}
