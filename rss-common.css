@@ -510,7 +510,7 @@ img { max-width: 100%; display: block; }
   border-radius: var(--rss-radius);
   font-size: var(--rss-font-base) !important; /* 15px */
   font-weight: 600;
-  border: 1px solid transparent;
+  border: 1.5px solid transparent;
   cursor: pointer;
   transition: all 0.15s;
   white-space: nowrap;
@@ -563,6 +563,23 @@ img { max-width: 100%; display: block; }
   border-color: var(--rss-danger);
   color: var(--rss-danger);
 }
+/* 전체보기 버튼 — 검색 결과 초기화용, outline-only 스타일
+   .rss-board-toolbar 또는 .rss-search-wrap 내에서 사용
+   기본 숨김, .is-searched 클래스 추가 시 표시 */
+.rss-btn--view-all {
+  background: #ffffff;
+  border: 1.5px solid var(--rss-border);
+  color: var(--rss-muted);
+  display: none;  /* 기본 숨김 — JS에서 .is-searched 토글로 제어 */
+}
+.rss-btn--view-all:hover {
+  border-color: var(--rss-info);
+  color: var(--rss-info);
+}
+/* 검색 실행 후 toolbar에 .is-searched 클래스 추가 시 표시 */
+.rss-board-toolbar.is-searched .rss-btn--view-all,
+.rss-search-wrap.is-searched .rss-btn--view-all,
+.list-toolbar.is-searched .rss-btn--view-all { display: inline-flex; }
 .rss-btn--sm {
   height: 32px;
   padding: 0 13px;
@@ -1372,11 +1389,12 @@ select.rss-form-input,
 /* 상태 열 — 배지 표시용 */
 .rss-col-status { width: 10%; }
 /* 공사명/제목 등 주요 데이터 열 — 나머지 공간 차지 (auto) */
-.rss-col-nm     { /* width: auto — colgroup에서 지정 안 하면 자동 */ }
+.rss-col-nm     { width: 20%; }  /* 모달 업체명 열 고정 */
 /* 발주업체명 열 */
 .rss-col-owner  { width: 15%; }
 /* 기간 열 — 날짜 범위가 1줄로 들어갈 너비 */
 .rss-col-period { width: 20%; }
+
 /* 금액 열 */
 .rss-col-price  { width: 10%; }
 /* 관리 열 — 버튼 1~2개 */
@@ -1397,8 +1415,10 @@ select.rss-form-input,
 .rss-col-bizno  { width: 20%; }
 /* 사업장 주소 열 — 나머지 공간 차지 */
 .rss-col-addr   { /* width: auto */ }
-/* 선택 버튼 열 — 모달 내 단일 액션 */
-.rss-col-select { width: 70px; }
+/* 불이행 기간 열 — rss-col-period와 동일 너비 */
+.rss-col-violation-period { width: 20%; }
+/* 선택 버튼 열 — 모달 내 단일 액션 (버튼 + 좌우 여백 확보) */
+.rss-col-select { width: 90px; }
 
 /* 긴급 행 강조 */
 .rss-table tr.row-urgent td           { background: #fff7f7; }
