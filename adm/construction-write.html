@@ -12,170 +12,6 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Lucide 아이콘 CDN -->
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-  <style>
-    /* ── 공사 등록/수정 전용 스타일 ── */
-
-    /* 폼 테이블 */
-    .adm-form-table { width:100%; border-collapse:collapse; }
-    .adm-form-table th {
-      width:160px; padding:10px 16px; background:#f8f9fa;
-      border:1px solid #e2e8f0; font-weight:600;
-      color:var(--rss-gray-700); text-align:left; vertical-align:middle; white-space:nowrap;
-    }
-    .adm-form-table td {
-      padding:8px 12px; border:1px solid #e2e8f0;
-      vertical-align:middle;
-    }
-    .adm-form-table th .required { color:var(--rss-danger-dark); margin-left:2px; }
-
-    /* 인라인 그룹 */
-    .adm-inline-group { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
-    .adm-inline-sep { color:var(--rss-muted); white-space:nowrap; }
-
-    /* 라디오 그룹 */
-    .adm-radio-group { display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
-    .adm-radio-group label { display:flex; align-items:center; gap:5px; cursor:pointer; }
-    .adm-radio-group input[type="radio"] { cursor:pointer; }
-
-    /* 체크박스 그룹 */
-    .adm-check-group { display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
-    .adm-check-group label { display:flex; align-items:center; gap:5px; cursor:pointer; }
-    .adm-check-group input[type="checkbox"] { cursor:pointer; }
-
-    /* 업체찾기 그룹 */
-    .adm-find-group { display:flex; align-items:center; gap:8px; }
-
-    /* 힌트 텍스트 */
-    .adm-hint { font-size:12px; color:var(--rss-gray-400); margin-top:4px; }
-
-    /* 섹션 카드 */
-    .write-section {
-      background:var(--rss-card); border:1px solid #e2e8f0; border-radius:8px;
-      margin-bottom:16px; overflow:hidden;
-    }
-    .write-section__head {
-      display:flex; align-items:center; gap:8px;
-      padding:12px 16px; background:#f8fafc;
-      border-bottom:1px solid #e2e8f0;
-    }
-    .write-section__title { font-size:14px; font-weight:700; color:#1e293b; margin:0; }
-    .write-section__body { padding:0; }
-
-    /* 품목 수량 — 가로 1줄 */
-    .equip-row {
-      display:flex; align-items:center; gap:20px;
-      padding:12px 16px; flex-wrap:wrap;
-    }
-    .equip-row__item { display:flex; align-items:center; gap:6px; }
-    .equip-row__label { font-weight:600; color:var(--rss-gray-700); white-space:nowrap; min-width:44px; }
-    .equip-row__unit { color:var(--rss-gray-400); }
-
-    /* 단가 1줄 표시 영역 */
-    .price-row {
-      display:flex; align-items:center; gap:0;
-      padding:10px 16px; flex-wrap:wrap;
-      background:#f8fafc; border-top:1px solid #f1f5f9;
-    }
-    .price-row__label {
-      font-weight:600; color:var(--rss-gray-700); white-space:nowrap;
-      margin-right:12px; min-width:60px;
-    }
-    .price-row__items { display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
-    .price-row__item { display:flex; align-items:center; gap:6px; }
-    .price-row__item-label { color:var(--rss-muted); white-space:nowrap; }
-    .price-row__item-val {
-      width:110px; text-align:right;
-    }
-    .price-row__item-unit { color:var(--rss-gray-400); white-space:nowrap; }
-    .price-row--auto .price-row__item-val { background:var(--rss-success-bg); color:#166534; font-weight:600; }
-    .price-row__sub { font-size:12px; color:var(--rss-muted); margin-left:8px; }
-
-    /* 전화번호 3분할 입력 */
-    .tel-split-wrap { display:flex; align-items:center; gap:6px; }
-    .tel-split-wrap .rss-input { width:72px; text-align:center; }
-    .tel-split-sep { color:var(--rss-gray-400); font-weight:600; flex-shrink:0; }
-
-    /* 모달 — adm-common-v2.css 참조 (adm-modal-overlay, adm-modal-box, adm-modal-box--wide 등) */
-
-    /* 캘린더 */
-    .cal-wrap { user-select:none; }
-    .cal-nav {
-      display:flex; align-items:center; justify-content:space-between;
-      padding:8px 0 12px;
-    }
-    .cal-nav__btn {
-      background:none; border:1px solid #e2e8f0; border-radius:4px;
-      padding:4px 8px; cursor:pointer; color:var(--rss-gray-700); font-size:13px;
-    }
-    .cal-nav__btn:hover { background:#f1f5f9; }
-    .cal-nav__label { font-size:14px; font-weight:700; color:#1e293b; }
-    .cal-grid {
-      display:grid; grid-template-columns:repeat(7,1fr); gap:2px;
-    }
-    .cal-grid__head {
-      text-align:center; font-size:11px; font-weight:600;
-      color:var(--rss-muted); padding:4px 0;
-    }
-    .cal-grid__head.sun { color:var(--rss-danger-dark); }
-    .cal-grid__head.sat { color:#3b82f6; }
-    .cal-grid__cell {
-      text-align:center; padding:6px 2px; font-size:13px;
-      border-radius:4px; cursor:pointer; color:var(--rss-gray-700);
-    }
-    .cal-grid__cell:hover { background:#f1f5f9; }
-    .cal-grid__cell.sun { color:var(--rss-danger-dark); }
-    .cal-grid__cell.sat { color:#3b82f6; }
-    .cal-grid__cell.empty { cursor:default; }
-    .cal-grid__cell.selected {
-      background:#1d4ed8; color:var(--rss-card) !important; font-weight:700; border-radius:50%;
-    }
-    .cal-hint { font-size:12px; color:var(--rss-muted); margin-top:8px; line-height:1.5; }
-
-    /* 선택된 날짜 태그 */
-    .work-date-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
-    .work-date-tag {
-      display:inline-flex; align-items:center; gap:4px;
-      background:var(--rss-info-bg); border:1px solid #bfdbfe; color:#1d4ed8;
-      border-radius:4px; padding:3px 8px; font-size:12px;
-    }
-    .work-date-tag button {
-      background:none; border:none; cursor:pointer; color:#93c5fd;
-      padding:0; line-height:1; font-size:14px; font-weight:700;
-    }
-    .work-date-tag button:hover { color:#1d4ed8; }
-
-    /* 날짜 선택 버튼 */
-    .btn-cal-open {
-      display:inline-flex; align-items:center; gap:6px;
-      padding:6px 14px; background:var(--rss-card); border:1px solid #d1d5db;
-      border-radius:6px; font-size:13px; cursor:pointer; color:var(--rss-gray-700);
-    }
-    .btn-cal-open:hover { background:#f9fafb; border-color:var(--rss-gray-400); }
-
-    /* 시연회 상세 행 */
-    .rehearsal-detail { display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
-    .rehearsal-detail__sep { color:#d1d5db; }
-
-    /* 권역 체크박스 */
-    .region-group { display:flex; flex-wrap:wrap; gap:12px; }
-    .region-group label { display:flex; align-items:center; gap:4px; cursor:pointer; }
-
-    /* 차단업체 태그 */
-    .block-corp-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
-    .block-corp-tag {
-      display:inline-flex; align-items:center; gap:4px;
-      background:var(--rss-success-bg); border:1px solid #bbf7d0; color:#166534;
-      border-radius:4px; padding:3px 8px; font-size:12px;
-    }
-    .block-corp-tag button {
-      background:none; border:none; cursor:pointer; color:#86efac;
-      padding:0; line-height:1; font-size:14px; font-weight:700;
-    }
-    .block-corp-tag button:hover { color:#166534; }
-
-    /* 비활성화 상태 */
-    .field-disabled { opacity:0.4; pointer-events:none; }
-  </style>
 </head>
 <body>
 <!-- ══════════════════════════════════════════════════
@@ -774,8 +610,9 @@
                     </div>
                     <div style="margin-top:8px;">
                       <!-- [Java] M2-1 차단업체 선택 팝업 연동 -->
+                      <!-- openBlockCorpModal(null, callback) — adm-common.js 제공 -->
                       <button type="button" class="rss-btn rss-btn--outline"
-                              onclick="openBlockCorpModal()">
+                              onclick="openBlockCorpModal(null, addBlockCorpTag)">
                         <i data-lucide="plus" style="width:14px;height:14px;margin-right:4px;"></i>
                         차단업체 강제 지정
                       </button>
@@ -794,20 +631,15 @@
         <div class="rss-page-actions">
           <!-- [Java] 수정 모드에서만 표시: th:if="${mode == 'edit'}" -->
           <div class="rss-page-actions--left">
-            <button type="button" class="rss-btn rss-btn--outline-danger"
-                    onclick="confirmDelete()">
-              <i data-lucide="trash-2" style="width:14px;height:14px;margin-right:4px;"></i>
-              삭제
+            <button type="button" class="rss-btn adm-btn--delete"
+                    onclick="confirmDelete()">삭제
             </button>
           </div>
           <button type="button" class="rss-btn adm-btn--cancel"
-                  onclick="location.href='construction-list.html'">
-            <i data-lucide="x" style="width:14px;height:14px;margin-right:4px;"></i>
-            취소
+                  onclick="location.href='construction-list.html'">취소
           </button>
-          <button type="submit" class="rss-btn rss-btn--amber"
+          <button type="submit" class="rss-btn adm-btn--save"
                   onclick="return submitConstructionForm(event)">
-            <i data-lucide="save" style="width:14px;height:14px;margin-right:4px;"></i>
             <!-- [Java] th:text="${mode == 'edit'} ? '수정 저장' : '저장'" -->
             저장
           </button>
@@ -829,9 +661,7 @@
   <div class="adm-modal-box adm-modal-box--wide">
     <div class="adm-modal-box__head">
       <h3 class="adm-modal-box__title" id="modalOrderCorpSearchTitle">발주업체 찾기</h3>
-      <button type="button" class="adm-modal-box__close" onclick="closeOrderCorpModal()" aria-label="닫기">
-        <i data-lucide="x" style="width:16px;height:16px;"></i>
-      </button>
+      <button type="button" class="adm-modal-box__close" onclick="closeOrderCorpModal()" aria-label="닫기"></button>
     </div>
     <div class="adm-modal-box__search">
       <!-- [Java] GET /adm/construction/order-corp/search?keyword= -->
@@ -914,116 +744,7 @@
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════════
-     M2-1. 차단업체 선택 모달
-     스토리보드 §M2-1: 발주업체 찾기 모달(§M1-4-1)과 동일한 UI/CSS
-     [Java] GET /adm/construction/block-corp/search?keyword=
-     용어사전 §22-3 modalBlockCorpSearch
-══════════════════════════════════════════════════ -->
-<div class="adm-modal-overlay" id="modalBlockCorpSearch" role="dialog"
-     aria-modal="true" aria-labelledby="modalBlockCorpSearchTitle">
-  <div class="adm-modal-box adm-modal-box--wide">
-    <div class="adm-modal-box__head">
-      <h3 class="adm-modal-box__title" id="modalBlockCorpSearchTitle">차단업체</h3>
-      <button type="button" class="adm-modal-box__close" onclick="closeBlockCorpModal()" aria-label="닫기">
-        <i data-lucide="x" style="width:16px;height:16px;"></i>
-      </button>
-    </div>
-    <!-- 검색 영역 — 발주업체 찾기 모달과 동일 구조 -->
-    <div class="adm-modal-box__search">
-      <!-- [Java] GET /adm/construction/block-corp/search?keyword= -->
-      <!-- 용어사전 §7 searchKeyword + block_corp → blockCorpSearchKeyword -->
-      <input type="text" id="blockCorpSearchKeyword" class="rss-input" style="flex:1;"
-             placeholder="업체명을 입력하세요"
-             onkeydown="if(event.key==='Enter') searchBlockCorp()" />
-      <button type="button" class="rss-btn rss-btn--primary" onclick="searchBlockCorp()">
-        <i data-lucide="search" style="width:14px;height:14px;margin-right:4px;"></i>
-        찾기
-      </button>
-    </div>
-    <!-- 결과 목록 — 발주업체 찾기 모달과 동일 테이블 구조 -->
-    <div class="adm-modal-box__body">
-      <div class="rss-table-wrap" style="margin:0;">
-        <!-- [Java] th:if="${#lists.isEmpty(blockCorpList)}" -->
-        <!-- <div class="rss-empty">검색 결과가 없습니다.</div> -->
-
-        <!-- [Java] th:unless="${#lists.isEmpty(blockCorpList)}" -->
-        <table class="rss-table" id="blockCorpResultTable">
-          <colgroup>
-            <col class="rss-col-nm" />      <!-- 업체명 20% -->
-            <col class="rss-col-bizno" />   <!-- 사업자 번호 20% -->
-            <col class="rss-col-addr" />    <!-- 사업장 주소 auto -->
-            <col class="rss-col-select" />  <!-- 선택 버튼 90px -->
-          </colgroup>
-          <thead>
-            <tr>
-              <th>업체명</th>
-              <th>사업자 등록번호</th>
-              <th>사업장 주소</th>
-              <th>선택</th>
-            </tr>
-          </thead>
-          <tbody id="blockCorpResultBody">
-            <!-- ══════════════════════════════════════════════
-                 [Java] th:each="corp : ${blockCorpList}"
-                 더미 데이터 — 스토리보드 §M2-1 기준
-            ══════════════════════════════════════════════ -->
-            <tr>
-              <!-- [Java] th:text="${corp.blockCorpNm}" -->
-              <td class="rss-col-nm"><span class="rss-link" onclick="selectBlockCorpRow('1001','순희차단')">순희차단</span></td>
-              <!-- [Java] th:text="${corp.bizNo}" -->
-              <td>000-00-00000</td>
-              <!-- [Java] th:text="${corp.bizAddr}" -->
-              <td>경기도 부천시 조마루로111 1401호</td>
-              <td>
-                <!-- [Java] th:onclick="'selectBlockCorpRow(' + ${corp.blockCorpSeq} + ',\'' + ${corp.blockCorpNm} + '\')'"--> 
-                <button type="button" class="rss-btn rss-btn--outline" style="padding:3px 10px;font-size:12px;"
-                        onclick="selectBlockCorpRow('1001','순희차단')">선택</button>
-              </td>
-            </tr>
-            <tr>
-              <td class="rss-col-nm"><span class="rss-link" onclick="selectBlockCorpRow('1002','우리국도차단')">우리국도차단</span></td>
-              <td>111-11-11111</td>
-              <td>경기도 안성시 단원1길 111</td>
-              <td><button type="button" class="rss-btn rss-btn--outline" style="padding:3px 10px;font-size:12px;"
-                          onclick="selectBlockCorpRow('1002','우리국도차단')">선택</button></td>
-            </tr>
-            <tr>
-              <td class="rss-col-nm"><span class="rss-link" onclick="selectBlockCorpRow('1003','프리마제일차단')">프리마제일차단</span></td>
-              <td>222-22-22222</td>
-              <td>경기도 의정부시 의정부대로 331</td>
-              <td><button type="button" class="rss-btn rss-btn--outline" style="padding:3px 10px;font-size:12px;"
-                          onclick="selectBlockCorpRow('1003','프리마제일차단')">선택</button></td>
-            </tr>
-            <tr>
-              <td class="rss-col-nm"><span class="rss-link" onclick="selectBlockCorpRow('1004','한국도로차단')">한국도로차단</span></td>
-              <td>333-33-33333</td>
-              <td>경기도 수원시 장안대로13번길 1</td>
-              <td><button type="button" class="rss-btn rss-btn--outline" style="padding:3px 10px;font-size:12px;"
-                          onclick="selectBlockCorpRow('1004','한국도로차단')">선택</button></td>
-            </tr>
-            <!-- ══════════════════════════════════════════════
-                 [Java] /th:each 끝
-            ══════════════════════════════════════════════ -->
-          </tbody>
-        </table>
-      </div>
-      <!-- 페이지네이션 — 10개씩 -->
-      <div class="rss-pagination" style="margin-top:12px;">
-        <button class="rss-pagination__btn" disabled>&lt;&lt;</button>
-        <button class="rss-pagination__btn" disabled>&lt;</button>
-        <button class="rss-pagination__btn rss-pagination__btn--active" data-page="1">1</button>
-        <button class="rss-pagination__btn" data-page="2">2</button>
-        <button class="rss-pagination__btn" data-page="3">3</button>
-        <button class="rss-pagination__btn">&gt;</button>
-        <button class="rss-pagination__btn">&gt;&gt;</button>
-      </div>
-    </div>
-    <div class="adm-modal-box__foot">
-      <button type="button" class="rss-btn rss-btn--outline" onclick="closeBlockCorpModal()">닫기</button>
-    </div>
-  </div>
-</div>
+<!-- 차단업체 모달(#modalBlockCorpSearch)은 adm-common.js에서 자동 삽입됨 -->
 
 <!-- ══════════════════════════════════════════════════
      공사 기간 날짜 선택 캘린더 모달
@@ -1035,9 +756,7 @@
   <div class="adm-modal-box">
     <div class="adm-modal-box__head">
       <h3 class="adm-modal-box__title" id="modalWorkDateCalTitle">공사 날짜 선택</h3>
-      <button type="button" class="adm-modal-box__close" onclick="closeWorkDateModal()" aria-label="닫기">
-        <i data-lucide="x" style="width:16px;height:16px;"></i>
-      </button>
+      <button type="button" class="adm-modal-box__close" onclick="closeWorkDateModal()" aria-label="닫기"></button>
     </div>
     <div class="adm-modal-box__body">
       <div class="cal-wrap">
@@ -1075,9 +794,7 @@
   <div class="adm-modal-box">
     <div class="adm-modal-box__head">
       <h3 class="adm-modal-box__title" id="modalRehearsalDateCalTitle">시연회 날짜 선택</h3>
-      <button type="button" class="adm-modal-box__close" onclick="closeRehearsalDateModal()" aria-label="닫기">
-        <i data-lucide="x" style="width:16px;height:16px;"></i>
-      </button>
+      <button type="button" class="adm-modal-box__close" onclick="closeRehearsalDateModal()" aria-label="닫기"></button>
     </div>
     <div class="adm-modal-box__body">
       <div class="cal-wrap">
@@ -1467,81 +1184,25 @@
   }
 
   /* ══════════════════════════════════════════════════
-     M2-1. 차단업체 선택 모달
-     스토리보드: 차단업체 강제 지정 버튼 클릭 → 모달 열기
+     M2-1. 차단업체 선택 모달 콜백
+     openBlockCorpModal(null, addBlockCorpTag) — adm-common.js 제공
+     선택 시 addBlockCorpTag(blockCorpSeq, blockCorpNm) 호출
   ══════════════════════════════════════════════════ */
-  function openBlockCorpModal() {
-    const modal = document.getElementById('modalBlockCorpSearch');
-    if (modal) {
-      modal.classList.add('open');
-      document.getElementById('blockCorpSearchKeyword').value = '';
-      // 검색 결과 전체 표시 초기화
-      document.querySelectorAll('#blockCorpResultBody tr').forEach(function(r) { r.style.display = ''; });
-      const emptyRow = document.getElementById('blockCorpEmptyRow');
-      if (emptyRow) emptyRow.style.display = 'none';
-      if (window.lucide) lucide.createIcons();
-      document.getElementById('blockCorpSearchKeyword').focus();
-    }
-  }
-
-  function closeBlockCorpModal() {
-    const modal = document.getElementById('modalBlockCorpSearch');
-    if (modal) modal.classList.remove('open');
-  }
-
-  /* backdrop 클릭 시 닫기 */
-  document.getElementById('modalBlockCorpSearch').addEventListener('click', function(e) {
-    if (e.target === this) closeBlockCorpModal();
-  });
-
-  /* 차단업체 검색 — 클라이언트 필터링 (스토리보드: 결과 없으면 '검색 결과가 없습니다.' 안내) */
-  function searchBlockCorp() {
-    const keyword = document.getElementById('blockCorpSearchKeyword').value.trim();
-    // [Java] AJAX 호출 후 blockCorpResultBody 갱신
-    const rows = document.querySelectorAll('#blockCorpResultBody tr:not(#blockCorpEmptyRow)');
-    let found = 0;
-    rows.forEach(function(row) {
-      const nm = row.cells[0] ? row.cells[0].textContent.trim() : '';
-      const show = !keyword || nm.indexOf(keyword) !== -1;
-      row.style.display = show ? '' : 'none';
-      if (show) found++;
-    });
-    // 결과 없음 처리
-    let emptyRow = document.getElementById('blockCorpEmptyRow');
-    if (!emptyRow) {
-      emptyRow = document.createElement('tr');
-      emptyRow.id = 'blockCorpEmptyRow';
-      emptyRow.innerHTML = '<td colspan="4" style="padding:24px 0;text-align:center;color:var(--rss-text-muted);">검색 결과가 없습니다.</td>';
-      document.getElementById('blockCorpResultBody').appendChild(emptyRow);
-    }
-    emptyRow.style.display = (found === 0 && keyword) ? '' : 'none';
-    console.log('[M2-1] 차단업체 검색:', keyword);
-  }
-
-  /* 차단업체 선택 확정
-     스토리보드: 선택 클릭 → '차단업체로 선택하시겠습니까?' 확인 → 예 → 모달 닫고 차단 정보 등록/수정(M1-2-1) 모달 뜨움
-     [Java] POST /adm/construction/assign-block-corp
-  */
-  function selectBlockCorpRow(blockCorpSeq, blockCorpNm) {
-    if (!confirm(blockCorpNm + '을(를) 차단업체로 선택하시겠습니까?')) return;
-    // [Java] POST /adm/construction/assign-block-corp
-    // 선택 완료 후 차단 업체 태그 영역 업데이트
+  function addBlockCorpTag(blockCorpSeq, blockCorpNm) {
+    /* 선택 완료 후 차단업체 태그 영역 업데이트 */
+    /* [Java] POST /adm/construction/assign-block-corp */
     const blockCorpArea = document.getElementById('blockCorpTagArea');
     if (blockCorpArea) {
-      // 기존 태그 제거 후 새 태그 추가
       const existingTag = blockCorpArea.querySelector('.block-corp-tag[data-seq="' + blockCorpSeq + '"]');
       if (!existingTag) {
         const tag = document.createElement('span');
         tag.className = 'block-corp-tag';
         tag.dataset.seq = blockCorpSeq;
         tag.innerHTML = blockCorpNm +
-          ' <button type="button" class="block-corp-tag__remove" onclick="removeBlockCorp(this)" aria-label="제거">' +
-          '<i data-lucide="x" style="width:10px;height:10px;"></i></button>';
+          ' <button type="button" class="block-corp-tag__remove" onclick="removeBlockCorp(this)" aria-label="제거"></button>';
         blockCorpArea.appendChild(tag);
-        if (window.lucide) lucide.createIcons();
       }
     }
-    closeBlockCorpModal();
     console.log('[M2-1] 차단업체 강제 지정:', blockCorpSeq, blockCorpNm);
   }
 
@@ -1651,12 +1312,12 @@
   }
 
   /* ══════════════════════════════════════════════════
-     ESC 키 모달 닫기 (발주업체 + 차단업체 + 캘린더)
+     ESC 키 모달 닫기 (발주업체 + 캘린더)
+     차단업체 모달 ESC는 adm-common.js에서 이미 처리
   ══════════════════════════════════════════════════ */
   document.addEventListener('keydown', function(e) {
     if (e.key !== 'Escape') return;
     if (document.getElementById('modalOrderCorpSearch').classList.contains('open')) closeOrderCorpModal();
-    if (document.getElementById('modalBlockCorpSearch').classList.contains('open')) closeBlockCorpModal();
     if (document.getElementById('modalWorkDateCal').classList.contains('open')) closeWorkDateModal();
     if (document.getElementById('modalRehearsalDateCal').classList.contains('open')) closeRehearsalDateModal();
   });

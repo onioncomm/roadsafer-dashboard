@@ -236,9 +236,8 @@
                       onclick="openTmaModal('edit', this)" data-id="1">
                 <i data-lucide="pencil" style="width:12px;height:12px;"></i>수정
               </button>
-              <button type="button" class="rss-btn rss-btn--outline-danger rss-btn--sm"
-                      onclick="deleteTmaCard(1)">
-                <i data-lucide="trash-2" style="width:12px;height:12px;"></i>삭제
+              <button type="button" class="rss-btn rss-btn--delete rss-btn--sm"
+                      onclick="deleteTmaCard(1)">삭제
               </button>
             </div>
           </div>
@@ -273,9 +272,8 @@
                       onclick="openTmaModal('edit', this)" data-id="2">
                 <i data-lucide="pencil" style="width:12px;height:12px;"></i>수정
               </button>
-              <button type="button" class="rss-btn rss-btn--outline-danger rss-btn--sm"
-                      onclick="deleteTmaCard(2)">
-                <i data-lucide="trash-2" style="width:12px;height:12px;"></i>삭제
+              <button type="button" class="rss-btn rss-btn--delete rss-btn--sm"
+                      onclick="deleteTmaCard(2)">삭제
               </button>
             </div>
           </div>
@@ -313,9 +311,8 @@
                       onclick="openTmaModal('edit', this)" data-id="3">
                 <i data-lucide="pencil" style="width:12px;height:12px;"></i>수정
               </button>
-              <button type="button" class="rss-btn rss-btn--outline-danger rss-btn--sm"
-                      onclick="deleteTmaCard(3)">
-                <i data-lucide="trash-2" style="width:12px;height:12px;"></i>삭제
+              <button type="button" class="rss-btn rss-btn--delete rss-btn--sm"
+                      onclick="deleteTmaCard(3)">삭제
               </button>
             </div>
           </div>
@@ -352,9 +349,8 @@
                       onclick="openTmaModal('edit', this)" data-id="4">
                 <i data-lucide="pencil" style="width:12px;height:12px;"></i>수정
               </button>
-              <button type="button" class="rss-btn rss-btn--outline-danger rss-btn--sm"
-                      onclick="deleteTmaCard(4)">
-                <i data-lucide="trash-2" style="width:12px;height:12px;"></i>삭제
+              <button type="button" class="rss-btn rss-btn--delete rss-btn--sm"
+                      onclick="deleteTmaCard(4)">삭제
               </button>
             </div>
           </div>
@@ -379,9 +375,7 @@
   <div class="notice-modal">
     <div class="notice-modal__header">
       <h2 class="notice-modal__title" id="tmaModalTitle">TMA 카드 등록</h2>
-      <button class="notice-modal__close" onclick="closeTmaModal()" aria-label="닫기">
-        <i data-lucide="x" style="width:18px;height:18px;"></i>
-      </button>
+      <button class="notice-modal__close" onclick="closeTmaModal()" aria-label="닫기"></button>
     </div>
     <div class="notice-modal__body">
       <form id="tmaForm" enctype="multipart/form-data">
@@ -438,9 +432,8 @@
       </form>
     </div>
     <div class="notice-modal__footer">
-      <button type="button" class="rss-btn rss-btn--outline" onclick="closeTmaModal()">취소</button>
-      <button type="button" class="rss-btn rss-btn--amber" onclick="submitTmaForm()">
-        <i data-lucide="save" style="width:14px;height:14px;"></i>저장
+      <button type="button" class="rss-btn rss-btn--cancel" onclick="closeTmaModal()">취소</button>
+      <button type="button" class="rss-btn rss-btn--save" onclick="submitTmaForm()">저장
       </button>
     </div>
   </div>
