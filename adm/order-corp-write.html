@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- [Java] th:text="${mode == 'edit'} ? '발주기업 수정' : '발주기업 등록'" -->
+  <title>발주기업 등록/수정 — 로드세이프티시스템 관리자</title>
+  <!-- 공통 CSS -->
+  <link rel="stylesheet" href="../rss-common.css?v=20260518" />
+  <link rel="stylesheet" href="adm-common-v2.css?v=20260518" />
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide 아이콘 CDN -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════
+     관리자 레이아웃
+══════════════════════════════════════════════════ -->
+<div id="adm-topbar-wrap"></div>
+<div class="adm-layout">
+  <div id="adm-sidebar-wrap"></div>
+  <div class="adm-main">
+
+    <!-- 브레드크럼 -->
+    <div class="adm-breadcrumb">
+      <h1 class="adm-breadcrumb__title">
+        <!-- [Java] th:text="${mode == 'edit'} ? '발주기업 수정' : '발주기업 등록'" -->
+        발주기업 등록/수정
+      </h1>
+      <nav class="adm-breadcrumb__nav" aria-label="breadcrumb">
+        <a href="#">로그인</a>
+        <span class="adm-breadcrumb__sep">›</span>
+        <a href="#">기업 관리</a>
+        <span class="adm-breadcrumb__sep">›</span>
+        <a href="order-corp-list.html">발주기업 관리</a>
+        <span class="adm-breadcrumb__sep">›</span>
+        <!-- [Java] th:text="${mode == 'edit'} ? '수정' : '등록'" -->
+        <span class="adm-breadcrumb__current">등록/수정</span>
+      </nav>
+    </div>
+
+    <main class="rss-content">
+
+      <!-- ══════════════════════════════════════════════════
+           발주기업 등록/수정 폼 (M4-3-1)
+           [Java] th:action="${mode == 'edit'}
+                    ? @{/adm/order-corp/mod/{seq}(seq=${corp.orderCorpSeq})}
+                    : @{/adm/order-corp/reg}"
+           [Java] th:method="post"
+      ══════════════════════════════════════════════════ -->
+      <form id="orderCorpWriteForm" method="post" action="#" novalidate>
+        <!-- [Java] CSRF: th:hidden th:name="${_csrf.parameterName}" th:value="${_csrf.token}" -->
+        <!-- [Java] 수정 모드: <input type="hidden" name="orderCorpSeq" th:value="${corp.orderCorpSeq}"> -->
+        <!-- [Java] <input type="hidden" name="mode" th:value="${mode}"> -->
+
+        <div class="rss-card">
+
+          <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+               섹션: 기업 정보
+          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+          <div class="write-section">
+            <div class="write-section__head">
+              <i data-lucide="briefcase" style="width:16px;height:16px;color:var(--rss-primary);flex-shrink:0;"></i>
+              <h2 class="write-section__title" id="secCorpTitle">기업 정보</h2>
+              <span class="adm-required-note">*는 필수입니다</span>
+            </div>
+            <div class="write-section__body">
+              <table class="adm-form-table">
+                <tbody>
+
+                  <!-- 행 1: 상호 / 대표자명 -->
+                  <tr>
+                    <th scope="row">상호<span class="required">*</span></th>
+                    <td>
+                      <!-- [Java] th:value="${corp.orderCorpNm}" -->
+                      <input type="text" id="orderCorpNm" name="orderCorpNm"
+                             class="rss-input" style="width:100%;"
+                             placeholder="상호를 입력하세요"
+                             value="KM코리아" />
+                    </td>
+                    <th scope="row">대표자명</th>
+                    <td>
+                      <!-- [Java] th:value="${corp.ceoNm}" -->
+                      <input type="text" id="ceoNm" name="ceoNm"
+                             class="rss-input" style="width:100%;"
+                             placeholder="대표자명"
+                             value="나잘난" />
+                    </td>
+                  </tr>
+
+                  <!-- 행 2: 사업자번호 -->
+                  <tr>
+                    <th scope="row">사업자번호<span class="required">*</span></th>
+                    <td colspan="3">
+                      <div class="adm-inline-group">
+                        <!-- [Java] th:value="${corp.bizNo1}" -->
+                        <input type="text" id="bizNo1" name="bizNo1"
+                               class="rss-input" style="width:72px;text-align:center;"
+                               value="000" maxlength="3" inputmode="numeric"
+                               oninput="this.value=this.value.replace(/[^0-9]/g,'')" />
+                        <span class="adm-inline-sep">-</span>
+                        <!-- [Java] th:value="${corp.bizNo2}" -->
+                        <input type="text" id="bizNo2" name="bizNo2"
+                               class="rss-input" style="width:56px;text-align:center;"
+                               value="00" maxlength="2" inputmode="numeric"
+                               oninput="this.value=this.value.replace(/[^0-9]/g,'')" />
+                        <span class="adm-inline-sep">-</span>
+                        <!-- [Java] th:value="${corp.bizNo3}" -->
+                        <input type="text" id="bizNo3" name="bizNo3"
+                               class="rss-input" style="width:80px;text-align:center;"
+                               value="00000" maxlength="5" inputmode="numeric"
+                               oninput="this.value=this.value.replace(/[^0-9]/g,'')" />
+                        <!-- ① 중복확인 — 스토리보드: 이미 등록된 사업자번호는 재등록 불가 -->
+                        <button type="button" class="rss-btn rss-btn--outline rss-btn--sm"
+                                onclick="checkBizNoDuplicate()">중복확인</button>
+                        <p class="adm-hint">* 사업자번호 중복확인 후 등록 가능합니다.</p>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- 행 3: 사업자등록증 -->
+                  <tr>
+                    <th scope="row">사업자 등록증</th>
+                    <td colspan="3">
+                      <div class="adm-inline-group">
+                        <button type="button" class="rss-btn rss-btn--outline rss-btn--sm"
+                                onclick="triggerFileInput('bizFile')">파일찾기</button>
+                        <!-- [Java] th:if="${corp.bizFile != null}" -->
+                        <a href="#" class="rss-link" id="bizFileLink">사업자등록증.pdf</a>
+                        <button type="button" class="reg-file-item__remove" id="bizFileDel"
+                                onclick="removeFile('bizFile')" title="삭제"></button>
+                        <input type="file" id="bizFile" name="bizFile" style="display:none;"
+                               accept=".pdf,.jpg,.jpeg,.png"
+                               onchange="handleFileChange(this,'bizFileLink','bizFileDel')" />
+                      </div>
+                      <p class="adm-hint">PDF, JPG, PNG 지원 / 최대 10MB</p>
+                    </td>
+                  </tr>
+
+                  <!-- 행 4: 대표 휴대폰 번호 -->
+                  <tr>
+                    <th scope="row">대표 휴대폰 번호</th>
+                    <td colspan="3">
+                      <div class="adm-inline-group">
+                        <!-- [Java] th:value="${corp.ceoTel1}" -->
+                        <input type="text" id="ceoTel1" name="ceoTel1"
+                               class="rss-input" style="width:70px;text-align:center;"
+                               value="010" maxlength="4" inputmode="numeric"
+                               oninput="this.value=this.value.replace(/[^0-9]/g,'')" />
+                        <span class="adm-inline-sep">-</span>
+                        <!-- [Java] th:value="${corp.ceoTel2}" -->
+                        <input type="text" id="ceoTel2" name="ceoTel2"
+                               class="rss-input" style="width:80px;text-align:center;"
+                               value="0000" maxlength="4" inputmode="numeric"
+                               oninput="this.value=this.value.replace(/[^0-9]/g,'')" />
+                        <span class="adm-inline-sep">-</span>
+                        <!-- [Java] th:value="${corp.ceoTel3}" -->
+                        <input type="text" id="ceoTel3" name="ceoTel3"
+                               class="rss-input" style="width:80px;text-align:center;"
+                               value="1111" maxlength="4" inputmode="numeric"
+                               oninput="this.value=this.value.replace(/[^0-9]/g,'')" />
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- 행 5: 이메일 주소 -->
+                  <tr>
+                    <th scope="row">이메일 주소</th>
+                    <td colspan="3">
+                      <div class="adm-inline-group">
+                        <!-- [Java] th:value="${corp.emailId}" -->
+                        <input type="text" id="emailId" name="emailId"
+                               class="rss-input" style="width:140px;"
+                               value="jalnan" />
+                        <span class="adm-inline-sep">@</span>
+                        <!-- [Java] th:value="${corp.emailDomain}" -->
+                        <input type="text" id="emailDomain" name="emailDomain"
+                               class="rss-input" style="width:140px;"
+                               value="naver.com" />
+                        <!-- [Java] th:value="${corp.emailDomainSelect}" -->
+                        <select class="rss-select" id="emailDomainSelect"
+                                onchange="setEmailDomain(this)" style="width:140px;">
+                          <option value="">선택</option>
+                          <option value="naver.com">naver.com</option>
+                          <option value="gmail.com">gmail.com</option>
+                          <option value="daum.net">daum.net</option>
+                          <option value="kakao.com">kakao.com</option>
+                          <option value="direct">직접입력</option>
+                        </select>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- 행 6: 사업장 주소 -->
+                  <tr>
+                    <th scope="row">사업장 주소</th>
+                    <td colspan="3">
+                      <div class="adm-inline-group" style="margin-bottom:6px;">
+                        <!-- [Java] th:value="${corp.bizPostCode}" -->
+                        <input type="text" id="bizPostCode" name="bizPostCode"
+                               class="rss-input" style="width:90px;"
+                               value="13383" readonly />
+                        <button type="button" class="rss-btn rss-btn--outline rss-btn--sm"
+                                onclick="openAddrSearch()">주소 찾기</button>
+                      </div>
+                      <div class="adm-inline-group">
+                        <!-- [Java] th:value="${corp.bizAddrMain}" -->
+                        <input type="text" id="bizAddrMain" name="bizAddrMain"
+                               class="rss-input" style="flex:1;"
+                               value="경기도 부천시 조마루로 111" readonly />
+                        <!-- [Java] th:value="${corp.bizAddrDetail}" -->
+                        <input type="text" id="bizAddrDetail" name="bizAddrDetail"
+                               class="rss-input" style="flex:1;"
+                               value="1401호(부천나나빌딩)" />
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- 행 7: 상태 (공개/비공개) -->
+                  <tr>
+                    <th scope="row">상태<span class="required">*</span></th>
+                    <td colspan="3">
+                      <div class="adm-check-group">
+                        <!-- [Java] th:checked="${corp.publicYn == 'Y'}" -->
+                        <label class="adm-radio-label">
+                          <input type="radio" id="orderCorpPublicYnY" name="orderCorpPublicYn"
+                                 value="Y" checked /> 공개
+                        </label>
+                        <label class="adm-radio-label">
+                          <input type="radio" id="orderCorpPublicYnN" name="orderCorpPublicYn"
+                                 value="N" /> 비공개
+                        </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div><!-- /write-section__body -->
+          </div><!-- /write-section -->
+
+        </div><!-- /rss-card -->
+
+        <!-- ─── 하단 버튼 영역 (카드 밖, 베이지 배경 위) ──────────────
+             스토리보드 ②: 저장 / ③: 취소
+        ──────────────────────────────────────────────────────── -->
+        <div class="rss-page-actions">
+          <!-- [Java] 수정 모드에서만 표시: th:if="${mode == 'edit'}" -->
+          <div class="rss-page-actions--left">
+            <!-- 발주기업은 삭제 대신 공개/비공개 처리 — 스토리보드 협의사항 참조 -->
+          </div>
+          <!-- ③ 취소 -->
+          <button type="button" class="rss-btn adm-btn--cancel"
+                  onclick="location.href='order-corp-list.html'">취소</button>
+          <!-- ② 저장 -->
+          <button type="submit" class="rss-btn adm-btn--save"
+                  onclick="return submitOrderCorpForm(event)">저장</button>
+        </div>
+
+      </form><!-- /orderCorpWriteForm -->
+
+    </main>
+
+    <div id="rss-footer-wrap"></div>
+  </div><!-- /adm-main -->
+</div><!-- /adm-layout -->
+
+<!-- ══════════════════════════════════════════════════
+     공통 스크립트
+══════════════════════════════════════════════════ -->
+<script src="../rss-common.js?v=20260518"></script>
+<script src="adm-common.js?v=20260518"></script>
+<script>
+lucide.createIcons();
+
+/* ── 이메일 도메인 선택 ──────────────────────────── */
+function setEmailDomain(sel) {
+  var domain = document.getElementById('emailDomain');
+  if (sel.value === 'direct') {
+    domain.value = '';
+    domain.readOnly = false;
+    domain.focus();
+  } else if (sel.value) {
+    domain.value = sel.value;
+    domain.readOnly = true;
+  } else {
+    domain.value = '';
+    domain.readOnly = false;
+  }
+}
+
+/* ── 파일 첨부 ──────────────────────────────────── */
+function triggerFileInput(inputId) {
+  document.getElementById(inputId).click();
+}
+
+function handleFileChange(input, linkId, delId) {
+  if (input.files && input.files[0]) {
+    var link = document.getElementById(linkId);
+    var del  = document.getElementById(delId);
+    link.textContent = input.files[0].name;
+    link.style.display = 'inline';
+    if (del) del.style.display = 'inline-block';
+  }
+}
+
+function removeFile(inputId) {
+  var input = document.getElementById(inputId);
+  var link  = document.getElementById(inputId + 'Link');
+  var del   = document.getElementById(inputId + 'Del');
+  if (input) input.value = '';
+  if (link) { link.textContent = ''; link.style.display = 'none'; }
+  if (del)  del.style.display = 'none';
+  // [Java] 기존 파일 삭제 플래그: <input type="hidden" name="bizFileDel" value="Y">
+}
+
+/* ── 사업자번호 중복확인 ─────────────────────────── */
+function checkBizNoDuplicate() {
+  var no = document.getElementById('bizNo1').value
+         + document.getElementById('bizNo2').value
+         + document.getElementById('bizNo3').value;
+  if (no.length < 10) {
+    alert('사업자번호를 모두 입력해 주세요.');
+    return;
+  }
+  // [Java] GET /adm/order-corp/biz-no/check?bizNo= → 중복 여부 반환
+  alert('중복확인 기능은 Java 연동 후 처리됩니다.');
+}
+
+/* ── 주소 찾기 (카카오 우편번호 서비스 연동) ──────── */
+function openAddrSearch() {
+  // [Java] 카카오 우편번호 API 연동 후 bizPostCode, bizAddrMain 자동 입력
+  alert('주소 찾기 기능은 카카오 API 연동 후 처리됩니다.');
+}
+
+/* ── 폼 저장 ② ──────────────────────────────────── */
+function submitOrderCorpForm(e) {
+  e.preventDefault();
+  var corpNm = document.getElementById('orderCorpNm').value.trim();
+  if (!corpNm) {
+    alert('상호를 입력해 주세요.');
+    return false;
+  }
+  var bizNo = document.getElementById('bizNo1').value
+            + document.getElementById('bizNo2').value
+            + document.getElementById('bizNo3').value;
+  if (bizNo.length < 10) {
+    alert('사업자번호를 모두 입력해 주세요.');
+    return false;
+  }
+  if (confirm('저장하시겠습니까?')) {
+    // [Java] POST /adm/order-corp/reg 또는 /adm/order-corp/mod/{seq}
+    alert('저장 기능은 Java 연동 후 처리됩니다.');
+    location.href = 'order-corp-list.html';
+  }
+  return false;
+}
+</script>
+
+</body>
+</html>
