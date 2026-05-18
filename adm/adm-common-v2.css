@@ -735,7 +735,7 @@
 }
 /* 넓은 모달 (업체찾기 등 테이블 포함 모달) */
 .adm-modal-box--wide {
-  width: 770px;
+  width: 800px;
 }
 
 /* ─── 관리자 전용 전체보기 버튼 hover 오버라이드 ──────────────────
@@ -1298,7 +1298,8 @@
   background: #fff;
   border-radius: 10px;
   padding: 28px 32px;
-  width: 420px;
+  width: 500px;  /* 기간 2개 + 체크박스 1줄 수용 */
+  max-width: 96vw;
   box-shadow: 0 8px 32px rgba(0,0,0,0.18);
 }
 .adm-suspend-modal__title {
@@ -1312,7 +1313,8 @@
   align-items: center;
   gap: 8px;
   margin-bottom: 12px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;  /* 기간 1줄 고정 */
+  white-space: nowrap;
 }
 .adm-suspend-modal__label {
   font-size: 13px;

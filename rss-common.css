@@ -720,6 +720,71 @@ select.rss-form-input,
 .rss-textarea::placeholder {
   color: #9ca3af;
 }
+
+/* ═══════════════════════════════════════════════════════════
+   ─── 날짜 인풋 공통 스타일 (input[type="date"].rss-input) ──────
+   ■ 앞으로 날짜 선택은 반드시 이 형식만 사용
+   ■ 사용법: <input type="date" class="rss-input" />
+   ■ 플레이스홀더(연도-월-일)는 브라우저 자동 표시 — 별도 placeholder 속성 불필요
+   ■ 캘린더 아이콘: 디자인 시스템 amber 계열로 통일
+   ■ 높이: rss-btn / rss-input 기본 높이(38px)와 동일
+═══════════════════════════════════════════════════════════ */
+input[type="date"].rss-input {
+  height: 38px;
+  padding-top: 0;
+  padding-bottom: 0;
+  line-height: 38px;
+  cursor: pointer;
+  min-width: 140px;
+}
+
+/* 날짜 텍스트 영역 색상 — 미선택 시 muted, 선택 후 text */
+input[type="date"].rss-input::-webkit-datetime-edit {
+  color: var(--rss-text);
+}
+input[type="date"].rss-input::-webkit-datetime-edit-fields-wrapper {
+  padding: 0;
+}
+input[type="date"].rss-input::-webkit-datetime-edit-text {
+  color: var(--rss-muted);
+  padding: 0 2px;
+}
+input[type="date"].rss-input::-webkit-datetime-edit-year-field,
+input[type="date"].rss-input::-webkit-datetime-edit-month-field,
+input[type="date"].rss-input::-webkit-datetime-edit-day-field {
+  color: var(--rss-muted);
+}
+input[type="date"].rss-input:not(:placeholder-shown)::-webkit-datetime-edit-year-field,
+input[type="date"].rss-input:not(:placeholder-shown)::-webkit-datetime-edit-month-field,
+input[type="date"].rss-input:not(:placeholder-shown)::-webkit-datetime-edit-day-field {
+  color: var(--rss-text);
+}
+
+/* 캘린더 아이콘 — amber 계열로 통일 */
+input[type="date"].rss-input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.6;
+  filter: invert(60%) sepia(80%) saturate(400%) hue-rotate(5deg) brightness(95%);
+  /* amber(#f59e0b) 계열로 변환 */
+  transition: opacity 0.15s;
+}
+input[type="date"].rss-input::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+/* 포커스 시 테두리 — rss-input:focus 와 동일 */
+input[type="date"].rss-input:focus {
+  border-color: var(--rss-amber);
+  box-shadow: 0 0 0 3px var(--rss-amber-ring);
+}
+
+/* 비활성화 상태 */
+input[type="date"].rss-input:disabled {
+  background: #f3f4f6;
+  color: var(--rss-muted);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
 .rss-textarea { resize: vertical; min-height: 130px; }
 .rss-form-group { margin-bottom: 18px; }
 
@@ -1511,9 +1576,11 @@ select.rss-form-input,
 /* 불이행 기간 열 — rss-col-period와 동일 너비 */
 .rss-col-violation-period { width: 20%; }
 /* 선택 버튼 열 — 모달 내 단일 액션 (버튼 + 좌우 여백 확보) */
-.rss-col-select { width: 90px; }
+.rss-col-select { width: 5%; }
+/* 아이디 열 */
+.rss-col-id { width: 10%; }
 /* 차단업체명 열 */
-.rss-col-block-corp { width: 10%; }
+.rss-col-block-corp { /* width: auto */ }
 /* 취소사유/불이행사유 등 사유 열 */
 .rss-col-reason { width: 20%; }
 /* 관리 열 wide — 버튼 2개 이상 필요 시 */

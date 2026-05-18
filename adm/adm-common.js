@@ -266,7 +266,7 @@ var _blockCorpModalSeq      = null; /* non-performance-list 전용 시퀀스 */
             <col class="rss-col-nm" />
             <col class="rss-col-bizno" />
             <col class="rss-col-addr" />
-            <col class="rss-col-select" />
+            <col class="rss-col-mgmt" />     <!-- 선택 버튼 열 10% -->
           </colgroup>
           <thead>
             <tr>

@@ -486,19 +486,19 @@
     <div class="adm-suspend-modal__row">
       <span class="adm-suspend-modal__label">기간</span>
       <!-- [Java] th:value="${company.suspendStartDt}" -->
-      <input type="date" class="rss-input" id="suspendStartDt" style="width:140px;" />
+      <input type="date" class="rss-input" id="suspendStartDt" />
       <span style="color:#64748b;">~</span>
       <!-- [Java] th:value="${company.suspendEndDt}" -->
-      <input type="date" class="rss-input" id="suspendEndDt" style="width:140px;" />
+      <input type="date" class="rss-input" id="suspendEndDt" />
     </div>
     <div class="adm-suspend-modal__row">
       <!-- [Java] th:checked="${company.suspendForeverYn == 'Y'}" -->
-      <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;">
+      <label class="adm-radio-label">
         <input type="checkbox" id="suspendForeverChk" onchange="toggleSuspendForever(this)" />
         영구 이용 정지
       </label>
       <!-- 사용정지 설정 모달에서만 표시 — [Java] th:if="${company.status == 'suspend'}" -->
-      <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;margin-left:16px;"
+      <label class="adm-radio-label" style="margin-left:8px;"
              id="suspendReleaseLabel">
         <input type="checkbox" id="suspendReleaseChk" onchange="toggleSuspendRelease(this)" />
         사용 정지 해제
