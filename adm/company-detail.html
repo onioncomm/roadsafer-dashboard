@@ -39,19 +39,17 @@
     <main class="rss-content">
 
       <!-- ══════════════════════════════════════════════════
-           기업 정보 카드 (M4-1-1)
+           기업 정보 섹션 (M4-1-1)
       ══════════════════════════════════════════════════ -->
-      <div class="rss-card">
-
-        <!-- ─── 기업 정보 섹션 ─────────────────────────────── -->
-        <div class="write-section">
-          <div class="write-section__head">
-            <i data-lucide="building-2" style="width:16px;height:16px;color:var(--rss-amber);flex-shrink:0;"></i>
-            <h2 class="write-section__title">기업 정보</h2>
-            <!-- [Java] th:text="${company.statusNm}" -->
-            <span class="adm-badge adm-badge--normal" id="companyStatusBadge">정상</span>
-          </div>
-          <div class="write-section__body">
+      <!-- ─── 기업 정보 섹션 ───────────────────────────────────── -->
+      <section class="write-section" aria-labelledby="secCorpInfoTitle">
+        <div class="write-section__head">
+          <i data-lucide="building-2" style="width:16px;height:16px;color:var(--rss-amber);flex-shrink:0;"></i>
+          <h2 class="write-section__title" id="secCorpInfoTitle">기업 정보</h2>
+          <!-- [Java] th:text="${company.statusNm}" -->
+          <span class="adm-badge adm-badge--normal" id="companyStatusBadge">정상</span>
+        </div><!-- /write-section__head -->
+        <div class="write-section__body">
 
             <!-- [Java] th:object="${company}" -->
             <table class="adm-form-table">
@@ -246,10 +244,8 @@
               </tbody>
             </table>
 
-          </div><!-- /write-section__body -->
-        </div><!-- /write-section -->
-
-      </div><!-- /rss-card -->
+        </div><!-- /write-section__body -->
+      </section><!-- /write-section 기업 정보 -->
 
       <!-- ─── 하단 버튼 영역 (카드 밖, 베이지 배경 위) ──────────────
            스토리보드 ②: 상태에 따라 버튼 다름
@@ -295,12 +291,11 @@
       <!-- ══════════════════════════════════════════════════
            TMA 카드 섹션
       ══════════════════════════════════════════════════ -->
-      <div class="rss-card adm-card--mt">
-        <div class="write-section">
-          <div class="write-section__head" style="justify-content:space-between;">
+      <section class="write-section adm-section--mt" aria-labelledby="secTmaTitle">
+        <div class="write-section__head" style="justify-content:space-between;">
             <div style="display:flex;align-items:center;gap:8px;">
               <i data-lucide="car" style="width:16px;height:16px;color:var(--rss-amber);flex-shrink:0;"></i>
-              <h2 class="write-section__title">TMA 카드</h2>
+              <h2 class="write-section__title" id="secTmaTitle">TMA 카드</h2>
             </div>
             <!-- ⑥ 신규 등록 버튼 -->
             <button type="button" class="rss-btn rss-btn--amber" onclick="addTmaNewRow()">
@@ -483,8 +478,7 @@
             </div>
 
           </div><!-- /write-section__body -->
-        </div><!-- /write-section -->
-      </div><!-- /rss-card TMA -->
+      </section><!-- /write-section TMA 카드 -->
 
     </main>
 

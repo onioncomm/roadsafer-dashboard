@@ -55,18 +55,16 @@
         <!-- [Java] 수정 모드: <input type="hidden" name="orderCorpSeq" th:value="${corp.orderCorpSeq}"> -->
         <!-- [Java] <input type="hidden" name="mode" th:value="${mode}"> -->
 
-        <div class="rss-card">
-
-          <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-               섹션: 기업 정보
-          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-          <div class="write-section">
-            <div class="write-section__head">
-              <i data-lucide="briefcase" style="width:16px;height:16px;color:var(--rss-primary);flex-shrink:0;"></i>
-              <h2 class="write-section__title" id="secCorpTitle">기업 정보</h2>
-              <span class="adm-required-note">*는 필수입니다</span>
-            </div>
-            <div class="write-section__body">
+        <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+             섹션: 기업 정보
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+        <section class="write-section" aria-labelledby="secCorpTitle">
+          <div class="write-section__head">
+            <i data-lucide="briefcase" style="width:16px;height:16px;color:var(--rss-primary);flex-shrink:0;"></i>
+            <h2 class="write-section__title" id="secCorpTitle">기업 정보</h2>
+            <span class="adm-required-note">*는 필수입니다</span>
+          </div><!-- /write-section__head -->
+          <div class="write-section__body">
               <table class="adm-form-table">
                 <tbody>
 
@@ -238,10 +236,8 @@
 
                 </tbody>
               </table>
-            </div><!-- /write-section__body -->
-          </div><!-- /write-section -->
-
-        </div><!-- /rss-card -->
+          </div><!-- /write-section__body -->
+        </section><!-- /write-section 기업 정보 -->
 
         <!-- ─── 하단 버튼 영역 (카드 밖, 베이지 배경 위) ──────────────
              스토리보드 ②: 저장 / ③: 취소
