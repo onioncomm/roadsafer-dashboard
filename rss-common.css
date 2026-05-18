@@ -1617,7 +1617,7 @@ input[type="date"].rss-input:disabled {
 /* 번호 열 — 고정 좁은 너비 */
 .rss-col-no     { width: 5%; }
 /* 상태 열 — 배지 표시용 */
-.rss-col-status { width: 10%; }
+.rss-col-status { width: 5%; }
 /* 공사명/제목 등 주요 데이터 열 — 나머지 공간 차지 (auto) */
 .rss-col-nm     { width: 20%; }  /* 모달 업체명 열 고정 */
 /* 발주업체명 열 */
