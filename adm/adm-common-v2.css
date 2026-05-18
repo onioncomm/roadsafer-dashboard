@@ -1299,10 +1299,16 @@
   font-weight: 600;
   white-space: nowrap;
 }
-.adm-badge--pending  { background: #fef3c7; color: #d97706; }   /* 대기 */
-.adm-badge--normal   { background: #f0fdf4; color: #16a34a; }   /* 정상 */
-.adm-badge--suspend  { background: #f1f5f9; color: #64748b; }   /* 사용 정지 */
-.adm-badge--reject   { background: #fef2f2; color: #dc2626; }   /* 반려 */
+.adm-badge--pending    { background: #fef3c7; color: #d97706; }   /* 대기 */
+.adm-badge--normal     { background: #f0fdf4; color: #16a34a; }   /* 정상 */
+.adm-badge--suspend    { background: #f1f5f9; color: #64748b; }   /* 사용 정지 */
+.adm-badge--reject     { background: #fef2f2; color: #dc2626; }   /* 반려 */
+/* 공사 상태 배지 (용어사전 §13-3) */
+.adm-badge--matching   { background: #ede9fe; color: #7c3aed; }   /* 매칭전 */
+.adm-badge--scheduled  { background: #eff6ff; color: #2563eb; }   /* 예정 */
+.adm-badge--progress   { background: #fef3c7; color: #d97706; }   /* 진행중 */
+.adm-badge--complete   { background: #f0fdf4; color: #16a34a; }   /* 종료 */
+.adm-badge--cancel     { background: #fef2f2; color: #dc2626; }   /* 취소 */
 
 /* 목록 하단: 액션 버튼이 있는 페이지네이션 래퍼
    rss-pagination의 padding/높이를 그대로 유지하면서
@@ -1471,4 +1477,158 @@
 }
 .adm-section--mt {
   margin-top: 20px;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   상세 탭 (adm-detail-tabs)
+   공사 상세, 기업 상세 등 탭 구조가 있는 상세 페이지에 사용
+   사용자 페이지의 detail-tabs / detail-tab 구조를 관리자용으로 공통화
+   사용: <div class="adm-detail-tabs"> <button class="adm-detail-tab active">...</button> </div>
+══════════════════════════════════════════════════════════════════════════ */
+.adm-detail-tabs {
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
+  padding: 16px 24px 0;
+  border-bottom: 2px solid #e5e7eb;
+}
+.adm-detail-tab {
+  padding: 9px 22px;
+  font-size: var(--rss-font-md);
+  font-weight: 600;
+  color: #6b7280;
+  cursor: pointer;
+  border: none;
+  background: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: color 0.15s, border-color 0.15s;
+}
+.adm-detail-tab:hover { color: #374151; }
+/* 관리자 포인트 컬러(amber) 동일 적용 */
+.adm-detail-tab.active { color: var(--rss-amber-dark); border-bottom-color: var(--rss-amber); }
+
+/* 탭 패널 — rss-tab-panel 공통 클래스 재사용 */
+/* .rss-tab-panel { display: none; } / .rss-tab-panel.active { display: block; } 은 rss-common.css에 정의됨 */
+
+/* ─── 상세 상태 행 ─────────────────────────────────────────────────────────
+   탭 패널 상단 상태 배지 + 수정된 정보 표시 행
+   사용: <div class="adm-detail-status-row"> <span class="adm-detail-status-label">상태 :</span> ... </div>
+──────────────────────────────────────────────────────────────────────────── */
+.adm-detail-status-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f3f4f6;
+}
+.adm-detail-status-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #374151;
+}
+/* 수정된 정보 강조 (빨간색) — 용어사전 §13-4 */
+.text-modified { color: #dc2626 !important; font-weight: 700; }
+.modified-notice { font-size: 12px; color: #dc2626; font-weight: 600; float: right; margin-top: 4px; }
+
+/* ─── 차단 신청 모달 내 수량 배지 / 차량 체크박스 리스트 ──────────────────────
+   M1-2-1 차단정보 등록/수정 모달에서 사용
+   사용: <span class="adm-item-count-badge">1대</span>
+         <div class="adm-vehicle-list"> <label class="adm-vehicle-item"> ... </label> </div>
+──────────────────────────────────────────────────────────────────────────── */
+.adm-item-count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 24px;
+  padding: 0 8px;
+  background-color: #94a3b8;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+.adm-vehicle-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+.adm-vehicle-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: var(--rss-font-sm);
+  color: #374151;
+}
+.adm-vehicle-item input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--rss-amber);
+}
+
+/* ─── 진행상황 탭 합계 금액 표시 ─────────────────────────────────────────────
+   진행상황 탭 상단 우측 현재 합계 금액
+   사용: <div class="adm-prog-total"> <span class="adm-prog-total__label">현재 합계</span> <strong class="adm-prog-total__amount">...</strong> </div>
+──────────────────────────────────────────────────────────────────────────── */
+.adm-prog-total {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-end;
+  padding: 12px 24px 0;
+}
+.adm-prog-total__label {
+  font-size: var(--rss-font-sm);
+  color: var(--rss-muted);
+}
+.adm-prog-total__amount {
+  font-size: var(--rss-font-md);
+  font-weight: 700;
+  color: #1e293b;
+}
+
+/* ─── 하단 버튼 행 좌우 분리 변형 ────────────────────────────────────────────
+   좌측: 수정·취소 등 조건부 버튼 / 우측: 목록 버튼
+   사용: <div class="rss-page-actions rss-page-actions--split">
+           <div class="rss-page-actions__left"> ... </div>
+           <div class="rss-page-actions__right"> ... </div>
+         </div>
+──────────────────────────────────────────────────────────────────────────── */
+.rss-page-actions--split {
+  justify-content: space-between;
+}
+.rss-page-actions--split .rss-page-actions__left,
+.rss-page-actions--split .rss-page-actions__right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+@media (max-width: 640px) {
+  .rss-page-actions--split {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .rss-page-actions--split .rss-page-actions__left,
+  .rss-page-actions--split .rss-page-actions__right {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ─── 안내 박스 flex 변형 ─────────────────────────────────────────────────────
+   아이콘 + 텍스트 + 버튼을 가로로 정렬할 때 사용
+   사용: <div class="rss-notice adm-notice--flex"> ... </div>
+──────────────────────────────────────────────────────────────────────────── */
+.adm-notice--flex {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }

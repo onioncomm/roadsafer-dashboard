@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>공사 상세 — 로드세이프티시스템 관리자</title>
+  <!-- 공통 CSS -->
+  <link rel="stylesheet" href="../rss-common.css?v=20260518" />
+  <link rel="stylesheet" href="adm-common-v2.css?v=20260518" />
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide 아이콘 CDN -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+</head>
+<body>
+<!-- ══════════════════════════════════════════════════
+     관리자 레이아웃
+══════════════════════════════════════════════════ -->
+<div id="adm-topbar-wrap"></div>
+<div class="adm-layout">
+  <div id="adm-sidebar-wrap"></div>
+  <div class="adm-main">
+    <!-- 브레드크럼 -->
+    <div class="adm-breadcrumb">
+      <h1 class="adm-breadcrumb__title">공사 상세</h1>
+      <nav class="adm-breadcrumb__nav" aria-label="breadcrumb">
+        <a href="#">홈</a>
+        <span class="adm-breadcrumb__sep">›</span>
+        <a href="construction-list.html">공사 관리</a>
+        <span class="adm-breadcrumb__sep">›</span>
+        <span class="adm-breadcrumb__current">공사 상세</span>
+      </nav>
+    </div>
+    <main class="rss-content">
+      <!-- ══════════════════════════════════════════════════
+           공사 상세 카드 (M1-1 ~ M1-3)
+           [DB] 테이블: rs_construction
+           [Java] model.addAttribute("construction", constructionVO)
+      ══════════════════════════════════════════════════ -->
+      <div class="rss-card" style="padding:0;">
+        <!-- ── 탭 네비게이션 ── -->
+        <div class="adm-detail-tabs" role="tablist">
+          <!-- [Java] th:classappend="${activeTab == 'tab-info'} ? 'active'" -->
+          <button class="adm-detail-tab active" role="tab" data-tab="tab-info"   aria-selected="true">공사 정보</button>
+          <button class="adm-detail-tab"        role="tab" data-tab="tab-block"  aria-selected="false">차단 정보</button>
+          <button class="adm-detail-tab"        role="tab" data-tab="tab-status" aria-selected="false">진행 상황</button>
+        </div>
+
+        <!-- ══════════════════════════════════════════════════
+             탭 1: 공사 정보 (M1-1)
+             [DB] 테이블: rs_construction
+             [Java] ${construction} — 공사 VO
+        ══════════════════════════════════════════════════ -->
+        <div id="tab-info" class="rss-tab-panel active">
+          <div style="padding:24px;">
+            <!-- 상태 행 -->
+            <div class="adm-detail-status-row">
+              <span class="adm-detail-status-label">상태 :</span>
+              <!-- [Java] th:text="${construction.statusNm}" / th:classappend 로 배지 클래스 분기 -->
+              <span class="adm-badge adm-badge--progress">진행중</span>
+              <!-- [Java] th:if="${construction.modifiedYn == 'Y'}" — 수정된 정보 배지 -->
+              <span class="adm-badge adm-badge--cancel">* 수정된 정보</span>
+            </div>
+            <!-- 공사 정보 테이블 -->
+            <div class="rss-table-wrap">
+              <table class="rss-table rss-table--detail">
+                <tbody>
+                  <tr>
+                    <th scope="row">공사명</th>
+                    <!-- [Java] th:text="${construction.constructionNm}" -->
+                    <td>횡단보도 시공</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">발주업체명</th>
+                    <!-- [Java] th:href="@{/adm/order-corp/detail/{seq}(seq=${construction.orderCorpSeq})}" -->
+                    <!-- [Java] th:text="${construction.orderCorpNm}" -->
+                    <td>
+                      <a href="order-corp-list.html?seq=1" class="rss-link">웅진토건</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">담당자</th>
+                    <!-- [Java] th:text="${construction.managerNm} + ' (' + ${construction.managerTel} + ')'" -->
+                    <td class="text-modified">송아중 (010-5555-6666)</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">기간</th>
+                    <!-- [Java] th:text="${construction.startDt} + ' ~ ' + ${construction.endDt} + ' (차단 기간 : ' + ${construction.workDayCnt} + '일, 공사없음 : ' + ${construction.noWorkDates} + ')'" -->
+                    <td>2026-06-25 ~ 2026-06-30 (차단 기간 : 4일, 공사없음 : 06/28, 06/29)</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">시간</th>
+                    <!-- [Java] th:text="${construction.workTimeDesc}" -->
+                    <td>주간, 야간 / 19시 차단 시작</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">도로 구분</th>
+                    <!-- [Java] th:text="${construction.roadClassNm}" -->
+                    <td>국도</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">길 구분</th>
+                    <!-- [Java] th:text="${construction.laneClassNm}" -->
+                    <td>본선</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">도로명</th>
+                    <!-- [Java] th:text="${construction.roadNm}" -->
+                    <td>국도 32번</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">방향</th>
+                    <!-- [Java] th:text="${construction.direction}" -->
+                    <td>대전</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">공사구간</th>
+                    <!-- [Java] th:text="${construction.blockSection}" -->
+                    <!-- [Java] th:classappend="${construction.modifiedYn == 'Y'} ? 'text-modified'" -->
+                    <td class="text-modified">105.6km ~ 105.7km</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">품목 수량</th>
+                    <!-- [Java] th:text="${construction.equipSummary}" -->
+                    <td>TMA1 : 1대, TMA3 : 2대, PLCS : 2대, 신호수 : 2명</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">시연회</th>
+                    <!-- [Java] th:if="${construction.rehearsalDt != null}" -->
+                    <!-- [Java] th:text="'시연회 날짜 : ' + ${construction.rehearsalDt} + ', ' + ${construction.rehearsalDesc}" -->
+                    <td>시연회 날짜 : 2026-06-22, 반공수 적용</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">권역</th>
+                    <!-- [Java] th:text="${construction.region}" -->
+                    <td>대전, 충남</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">책정 단가(1대당)</th>
+                    <td>
+                      <!-- [Java] th:if="${construction.urgentYn == 'Y'}" -->
+                      <div class="unit-price-box">
+                        <span class="adm-badge adm-badge--cancel" style="padding:2px 8px; font-size:11px; margin-right:6px;">긴급</span>
+                        <!-- [Java] th:text="${construction.unitPriceSummary}" -->
+                        TMA1 : 600,000, TMA3 : 1,000,000, PLCS : 900,000, 신호수 : 250,000
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">공개 여부</th>
+                    <!-- [Java] th:text="${construction.openYn == 'Y'} ? '공개' : '비공개'" -->
+                    <td>공개</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- 하단 버튼: 좌측(수정·공사취소) + 우측(목록) -->
+            <div class="rss-page-actions rss-page-actions--split">
+              <div class="rss-page-actions__left">
+                <!-- [Java] 수정 버튼: construction-write.html?seq=${construction.constructionSeq} -->
+                <a href="construction-write.html?seq=1001" class="rss-btn rss-btn--outline">
+                  <i data-lucide="pencil" style="width:14px;height:14px;"></i> 수정
+                </a>
+                <!-- [Java] th:if="${construction.status != 'CANCELLED' and construction.status != 'COMPLETED'}" -->
+                <button type="button" class="rss-btn rss-btn--outline-cancel" onclick="openConstCancelModal()">
+                  <i data-lucide="x-circle" style="width:14px;height:14px;"></i> 공사 취소
+                </button>
+              </div>
+              <div class="rss-page-actions__right">
+                <a href="construction-list.html" class="rss-btn rss-btn--outline">
+                  <i data-lucide="list" style="width:14px;height:14px;"></i> 목록
+                </a>
+              </div>
+            </div>
+          </div>
+        </div><!-- /tab-info -->
+
+        <!-- ══════════════════════════════════════════════════
+             탭 2: 차단 정보 (M1-2)
+             [DB] 테이블: rs_construction_block_req
+             [Java] ${blockReq} — 차단신청 VO
+        ══════════════════════════════════════════════════ -->
+        <div id="tab-block" class="rss-tab-panel">
+          <div style="padding:24px;">
+            <!-- 관리자 전용: 차단업체 미지정 안내 + 강제 지정 버튼 -->
+            <!-- [Java] th:if="${blockReq == null or blockReq.blockCorpSeq == null}" -->
+            <div class="rss-notice adm-notice--flex" id="blockCorpAssignNotice">
+              <i data-lucide="alert-triangle" style="width:16px;height:16px;flex-shrink:0;"></i>
+              <span>차단업체가 아직 매칭되지 않았습니다. 관리자가 직접 지정할 수 있습니다.</span>
+              <button type="button" class="rss-btn rss-btn--amber"
+                      style="margin-left:auto; white-space:nowrap;"
+                      onclick="openBlockCorpModal(1001, onBlockCorpAssigned)">
+                <i data-lucide="link" style="width:14px;height:14px;margin-right:4px;"></i>
+                차단업체 지정
+              </button>
+            </div>
+
+            <!-- 차단 정보 테이블 -->
+            <!-- [Java] th:if="${blockReq != null}" -->
+            <div class="rss-table-wrap">
+              <table class="rss-table rss-table--detail">
+                <tbody>
+                  <tr>
+                    <th scope="row">차단업체명</th>
+                    <!-- [Java] th:text="${blockReq.blockCorpNm}" -->
+                    <td>대한안전</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">담당자</th>
+                    <!-- [Java] th:text="${blockReq.managerNm} + ' (' + ${blockReq.managerTel} + ')'" -->
+                    <td>김석진 (010-1234-5678)</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">차단 구간</th>
+                    <!-- [Java] th:text="${blockReq.blockSection}" -->
+                    <td>32번 국도 대전방향 105.5km ~ 105.8km 400미터</td>
+                  </tr>
+                  <!-- TMA1 -->
+                  <tr>
+                    <th scope="row">TMA1</th>
+                    <!-- [Java] th:each="item : ${blockReq.tma1List}" -->
+                    <td>
+                      <div class="flex items-center gap-2 flex-wrap">
+                        <span class="rss-badge rss-badge--scheduled">1대</span>
+                        <div class="flex flex-col gap-1">
+                          <!-- [Java] th:each="tma : ${blockReq.tma1List}" -->
+                          <a href="#" class="rss-link" style="font-size:var(--rss-font-sm);">11누1111 우리국도차단.pdf</a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <!-- TMA3 -->
+                  <tr>
+                    <th scope="row">TMA3</th>
+                    <!-- [Java] th:each="item : ${blockReq.tma3List}" -->
+                    <td>
+                      <div class="flex items-center gap-2 flex-wrap">
+                        <span class="rss-badge rss-badge--scheduled">2대</span>
+                        <div class="flex flex-col gap-1">
+                          <a href="#" class="rss-link" style="font-size:var(--rss-font-sm);">11소1111 우리국도차단.pdf</a>
+                          <!-- [Java] th:if="${tma.separateSubmitYn == 'Y'}" -->
+                          <span style="font-size:var(--rss-font-sm); color:var(--rss-muted);">1건 : 별도제출</span>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <!-- PLCS -->
+                  <tr>
+                    <th scope="row">PLCS</th>
+                    <!-- [Java] th:each="item : ${blockReq.plcsList}" -->
+                    <td>
+                      <div class="flex items-center gap-2 flex-wrap">
+                        <span class="rss-badge rss-badge--scheduled">2대</span>
+                        <div class="flex flex-col gap-1">
+                          <!-- [Java] th:if="${blockReq.plcsSeparateCnt > 0}" -->
+                          <span style="font-size:var(--rss-font-sm); color:var(--rss-muted);">2건 : 별도제출</span>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <!-- 신호수 -->
+                  <tr>
+                    <th scope="row">신호수</th>
+                    <!-- [Java] th:text="${blockReq.signalerCnt} + '명'" -->
+                    <td><span class="rss-badge rss-badge--scheduled">0명</span></td>
+                  </tr>
+                  <!-- 의견 -->
+                  <tr>
+                    <th scope="row">의견</th>
+                    <!-- [Java] th:text="${blockReq.opinion}" -->
+                    <td>신호수도 1명 필요보입니다</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- 파일 일괄 다운로드 -->
+            <!-- [Java] th:if="${blockReq != null and blockReq.fileList.size() > 0}" -->
+            <div style="margin-top:12px; text-align:right;">
+              <button type="button" class="rss-btn rss-btn--outline" onclick="downloadAllBlockFiles()">
+                <i data-lucide="download" style="width:14px;height:14px;margin-right:4px;"></i>
+                파일 일괄 다운로드
+              </button>
+            </div>
+
+            <!-- 하단 버튼: 좌측(수정·차단신청 취소) + 우측(목록) -->
+            <div class="rss-page-actions rss-page-actions--split">
+              <div class="rss-page-actions__left">
+                <!-- [Java] th:if="${blockReq != null}" -->
+                <button type="button" class="rss-btn rss-btn--outline" onclick="openBlockReqEditModal()">
+                  <i data-lucide="pencil" style="width:14px;height:14px;"></i> 수정
+                </button>
+                <!-- [Java] th:if="${blockReq != null and blockReq.status == 'SCHEDULED'}" -->
+                <button type="button" class="rss-btn rss-btn--outline-cancel" onclick="openBlockReqCancelConfirm()">
+                  <i data-lucide="x-circle" style="width:14px;height:14px;"></i> 차단신청 취소
+                </button>
+              </div>
+              <div class="rss-page-actions__right">
+                <a href="construction-list.html" class="rss-btn rss-btn--outline">
+                  <i data-lucide="list" style="width:14px;height:14px;"></i> 목록
+                </a>
+              </div>
+            </div>
+          </div>
+        </div><!-- /tab-block -->
+
+        <!-- ══════════════════════════════════════════════════
+             탭 3: 진행 상황 (M1-3)
+             [DB] 테이블: rs_daily_prog
+             [Java] ${dailyProgList} / ${construction.startDt} / ${construction.endDt}
+        ══════════════════════════════════════════════════ -->
+        <div id="tab-status" class="rss-tab-panel">
+          <!-- 현재 합계 금액 (관리자 전용) -->
+          <div class="adm-prog-total">
+            <span class="adm-prog-total__label">현재 합계</span>
+            <!-- [Java] th:text="${#numbers.formatInteger(construction.totalAmt, 3, 'COMMA')} + '원'" -->
+            <strong class="adm-prog-total__amount">7,900,000원</strong>
+          </div>
+
+          <div style="padding:0 24px 24px;">
+            <!-- 캘린더 테이블 (PC) -->
+            <div class="rss-cal-table-wrap">
+              <!--
+                [Java] 캘린더 렌더링 가이드
+                - 공사 시작일(construction.startDt) 이전 주의 일요일부터 시작
+                - 공사 종료일(construction.endDt) 이후 주의 토요일까지 표시
+                - 각 날짜 셀: rs_daily_prog 테이블에서 해당 날짜의 prog_cd, amount 조회
+                - 공사 기간 외 날짜: rss-cal-cell--out 클래스 추가
+                - 오늘 날짜: rss-cal-cell--today 클래스 추가
+              -->
+              <table class="rss-cal-table" aria-label="공사 진행상황 캘린더">
+                <thead>
+                  <tr>
+                    <th scope="col">일</th>
+                    <th scope="col">월</th>
+                    <th scope="col">화</th>
+                    <th scope="col">수</th>
+                    <th scope="col">목</th>
+                    <th scope="col">금</th>
+                    <th scope="col">토</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- ── 1주차: 6/21 ~ 6/27 ── -->
+                  <!-- [Java] th:each="week : ${calWeeks}" / th:each="cell : ${week.cells}" -->
+                  <tr>
+                    <!-- 6/21: 공사 기간 외 -->
+                    <td class="rss-cal-cell--out">
+                      <div class="rss-cal-date">6/21</div>
+                    </td>
+                    <!-- 6/22: 시연회 -->
+                    <td>
+                      <div class="rss-cal-date">6/22</div>
+                      <button class="rss-cal-badge rss-cal-badge--rehearsal"
+                              onclick="openDailyProgModal('2026-06-22','REHEARSAL',2450000)"
+                              title="금액 상세 보기">시연회</button>
+                      <span class="rss-cal-amount rss-cal-amount--link"
+                            onclick="openDailyProgModal('2026-06-22','REHEARSAL',2450000)"
+                            role="button" tabindex="0">(2,450,000)</span>
+                    </td>
+                    <!-- 6/23: 공사없음 -->
+                    <td>
+                      <div class="rss-cal-date">6/23</div>
+                      <span class="rss-cal-badge rss-cal-badge--none">공사없음</span>
+                    </td>
+                    <!-- 6/24: 공사없음 -->
+                    <td>
+                      <div class="rss-cal-date">6/24</div>
+                      <span class="rss-cal-badge rss-cal-badge--none">공사없음</span>
+                    </td>
+                    <!-- 6/25: 공사완료 -->
+                    <td>
+                      <div class="rss-cal-date">6/25</div>
+                      <button class="rss-cal-badge rss-cal-badge--complete"
+                              onclick="openDailyProgModal('2026-06-25','WORK_COMPLETE',4900000)"
+                              title="금액 상세 보기">공사완료</button>
+                      <span class="rss-cal-amount rss-cal-amount--link"
+                            onclick="openDailyProgModal('2026-06-25','WORK_COMPLETE',4900000)"
+                            role="button" tabindex="0">(4,900,000)</span>
+                    </td>
+                    <!-- 6/26: 취소 -->
+                    <td>
+                      <div class="rss-cal-date">6/26</div>
+                      <button class="rss-cal-badge rss-cal-badge--cancel"
+                              onclick="openDailyProgModal('2026-06-26','CANCEL',500000)"
+                              title="금액 상세 보기">취소</button>
+                      <span class="rss-cal-amount rss-cal-amount--link"
+                            onclick="openDailyProgModal('2026-06-26','CANCEL',500000)"
+                            role="button" tabindex="0">(500,000)</span>
+                    </td>
+                    <!-- 6/27: 오늘 날짜 — 예정 + 완료/수정/취소 버튼 (관리자 전용) -->
+                    <!-- [Java] th:classappend="${cell.isToday} ? 'rss-cal-cell--today'" -->
+                    <td class="rss-cal-cell--today">
+                      <div class="rss-cal-date">6/27</div>
+                      <!-- [Java] th:if="${cell.progCd == 'SCHEDULED'}" -->
+                      <span class="rss-cal-badge rss-cal-badge--scheduled">예정</span>
+                      <!-- 관리자 전용: 완료/수정/취소 버튼 -->
+                      <div class="rss-cal-today-btns">
+                        <button type="button"
+                                class="rss-cal-btn-done"
+                                onclick="openAdmDailyProgModal('2026-06-27', 'complete')">완료</button>
+                        <button type="button"
+                                class="rss-cal-btn-done"
+                                style="background:#64748b;"
+                                onclick="openAdmDailyProgModal('2026-06-27', 'modify')">수정</button>
+                        <button type="button"
+                                class="rss-cal-btn-cancel"
+                                onclick="openAdmDailyProgModal('2026-06-27', 'cancel')">취소</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <!-- ── 2주차: 6/28 ~ 7/4 ── -->
+                  <tr>
+                    <!-- 6/28: 공사없음 -->
+                    <td>
+                      <div class="rss-cal-date">6/28</div>
+                      <span class="rss-cal-badge rss-cal-badge--none">공사없음</span>
+                    </td>
+                    <!-- 6/29: 공사없음 -->
+                    <td>
+                      <div class="rss-cal-date">6/29</div>
+                      <span class="rss-cal-badge rss-cal-badge--none">공사없음</span>
+                    </td>
+                    <!-- 6/30: 예정 -->
+                    <td>
+                      <div class="rss-cal-date">6/30</div>
+                      <span class="rss-cal-badge rss-cal-badge--scheduled">예정</span>
+                    </td>
+                    <!-- 7/1 ~ 7/4: 공사 기간 외 -->
+                    <td class="rss-cal-cell--out"><div class="rss-cal-date">7/1</div></td>
+                    <td class="rss-cal-cell--out"><div class="rss-cal-date">7/2</div></td>
+                    <td class="rss-cal-cell--out"><div class="rss-cal-date">7/3</div></td>
+                    <td class="rss-cal-cell--out"><div class="rss-cal-date">7/4</div></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div><!-- /rss-cal-table-wrap -->
+
+            <!-- 모바일: 세로 리스트 -->
+            <div class="rss-cal-list" aria-label="공사 진행상황 목록">
+              <div class="rss-cal-list-header" role="row">
+                <span role="columnheader">날짜</span>
+                <span role="columnheader">요일</span>
+                <span role="columnheader">진행상황</span>
+              </div>
+              <div class="rss-cal-list-row" role="row">
+                <span class="rss-cal-list-dt">6/22</span>
+                <span class="rss-cal-list-dow">월</span>
+                <div class="rss-cal-list-status">
+                  <button class="rss-cal-badge rss-cal-badge--rehearsal"
+                          onclick="openDailyProgModal('2026-06-22','REHEARSAL',2450000)">시연회</button>
+                  <span class="rss-cal-amount rss-cal-amount--link"
+                        onclick="openDailyProgModal('2026-06-22','REHEARSAL',2450000)"
+                        role="button" tabindex="0">(2,450,000)</span>
+                </div>
+              </div>
+              <div class="rss-cal-list-row" role="row">
+                <span class="rss-cal-list-dt">6/23</span>
+                <span class="rss-cal-list-dow">화</span>
+                <div class="rss-cal-list-status">
+                  <span class="rss-cal-badge rss-cal-badge--none">공사없음</span>
+                </div>
+              </div>
+              <div class="rss-cal-list-row" role="row">
+                <span class="rss-cal-list-dt">6/24</span>
+                <span class="rss-cal-list-dow">수</span>
+                <div class="rss-cal-list-status">
+                  <span class="rss-cal-badge rss-cal-badge--none">공사없음</span>
+                </div>
+              </div>
+              <div class="rss-cal-list-row" role="row">
+                <span class="rss-cal-list-dt">6/25</span>
+                <span class="rss-cal-list-dow">목</span>
+                <div class="rss-cal-list-status">
+                  <button class="rss-cal-badge rss-cal-badge--complete"
+                          onclick="openDailyProgModal('2026-06-25','WORK_COMPLETE',4900000)">공사완료</button>
+                  <span class="rss-cal-amount rss-cal-amount--link"
+                        onclick="openDailyProgModal('2026-06-25','WORK_COMPLETE',4900000)"
+                        role="button" tabindex="0">(4,900,000)</span>
+                </div>
+              </div>
+              <div class="rss-cal-list-row" role="row">
+                <span class="rss-cal-list-dt">6/26</span>
+                <span class="rss-cal-list-dow">금</span>
+                <div class="rss-cal-list-status">
+                  <button class="rss-cal-badge rss-cal-badge--cancel"
+                          onclick="openDailyProgModal('2026-06-26','CANCEL',500000)">취소</button>
+                  <span class="rss-cal-amount rss-cal-amount--link"
+                        onclick="openDailyProgModal('2026-06-26','CANCEL',500000)"
+                        role="button" tabindex="0">(500,000)</span>
+                </div>
+              </div>
+              <!-- 오늘 날짜 -->
+              <div class="rss-cal-list-row rss-cal-list-row--today" role="row">
+                <span class="rss-cal-list-dt">6/27</span>
+                <span class="rss-cal-list-dow">토</span>
+                <div class="rss-cal-list-status">
+                  <span class="rss-cal-badge rss-cal-badge--scheduled">예정</span>
+                  <div class="rss-cal-list-btns">
+                    <button type="button" class="rss-cal-btn-done"
+                            onclick="openAdmDailyProgModal('2026-06-27','complete')">완료</button>
+                    <button type="button" class="rss-cal-btn-done"
+                            style="background:#64748b;"
+                            onclick="openAdmDailyProgModal('2026-06-27','modify')">수정</button>
+                    <button type="button" class="rss-cal-btn-cancel"
+                            onclick="openAdmDailyProgModal('2026-06-27','cancel')">취소</button>
+                  </div>
+                </div>
+              </div>
+            </div><!-- /rss-cal-list -->
+
+            <!-- 하단 버튼: 좌측(공사 종료) + 우측(목록) -->
+            <div class="rss-page-actions rss-page-actions--split" style="margin-top:20px;">
+              <div class="rss-page-actions__left">
+                <!-- [Java] th:if="${construction.status == 'IN_PROGRESS'}" -->
+                <button type="button" class="rss-btn rss-btn--outline-cancel" onclick="openConstCompleteModal()">
+                  <i data-lucide="check-circle" style="width:14px;height:14px;"></i> 공사 종료
+                </button>
+              </div>
+              <div class="rss-page-actions__right">
+                <a href="construction-list.html" class="rss-btn rss-btn--outline">
+                  <i data-lucide="list" style="width:14px;height:14px;"></i> 목록
+                </a>
+              </div>
+            </div>
+          </div>
+        </div><!-- /tab-status -->
+      </div><!-- /rss-card -->
+    </main>
+    <div id="rss-footer-wrap"></div>
+  </div><!-- /adm-main -->
+</div><!-- /adm-layout -->
+
+<!-- ══════════════════════════════════════════════════
+     M1-2-1: 차단정보 등록/수정 모달
+     construction-apply.html 폼을 모달로 변환
+     openBlockReqEditModal() 호출 시 표시
+     [Java] 실제 데이터: GET /adm/construction/block-req?seq={constructionSeq}
+══════════════════════════════════════════════════ -->
+<div id="blockReqModalBackdrop" class="adm-modal-backdrop" role="dialog" aria-modal="true"
+     aria-labelledby="blockReqModalTitle" style="display:none;">
+  <div class="adm-modal-box" style="max-width:640px; max-height:90vh; overflow-y:auto;">
+    <div class="adm-modal-box__head">
+      <h3 class="adm-modal-box__title" id="blockReqModalTitle">차단정보 등록/수정</h3>
+      <button type="button" class="adm-modal-box__close" onclick="closeBlockReqModal()" aria-label="닫기"></button>
+    </div>
+    <div class="adm-modal-box__body" style="padding:20px;">
+      <form id="blockReqForm">
+        <!-- [Java] <input type="hidden" name="construction_seq" th:value="${construction.constructionSeq}"> -->
+        <input type="hidden" name="construction_seq" value="1001">
+        <!-- 차단 구간 -->
+        <div class="rss-form-row">
+          <label class="rss-form-label" for="blockSection">차단 구간</label>
+          <!-- [Java] th:value="${blockReq.blockSection}" -->
+          <input type="text" name="block_section" id="blockSection" class="rss-input"
+                 placeholder="차단 구간을 입력하세요 (예: 105.6km ~ 105.7km)">
+        </div>
+        <!-- TMA1 -->
+        <div class="rss-form-row">
+          <label class="rss-form-label">TMA1</label>
+          <div class="adm-vehicle-list">
+            <!-- [Java] 보유 대수 배지: ${blockCorpTma1List.size()} -->
+            <span class="adm-item-count-badge">1대</span>
+            <!-- [Java] th:each="v : ${blockCorpTma1List}" -->
+            <label class="adm-vehicle-item">
+              <input type="checkbox" name="tma1_vcl_no" value="11누1111">
+              <span>11누1111</span>
+            </label>
+          </div>
+        </div>
+        <!-- TMA3 -->
+        <div class="rss-form-row">
+          <label class="rss-form-label">TMA3</label>
+          <div class="adm-vehicle-list">
+            <!-- [Java] 보유 대수 배지: ${blockCorpTma3List.size()} -->
+            <span class="adm-item-count-badge">2대</span>
+            <!-- [Java] th:each="v : ${blockCorpTma3List}" -->
+            <label class="adm-vehicle-item">
+              <input type="checkbox" name="tma3_vcl_no" value="22마2222">
+              <span>22마2222</span>
+            </label>
+            <label class="adm-vehicle-item">
+              <input type="checkbox" name="tma3_vcl_no" value="33다3333">
+              <span>33다3333</span>
+            </label>
+            <label class="adm-vehicle-item" style="color:var(--rss-amber);font-weight:600;">
+              <input type="checkbox" name="tma3_sep_yn" value="Y">
+              <span>별도 제출</span>
+            </label>
+          </div>
+        </div>
+        <!-- PLCS -->
+        <div class="rss-form-row">
+          <label class="rss-form-label">PLCS</label>
+          <div class="adm-vehicle-list">
+            <!-- [Java] 보유 대수 배지: ${blockCorpPlcsList.size()} -->
+            <span class="adm-item-count-badge">2대</span>
+            <!-- [Java] th:each="v : ${blockCorpPlcsList}" -->
+            <label class="adm-vehicle-item">
+              <input type="checkbox" name="plcs_vcl_no" value="11소6767">
+              <span>11소6767</span>
+            </label>
+            <label class="adm-vehicle-item">
+              <input type="checkbox" name="plcs_vcl_no" value="32파0090">
+              <span>32파0090</span>
+            </label>
+            <label class="adm-vehicle-item" style="color:var(--rss-amber);font-weight:600;">
+              <input type="checkbox" name="plcs_sep_yn" value="Y">
+              <span>별도 제출</span>
+            </label>
+          </div>
+        </div>
+        <!-- 신호수 -->
+        <div class="rss-form-row">
+          <label class="rss-form-label">신호수</label>
+          <div class="flex items-center gap-3">
+            <!-- [Java] 보유 신호수 수: ${blockCorpSignalerCnt} -->
+            <span class="adm-item-count-badge">0명</span>
+            <select name="signaler_cnt" class="rss-input" style="width:120px;">
+              <option value="0">0명</option>
+              <option value="1">1명</option>
+              <option value="2">2명</option>
+              <option value="3">3명</option>
+            </select>
+          </div>
+        </div>
+        <!-- 의견 -->
+        <div class="rss-form-row">
+          <label class="rss-form-label" for="blockReqOpinion">의견</label>
+          <!-- [Java] th:text="${blockReq.opinion}" -->
+          <textarea name="opinion" id="blockReqOpinion" class="rss-input rss-textarea"
+                    placeholder="차단방법, 일정에 대해 자유로운 의견을 남겨주세요."></textarea>
+        </div>
+      </form>
+    </div>
+    <div class="adm-modal-box__footer">
+      <button type="button" class="rss-btn rss-btn--cancel" onclick="closeBlockReqModal()">취소</button>
+      <button type="button" class="rss-btn adm-btn--save" onclick="submitBlockReqForm()">저장</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     M1-3-1: 공사 정보 수정 모달 (날짜별 완료/수정/취소)
+     openAdmDailyProgModal(dt, mode) 호출 시 표시
+     mode: 'complete' | 'modify' | 'cancel'
+     [Java] 실제 데이터: GET /adm/construction/daily-prog?seq={seq}&dt={dt}
+══════════════════════════════════════════════════ -->
+<div id="admDailyProgModalBackdrop" class="adm-modal-backdrop" role="dialog" aria-modal="true"
+     aria-labelledby="admDailyProgModalTitle" style="display:none;">
+  <div class="adm-modal-box" style="max-width:520px;">
+    <div class="adm-modal-box__head">
+      <h3 class="adm-modal-box__title" id="admDailyProgModalTitle">공사 정보 수정</h3>
+      <button type="button" class="adm-modal-box__close" onclick="closeAdmDailyProgModal()" aria-label="닫기"></button>
+    </div>
+    <div class="adm-modal-box__body" style="padding:20px;">
+      <!-- 날짜 표시 -->
+      <div style="font-size:var(--rss-font-md); font-weight:700; color:#1e293b; margin-bottom:16px;">
+        <i data-lucide="calendar" style="width:16px;height:16px;margin-right:6px;vertical-align:middle;"></i>
+        <span id="admDailyProgDate">2026년 6월 27일</span>
+      </div>
+      <!-- 시간대 선택 -->
+      <div class="rss-form-row">
+        <label class="rss-form-label" for="admDailyTimeSlot">시간대</label>
+        <select id="admDailyTimeSlot" class="rss-select" style="width:160px;">
+          <option value="day">주간</option>
+          <option value="night">야간</option>
+        </select>
+      </div>
+      <!-- 품목별 투입수량 + 금액 -->
+      <div class="rss-table-wrap" style="margin-top:12px;">
+        <table class="rss-table" id="admDailyProgItemTable">
+          <colgroup>
+            <col style="width:80px;" />
+            <col style="width:120px;" />
+            <col />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>품목</th>
+              <th>투입수량</th>
+              <th>금액</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- [Java] th:each="item : ${construction.equipList}" -->
+            <tr>
+              <td>TMA1</td>
+              <td>
+                <input type="number" name="tma1_qty" class="rss-input rss-input--sm" value="1"
+                       min="0" style="width:70px;" onchange="calcDailyProgTotal()">
+              </td>
+              <td>
+                <!-- [Java] th:text="${#numbers.formatInteger(item.unitPrice * item.qty, 3, 'COMMA')}" -->
+                <span id="admDailyTma1Amt">600,000</span>
+              </td>
+            </tr>
+            <tr>
+              <td>TMA3</td>
+              <td>
+                <input type="number" name="tma3_qty" class="rss-input rss-input--sm" value="2"
+                       min="0" style="width:70px;" onchange="calcDailyProgTotal()">
+              </td>
+              <td><span id="admDailyTma3Amt">2,000,000</span></td>
+            </tr>
+            <tr>
+              <td>PLCS</td>
+              <td>
+                <input type="number" name="plcs_qty" class="rss-input rss-input--sm" value="2"
+                       min="0" style="width:70px;" onchange="calcDailyProgTotal()">
+              </td>
+              <td><span id="admDailyPlcsAmt">1,800,000</span></td>
+            </tr>
+            <tr>
+              <td>신호수</td>
+              <td>
+                <input type="number" name="signaler_qty" class="rss-input rss-input--sm" value="0"
+                       min="0" style="width:70px;" onchange="calcDailyProgTotal()">
+              </td>
+              <td><span id="admDailySignalerAmt">0</span></td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="2">지급액</td>
+              <td><strong id="admDailyPayTotal">4,400,000</strong></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+    <div class="adm-modal-box__footer">
+      <button type="button" class="rss-btn rss-btn--cancel" onclick="closeAdmDailyProgModal()">취소</button>
+      <button type="button" class="rss-btn adm-btn--save" onclick="submitAdmDailyProg()">저장</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     M1-3-2: 금액 정보 모달 (날짜 클릭 시 읽기 전용)
+     openDailyProgModal(dt, progCd, amount) 호출 시 표시
+     [Java] 실제 데이터: GET /api/construction/daily-prog?seq={seq}&dt={dt}
+══════════════════════════════════════════════════ -->
+<div id="dailyProgModalBackdrop" class="rss-prog-modal-backdrop" role="dialog" aria-modal="true"
+     aria-labelledby="dailyProgModalTitle">
+  <article class="rss-prog-modal">
+    <header class="rss-prog-modal__head">
+      <h2 class="rss-prog-modal__title" id="dailyProgModalTitle">공사 금액</h2>
+      <button type="button" class="rss-prog-modal__close" onclick="closeDailyProgModal()" aria-label="닫기"></button>
+    </header>
+    <div class="rss-prog-modal__body">
+      <!-- 날짜 네비게이터 -->
+      <nav class="rss-prog-modal__nav" aria-label="날짜 이동">
+        <button type="button" class="rss-prog-modal__nav-btn" id="dailyProgPrevBtn"
+                onclick="navigateDailyProg(-1)" aria-label="이전 날짜">
+          <i data-lucide="chevron-left" style="width:14px;height:14px;"></i>
+        </button>
+        <!-- [Java] th:text="${#temporals.format(cell.dt, 'yyyy년 M월 d일')}" -->
+        <span class="rss-prog-modal__nav-date" id="dailyProgNavDate">2026년 6월 25일</span>
+        <button type="button" class="rss-prog-modal__nav-btn" id="dailyProgNextBtn"
+                onclick="navigateDailyProg(1)" aria-label="다음 날짜">
+          <i data-lucide="chevron-right" style="width:14px;height:14px;"></i>
+        </button>
+      </nav>
+      <!-- 안내 문구 -->
+      <p class="rss-prog-modal__notice">
+        싸인카 투입 수량 및 완료 취소 여부에 따라 금액이 조정됩니다.<br>
+        공사 금액 문의는 콜센터(1500-0000)으로 해주세요.
+      </p>
+      <!-- 구분/시간대 정보 테이블 -->
+      <table class="rss-prog-modal__info-table" aria-label="공사 구분 정보">
+        <tbody>
+          <tr>
+            <th scope="row">구분</th>
+            <!-- [Java] th:text="${cell.progLabel}" -->
+            <td id="dailyProgInfoLabel">공사 완료</td>
+          </tr>
+          <tr>
+            <th scope="row">시간대</th>
+            <!-- [Java] th:text="${construction.timeSlot == 'night' ? '야간' : '주간'}" -->
+            <td id="dailyProgInfoTimeSlot">야간</td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- 품목별 금액 테이블 — 공사완료/시연회 시 표시 -->
+      <!-- [Java] th:if="${cell.progCd == 'WORK_COMPLETE' or cell.progCd == 'REHEARSAL'}" -->
+      <div id="dailyProgItemSection">
+        <table class="rss-prog-modal__item-table" aria-label="품목별 공사 금액">
+          <thead>
+            <tr>
+              <th scope="col">품목</th>
+              <th scope="col">투입수량</th>
+              <th scope="col">금액</th>
+            </tr>
+          </thead>
+          <tbody id="dailyProgItemTbody">
+            <!-- [Java] th:each="item : ${cell.items}" -->
+            <tr>
+              <td>TMA1</td>
+              <td>1대</td>
+              <td>550,000</td>
+            </tr>
+            <tr>
+              <td>TMA3</td>
+              <td>2대</td>
+              <td>1,800,000</td>
+            </tr>
+            <tr>
+              <td>PLCS</td>
+              <td>2대</td>
+              <td>1,500,000</td>
+            </tr>
+            <tr>
+              <td>신호수</td>
+              <td>1명</td>
+              <td>200,000</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="2">지급액</td>
+              <!-- [Java] th:text="${#numbers.formatInteger(cell.payAmt, 3, 'COMMA')}" -->
+              <td id="dailyProgPayTotal">4,050,000</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <!-- 취소 시 지급액 단순 행 -->
+      <!-- [Java] th:if="${cell.progCd == 'CANCEL'}" -->
+      <div id="dailyProgCancelSection" style="display:none;">
+        <div class="rss-prog-modal__pay-row">
+          <span class="rss-prog-modal__pay-label">지급액</span>
+          <!-- [Java] th:text="${cell.cancelAmt != null ? #numbers.formatInteger(cell.cancelAmt, 3, 'COMMA') + '원' : '미정'}" -->
+          <span class="rss-prog-modal__pay-amount" id="dailyProgCancelAmt">500,000원</span>
+        </div>
+      </div>
+    </div>
+  </article>
+</div>
+
+<!-- 공사 취소 확인 모달 (공통 confirm 패턴) -->
+<div id="constCancelModalBackdrop" class="adm-modal-backdrop" role="dialog" aria-modal="true"
+     aria-labelledby="constCancelModalTitle" style="display:none;">
+  <div class="adm-modal-box" style="max-width:400px;">
+    <div class="adm-modal-box__head">
+      <h3 class="adm-modal-box__title" id="constCancelModalTitle">공사 취소</h3>
+      <button type="button" class="adm-modal-box__close" onclick="closeConstCancelModal()" aria-label="닫기"></button>
+    </div>
+    <div class="adm-modal-box__body" style="padding:20px;">
+      <p style="margin-bottom:12px; color:#374151;">공사를 취소하시겠습니까?<br>취소 후에는 되돌릴 수 없습니다.</p>
+      <div class="rss-form-row">
+        <label class="rss-form-label" for="constCancelReason">취소 사유</label>
+        <textarea id="constCancelReason" class="rss-input rss-textarea" placeholder="취소 사유를 입력하세요."></textarea>
+      </div>
+    </div>
+    <div class="adm-modal-box__footer">
+      <button type="button" class="rss-btn rss-btn--cancel" onclick="closeConstCancelModal()">닫기</button>
+      <button type="button" class="rss-btn adm-btn--reject" onclick="submitConstCancel()">공사 취소</button>
+    </div>
+  </div>
+</div>
+
+<!-- 공사 종료 확인 모달 -->
+<div id="constCompleteModalBackdrop" class="adm-modal-backdrop" role="dialog" aria-modal="true"
+     aria-labelledby="constCompleteModalTitle" style="display:none;">
+  <div class="adm-modal-box" style="max-width:380px;">
+    <div class="adm-modal-box__head">
+      <h3 class="adm-modal-box__title" id="constCompleteModalTitle">공사 종료</h3>
+      <button type="button" class="adm-modal-box__close" onclick="closeConstCompleteModal()" aria-label="닫기"></button>
+    </div>
+    <div class="adm-modal-box__body" style="padding:20px;">
+      <p style="color:#374151;">해당 공사를 종료 처리하시겠습니까?<br>발주업체와 차단업체에 알림이 발송됩니다.</p>
+    </div>
+    <div class="adm-modal-box__footer">
+      <button type="button" class="rss-btn rss-btn--cancel" onclick="closeConstCompleteModal()">닫기</button>
+      <button type="button" class="rss-btn adm-btn--save" onclick="submitConstComplete()">종료 처리</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     공통 스크립트
+══════════════════════════════════════════════════ -->
+<script src="../rss-common.js?v=20260507"></script>
+<script src="adm-common.js?v=20260518"></script>
+<script>
+lucide.createIcons();
+
+/* ── 탭 전환 ────────────────────────────────────── */
+document.querySelectorAll('.adm-detail-tab').forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    var targetId = this.getAttribute('data-tab');
+    /* 탭 버튼 active 처리 */
+    document.querySelectorAll('.adm-detail-tab').forEach(function(t) {
+      t.classList.remove('active');
+      t.setAttribute('aria-selected', 'false');
+    });
+    this.classList.add('active');
+    this.setAttribute('aria-selected', 'true');
+    /* 탭 패널 active 처리 */
+    document.querySelectorAll('.rss-tab-panel').forEach(function(panel) {
+      panel.classList.remove('active');
+    });
+    var target = document.getElementById(targetId);
+    if (target) target.classList.add('active');
+    /* URL 해시 업데이트 */
+    history.replaceState(null, '', '#' + targetId);
+    lucide.createIcons();
+  });
+});
+
+/* ── 페이지 로드 시 해시 탭 활성화 ─────────────── */
+(function() {
+  var hash = location.hash.replace('#', '');
+  if (hash) {
+    var btn = document.querySelector('[data-tab="' + hash + '"]');
+    if (btn) btn.click();
+  }
+})();
+
+/* ── 차단업체 지정 콜백 ─────────────────────────── */
+function onBlockCorpAssigned(blockCorpSeq, blockCorpNm) {
+  /* [Java] POST /adm/construction/assign-block-corp */
+  console.log('[M1-2] 차단업체 강제 지정:', blockCorpSeq, blockCorpNm);
+  alert('차단업체 [' + blockCorpNm + ']이(가) 지정되었습니다.\n발주·차단업체에 카카오 알림톡이 발송됩니다.');
+  location.reload();
+}
+
+/* ── M1-2-1: 차단정보 등록/수정 모달 ─────────────── */
+function openBlockReqEditModal() {
+  document.getElementById('blockReqModalBackdrop').style.display = 'flex';
+  lucide.createIcons();
+}
+function closeBlockReqModal() {
+  document.getElementById('blockReqModalBackdrop').style.display = 'none';
+}
+function submitBlockReqForm() {
+  /* [Java] POST /adm/construction/block-req/save */
+  alert('차단정보가 저장되었습니다.');
+  closeBlockReqModal();
+  location.reload();
+}
+
+/* ── 차단신청 취소 확인 ─────────────────────────── */
+function openBlockReqCancelConfirm() {
+  if (confirm('차단신청을 취소하시겠습니까?')) {
+    /* [Java] POST /adm/construction/block-req/cancel */
+    alert('차단신청이 취소되었습니다.');
+    location.reload();
+  }
+}
+
+/* ── 파일 일괄 다운로드 ─────────────────────────── */
+function downloadAllBlockFiles() {
+  /* [Java] GET /adm/construction/block-req/files/download?constructionSeq={seq} */
+  alert('파일 일괄 다운로드 기능은 Java 연동 후 처리됩니다.');
+}
+
+/* ── M1-3-1: 관리자 일별 진행 수정 모달 ─────────── */
+var _admDailyProgDate = null;
+var _admDailyProgMode = null;
+
+function openAdmDailyProgModal(dt, mode) {
+  _admDailyProgDate = dt;
+  _admDailyProgMode = mode;
+  /* 모달 타이틀 분기 */
+  var titles = { complete: '공사 완료 처리', modify: '공사 정보 수정', cancel: '공사 취소 처리' };
+  document.getElementById('admDailyProgModalTitle').textContent = titles[mode] || '공사 정보 수정';
+  /* 날짜 표시 */
+  var d = new Date(dt);
+  document.getElementById('admDailyProgDate').textContent =
+    d.getFullYear() + '년 ' + (d.getMonth()+1) + '월 ' + d.getDate() + '일';
+  document.getElementById('admDailyProgModalBackdrop').style.display = 'flex';
+  lucide.createIcons();
+}
+function closeAdmDailyProgModal() {
+  document.getElementById('admDailyProgModalBackdrop').style.display = 'none';
+}
+function calcDailyProgTotal() {
+  /* [Java] 단가 × 수량 자동 계산 — 실제 단가는 서버에서 주입 */
+  var unitPrices = { tma1: 600000, tma3: 1000000, plcs: 900000, signaler: 250000 };
+  var tma1  = parseInt(document.querySelector('[name="tma1_qty"]').value) || 0;
+  var tma3  = parseInt(document.querySelector('[name="tma3_qty"]').value) || 0;
+  var plcs  = parseInt(document.querySelector('[name="plcs_qty"]').value) || 0;
+  var sig   = parseInt(document.querySelector('[name="signaler_qty"]').value) || 0;
+  var total = tma1 * unitPrices.tma1 + tma3 * unitPrices.tma3
+            + plcs * unitPrices.plcs + sig * unitPrices.signaler;
+  document.getElementById('admDailyTma1Amt').textContent     = (tma1 * unitPrices.tma1).toLocaleString();
+  document.getElementById('admDailyTma3Amt').textContent     = (tma3 * unitPrices.tma3).toLocaleString();
+  document.getElementById('admDailyPlcsAmt').textContent     = (plcs * unitPrices.plcs).toLocaleString();
+  document.getElementById('admDailySignalerAmt').textContent = (sig  * unitPrices.signaler).toLocaleString();
+  document.getElementById('admDailyPayTotal').textContent    = total.toLocaleString();
+}
+function submitAdmDailyProg() {
+  /* [Java] POST /adm/construction/daily-prog/save */
+  alert('저장되었습니다.');
+  closeAdmDailyProgModal();
+  location.reload();
+}
+
+/* ── M1-3-2: 금액 정보 모달 (사용자 페이지 동일 구조) ── */
+function openDailyProgModal(dt, progCd, amount) {
+  var d = new Date(dt);
+  document.getElementById('dailyProgNavDate').textContent =
+    d.getFullYear() + '년 ' + (d.getMonth()+1) + '월 ' + d.getDate() + '일';
+  var labels = {
+    REHEARSAL:     '시연회',
+    WORK_COMPLETE: '공사 완료',
+    CANCEL:        '취소',
+    NO_WORK:       '공사없음'
+  };
+  document.getElementById('dailyProgInfoLabel').textContent = labels[progCd] || progCd;
+  /* 취소/완료 섹션 분기 */
+  var itemSection   = document.getElementById('dailyProgItemSection');
+  var cancelSection = document.getElementById('dailyProgCancelSection');
+  if (progCd === 'CANCEL') {
+    itemSection.style.display   = 'none';
+    cancelSection.style.display = 'block';
+    document.getElementById('dailyProgCancelAmt').textContent = amount.toLocaleString() + '원';
+  } else {
+    itemSection.style.display   = 'block';
+    cancelSection.style.display = 'none';
+    document.getElementById('dailyProgPayTotal').textContent  = amount.toLocaleString();
+  }
+  document.getElementById('dailyProgModalBackdrop').style.display = 'flex';
+  lucide.createIcons();
+}
+function closeDailyProgModal() {
+  document.getElementById('dailyProgModalBackdrop').style.display = 'none';
+}
+function navigateDailyProg(dir) {
+  /* [Java] GET /api/construction/daily-prog/nav?seq={seq}&dt={dt}&dir={dir} */
+  alert('날짜 이동은 Java 연동 후 처리됩니다.');
+}
+
+/* ── 공사 취소 모달 ─────────────────────────────── */
+function openConstCancelModal() {
+  document.getElementById('constCancelModalBackdrop').style.display = 'flex';
+  lucide.createIcons();
+}
+function closeConstCancelModal() {
+  document.getElementById('constCancelModalBackdrop').style.display = 'none';
+}
+function submitConstCancel() {
+  var reason = document.getElementById('constCancelReason').value.trim();
+  if (!reason) { alert('취소 사유를 입력하세요.'); return; }
+  /* [Java] POST /adm/construction/cancel */
+  alert('공사가 취소되었습니다.');
+  closeConstCancelModal();
+  location.href = 'construction-list.html';
+}
+
+/* ── 공사 종료 모달 ─────────────────────────────── */
+function openConstCompleteModal() {
+  document.getElementById('constCompleteModalBackdrop').style.display = 'flex';
+  lucide.createIcons();
+}
+function closeConstCompleteModal() {
+  document.getElementById('constCompleteModalBackdrop').style.display = 'none';
+}
+function submitConstComplete() {
+  /* [Java] POST /adm/construction/complete */
+  alert('공사가 종료 처리되었습니다.');
+  closeConstCompleteModal();
+  location.reload();
+}
+</script>
+</body>
+</html>
