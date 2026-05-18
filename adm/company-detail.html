@@ -46,6 +46,7 @@
         <!-- ─── 기업 정보 섹션 ─────────────────────────────── -->
         <div class="write-section">
           <div class="write-section__head">
+            <i data-lucide="building-2" style="width:16px;height:16px;color:var(--rss-amber);flex-shrink:0;"></i>
             <h2 class="write-section__title">기업 정보</h2>
             <!-- [Java] th:text="${company.statusNm}" -->
             <span class="adm-badge adm-badge--normal" id="companyStatusBadge">정상</span>
@@ -248,34 +249,34 @@
           </div><!-- /write-section__body -->
         </div><!-- /write-section -->
 
-        <!-- ─── 하단 버튼 영역 ────────────────────────────────
-             스토리보드 ②: 상태에 따라 버튼 다름
-               - 대기: 승인, 반려
-               - 정상: 사용 정지
-               - 사용 정지: 사용정지 설정
-             ③ 저장 / ④ 취소 / ⑤ 비밀번호 변경
-        ──────────────────────────────────────────────────────── -->
-        <div class="rss-page-actions">
-          <!-- 상태별 버튼 — [Java] th:if 로 조건부 렌더링 -->
-          <!-- [Java] th:if="${company.status == 'normal'}" -->
-          <button type="button" class="rss-btn adm-btn--delete" id="btnSuspend"
-                  onclick="openSuspendModal()">사용 정지</button>
-          <!-- [Java] th:if="${company.status == 'suspend'}" — 현재는 숨김 -->
-          <button type="button" class="rss-btn adm-btn--delete" id="btnSuspendSetting"
-                  onclick="openSuspendModal()" style="display:none;">사용정지 설정</button>
-          <!-- [Java] th:if="${company.status == 'pending'}" — 현재는 숨김 -->
-          <button type="button" class="rss-btn adm-btn--save" id="btnApprove"
-                  onclick="approveCompany()" style="display:none;">승인</button>
-          <button type="button" class="rss-btn adm-btn--cancel" id="btnReject"
-                  onclick="rejectCompany()" style="display:none;">반려</button>
-
-          <!-- 저장 / 취소 / 비밀번호 변경 -->
-          <button type="button" class="rss-btn adm-btn--save" onclick="saveCompany()">저장</button>
-          <button type="button" class="rss-btn adm-btn--cancel" onclick="goBack()">취소</button>
-          <button type="button" class="rss-btn rss-btn--outline" onclick="openPwModal()">비밀번호 변경</button>
-        </div>
-
       </div><!-- /rss-card -->
+
+      <!-- ─── 하단 버튼 영역 (카드 밖, 베이지 배경 위) ──────────────
+           스토리보드 ②: 상태에 따라 버튼 다름
+             - 대기: 승인, 반려
+             - 정상: 사용 정지
+             - 사용 정지: 사용정지 설정
+           ③ 저장 / ④ 취소 / ⑤ 비밀번호 변경
+      ──────────────────────────────────────────────────────── -->
+      <div class="rss-page-actions">
+        <!-- 상태별 버튼 — [Java] th:if 로 조건부 렌더링 -->
+        <!-- [Java] th:if="${company.status == 'normal'}" -->
+        <button type="button" class="rss-btn adm-btn--delete" id="btnSuspend"
+                onclick="openSuspendModal()">사용 정지</button>
+        <!-- [Java] th:if="${company.status == 'suspend'}" — 현재는 숨김 -->
+        <button type="button" class="rss-btn adm-btn--delete" id="btnSuspendSetting"
+                onclick="openSuspendModal()" style="display:none;">사용정지 설정</button>
+        <!-- [Java] th:if="${company.status == 'pending'}" — 현재는 숨김 -->
+        <button type="button" class="rss-btn adm-btn--save" id="btnApprove"
+                onclick="approveCompany()" style="display:none;">승인</button>
+        <button type="button" class="rss-btn adm-btn--cancel" id="btnReject"
+                onclick="rejectCompany()" style="display:none;">반려</button>
+
+        <!-- 저장 / 취소 / 비밀번호 변경 -->
+        <button type="button" class="rss-btn adm-btn--save" onclick="saveCompany()">저장</button>
+        <button type="button" class="rss-btn adm-btn--cancel" onclick="goBack()">취소</button>
+        <button type="button" class="rss-btn rss-btn--outline" onclick="openPwModal()">비밀번호 변경</button>
+      </div>
 
       <!-- ══════════════════════════════════════════════════
            TMA 카드 섹션
@@ -283,7 +284,10 @@
       <div class="rss-card adm-card--mt">
         <div class="write-section">
           <div class="write-section__head" style="justify-content:space-between;">
-            <h2 class="write-section__title">TMA 카드</h2>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <i data-lucide="car" style="width:16px;height:16px;color:var(--rss-amber);flex-shrink:0;"></i>
+              <h2 class="write-section__title">TMA 카드</h2>
+            </div>
             <!-- ⑥ 신규 등록 버튼 -->
             <button type="button" class="rss-btn rss-btn--amber" onclick="addTmaNewRow()">
               신규 등록
