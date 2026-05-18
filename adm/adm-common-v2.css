@@ -824,8 +824,12 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23ef4444' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='3 6 5 6 21 6'/%3E%3Cpath d='M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6'/%3E%3Cpath d='M10 11v6'/%3E%3Cpath d='M14 11v6'/%3E%3Cpath d='M9 6V4h6v2'/%3E%3C/svg%3E");
 }
 
-/* 승인 버튼 — amber(blue) 배경, 아이콘 없음 */
+/* 승인 버튼 — amber 배경, check 아이콘 */
 .adm-btn--approve {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 88px;
   background: var(--rss-amber);
   border-color: var(--rss-amber);
   color: #ffffff;
@@ -834,8 +838,24 @@
   background: var(--rss-amber-dark);
   border-color: var(--rss-amber-dark);
 }
-/* 반려 버튼 — 흰 배경, 빨간 테두리/텍스트, 아이콘 없음 */
+.adm-btn--approve::before {
+  content: '';
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+}
+
+/* 반려 버튼 — 흔 배경, 빨간 테두리/텍스트, x-circle 아이콘 */
 .adm-btn--reject {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 88px;
   background: #ffffff;
   border: 1.5px solid #ef4444;
   color: #ef4444;
@@ -844,6 +864,20 @@
   background: #fef2f2;
   border-color: #dc2626;
   color: #dc2626;
+}
+.adm-btn--reject::before {
+  content: '';
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23ef4444' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cline x1='15' y1='9' x2='9' y2='15'/%3E%3Cline x1='9' y1='9' x2='15' y2='15'/%3E%3C/svg%3E");
+}
+.adm-btn--reject:hover::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23dc2626' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cline x1='15' y1='9' x2='9' y2='15'/%3E%3Cline x1='9' y1='9' x2='15' y2='15'/%3E%3C/svg%3E");
 }
 
 /* 비밀번호 변경 버튼 — 흐색 배경, 테두리, 자물솠 아이콘
