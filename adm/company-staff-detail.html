@@ -178,26 +178,40 @@
       </div><!-- /rss-card -->
 
       <!-- ─── 하단 버튼 영역 (카드 밖, 베이지 배경 위) ──────────────
-           스토리보드 ②: 상태에 따라 버튼 다름
-             - 대기:  승인 + 반려 + 비밀번호 변경
-             - 정상:  승인취소 + 비밀번호 변경
-           ③ 비밀번호 변경 — 홈페이지와 동일한 모달
+           3분할 구조:
+             ■ 왼쪽  : 상태별 버튼 (대기: 승인+반려 / 정상: 승인취소)
+             ■ 가운데: 저장 + 취소
+             ■ 오른쪽: 비밀번호 변경
+           [Java] th:if 로 상태별 조건부 렌더링
       ──────────────────────────────────────────────────────── -->
-      <div class="rss-page-actions">
-        <!-- 상태별 버튼 — [Java] th:if 로 조건부 렌더링 -->
+      <div class="rss-page-actions" style="justify-content:space-between;">
 
-        <!-- [Java] th:if="${staff.staffStatus == 'pending'}" — 대기 상태 -->
-        <button type="button" class="rss-btn adm-btn--approve" id="btnStaffApprove"
-                onclick="approveStaff()">승인</button>
-        <button type="button" class="rss-btn adm-btn--reject" id="btnStaffReject"
-                onclick="rejectStaff()">반려</button>
+        <!-- ■ 왼쪽: 상태별 버튼 -->
+        <div style="display:flex;gap:8px;align-items:center;">
+          <!-- [Java] th:if="${staff.staffStatus == 'pending'}" — 대기 상태 -->
+          <button type="button" class="rss-btn adm-btn--approve" id="btnStaffApprove"
+                  onclick="approveStaff()">승인</button>
+          <button type="button" class="rss-btn adm-btn--reject" id="btnStaffReject"
+                  onclick="rejectStaff()">반려</button>
+          <!-- [Java] th:if="${staff.staffStatus == 'normal'}" — 정상 상태 (현재는 숨김) -->
+          <button type="button" class="rss-btn adm-btn--delete" id="btnStaffApproveCancel"
+                  onclick="cancelApproveStaff()" style="display:none;">승인취소</button>
+        </div>
 
-        <!-- [Java] th:if="${staff.staffStatus == 'normal'}" — 정상 상태 (현재는 숨김) -->
-        <button type="button" class="rss-btn adm-btn--delete" id="btnStaffApproveCancel"
-                onclick="cancelApproveStaff()" style="display:none;">승인취소</button>
+        <!-- ■ 가운데: 저장 + 취소 -->
+        <div style="display:flex;gap:8px;align-items:center;">
+          <!-- ③ 저장 — [Java] POST /adm/staff/save -->
+          <button type="button" class="rss-btn adm-btn--save" onclick="saveStaff()">저장</button>
+          <!-- ④ 취소 — 목록으로 이동 -->
+          <button type="button" class="rss-btn adm-btn--cancel" onclick="goBack()">취소</button>
+        </div>
 
-        <!-- 비밀번호 변경 — 항상 표시 -->
-        <button type="button" class="rss-btn rss-btn--outline" onclick="openStaffPwModal()">비밀번호 변경</button>
+        <!-- ■ 오른쪽: 비밀번호 변경 -->
+        <div style="display:flex;gap:8px;align-items:center;">
+          <!-- ⑤ 비밀번호 변경 — 항상 표시, 홈페이지와 동일한 모달 -->
+          <button type="button" class="rss-btn rss-btn--outline" onclick="openStaffPwModal()">비밀번호 변경</button>
+        </div>
+
       </div>
     </main>
 
@@ -302,6 +316,20 @@ function initStaffButtons() {
   }
 }
 document.addEventListener('DOMContentLoaded', initStaffButtons);
+/* ── 저장 처리 ③ ──────────────────────────── */
+function saveStaff() {
+  if (confirm('저장하시겠습니까?')) {
+    // [Java] POST /adm/staff/save?staffSeq= → 저장 후 페이지 새로고침
+    alert('저장되었습니다.');
+    location.reload();
+  }
+}
+
+/* ── 취소 (목록으로 이동) ④ ────────────────────── */
+function goBack() {
+  // [Java] 목록(M4-2)으로 이동
+  location.href = 'company-staff-list.html';
+}
 
 /* ── 이메일 도메인 선택 ──────────────────────────── */
 function setEmailDomain(sel) {
