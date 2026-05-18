@@ -349,14 +349,12 @@
               </button>
               <!-- 우측: 비밀번호 변경 · 회원탈퇴 -->
               <div class="profile-btn-right" style="flex:1; display:flex; justify-content:flex-end; gap:8px;">
-                <button type="button" class="rss-btn rss-btn--outline"
-                        onclick="openPwModal()">
-                  <i data-lucide="lock"></i> 비밀번호 변경
-                </button>
-                <button type="button" class="rss-btn rss-btn--outline-danger"
-                        onclick="openWithdrawModal()">
-                  <i data-lucide="user-x"></i> 회원탈퇴
-                </button>
+                <!-- 비밀번호 변경 — rss-common.css rss-btn--pw-change 적용 -->
+                <button type="button" class="rss-btn rss-btn--pw-change"
+                        onclick="openPwModal()">비밀번호 변경</button>
+                <!-- 회원탈퇴 — rss-common.css rss-btn--withdraw 적용 -->
+                <button type="button" class="rss-btn rss-btn--withdraw"
+                        onclick="openWithdrawModal()">회원탈퇴</button>
               </div>
             </div>
           </form>
