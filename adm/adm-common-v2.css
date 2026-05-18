@@ -1480,36 +1480,14 @@
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
-   상세 탭 (adm-detail-tabs)
-   공사 상세, 기업 상세 등 탭 구조가 있는 상세 페이지에 사용
-   사용자 페이지의 detail-tabs / detail-tab 구조를 관리자용으로 공통화
-   사용: <div class="adm-detail-tabs"> <button class="adm-detail-tab active">...</button> </div>
+   상세 탭 — rss-common.css의 .rss-tabs / .rss-tab 공통 클래스 사용
+   관리자 페이지에서는 .rss-tabs 컨테이너에 padding 추가만 오버라이드
+   사용: <div class="rss-tabs adm-tabs"> <button class="rss-tab active">...</button> </div>
 ══════════════════════════════════════════════════════════════════════════ */
-.adm-detail-tabs {
-  display: flex;
-  align-items: flex-end;
-  gap: 0;
+.adm-tabs {
   padding: 16px 24px 0;
-  border-bottom: 2px solid #e5e7eb;
 }
-.adm-detail-tab {
-  padding: 9px 22px;
-  font-size: var(--rss-font-md);
-  font-weight: 600;
-  color: #6b7280;
-  cursor: pointer;
-  border: none;
-  background: none;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -2px;
-  transition: color 0.15s, border-color 0.15s;
-}
-.adm-detail-tab:hover { color: #374151; }
-/* 관리자 포인트 컬러(amber) 동일 적용 */
-.adm-detail-tab.active { color: var(--rss-amber-dark); border-bottom-color: var(--rss-amber); }
-
-/* 탭 패널 — rss-tab-panel 공통 클래스 재사용 */
-/* .rss-tab-panel { display: none; } / .rss-tab-panel.active { display: block; } 은 rss-common.css에 정의됨 */
+/* 탭 패널 — rss-common.css에 정의된 .rss-tab-panel / .rss-tab-panel.active 그대로 사용 */
 
 /* ─── 상세 상태 행 ─────────────────────────────────────────────────────────
    탭 패널 상단 상태 배지 + 수정된 정보 표시 행

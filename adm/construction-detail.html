@@ -39,11 +39,11 @@
       ══════════════════════════════════════════════════ -->
       <div class="rss-card" style="padding:0;">
         <!-- ── 탭 네비게이션 ── -->
-        <div class="adm-detail-tabs" role="tablist">
+        <div class="rss-tabs adm-tabs" role="tablist">
           <!-- [Java] th:classappend="${activeTab == 'tab-info'} ? 'active'" -->
-          <button class="adm-detail-tab active" role="tab" data-tab="tab-info"   aria-selected="true">공사 정보</button>
-          <button class="adm-detail-tab"        role="tab" data-tab="tab-block"  aria-selected="false">차단 정보</button>
-          <button class="adm-detail-tab"        role="tab" data-tab="tab-status" aria-selected="false">진행 상황</button>
+          <button class="rss-tab active" role="tab" data-tab="tab-info"   aria-selected="true">공사 정보</button>
+          <button class="rss-tab"        role="tab" data-tab="tab-block"  aria-selected="false">차단 정보</button>
+          <button class="rss-tab"        role="tab" data-tab="tab-status" aria-selected="false">진행 상황</button>
         </div>
 
         <!-- ══════════════════════════════════════════════════
@@ -887,11 +887,11 @@
 lucide.createIcons();
 
 /* ── 탭 전환 ────────────────────────────────────── */
-document.querySelectorAll('.adm-detail-tab').forEach(function(tab) {
+document.querySelectorAll('.rss-tab').forEach(function(tab) {
   tab.addEventListener('click', function() {
     var targetId = this.getAttribute('data-tab');
     /* 탭 버튼 active 처리 */
-    document.querySelectorAll('.adm-detail-tab').forEach(function(t) {
+    document.querySelectorAll('.rss-tab').forEach(function(t) {
       t.classList.remove('active');
       t.setAttribute('aria-selected', 'false');
     });
