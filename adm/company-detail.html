@@ -258,24 +258,38 @@
              - 사용 정지: 사용정지 설정
            ③ 저장 / ④ 취소 / ⑤ 비밀번호 변경
       ──────────────────────────────────────────────────────── -->
-      <div class="rss-page-actions">
-        <!-- 상태별 버튼 — [Java] th:if 로 조건부 렌더링 -->
-        <!-- [Java] th:if="${company.status == 'normal'}" -->
-        <button type="button" class="rss-btn adm-btn--delete" id="btnSuspend"
-                onclick="openSuspendModal()">사용 정지</button>
-        <!-- [Java] th:if="${company.status == 'suspend'}" — 현재는 숨김 -->
-        <button type="button" class="rss-btn adm-btn--delete" id="btnSuspendSetting"
-                onclick="openSuspendModal()" style="display:none;">사용정지 설정</button>
-        <!-- [Java] th:if="${company.status == 'pending'}" — 현재는 숨김 -->
-        <button type="button" class="rss-btn adm-btn--save" id="btnApprove"
-                onclick="approveCompany()" style="display:none;">승인</button>
-        <button type="button" class="rss-btn adm-btn--cancel" id="btnReject"
-                onclick="rejectCompany()" style="display:none;">반려</button>
+      <div class="rss-page-actions" style="display:flex;align-items:center;justify-content:space-between;">
 
-        <!-- 저장 / 취소 / 비밀번호 변경 -->
-        <button type="button" class="rss-btn adm-btn--save" onclick="saveCompany()">저장</button>
-        <button type="button" class="rss-btn adm-btn--cancel" onclick="goBack()">취소</button>
-        <button type="button" class="rss-btn rss-btn--outline" onclick="openPwModal()">비밀번호 변경</button>
+        <!-- ■ 왼쪽: 상태별 버튼 — [Java] th:if 로 조건부 렌더링 -->
+        <div style="display:flex;gap:8px;align-items:center;">
+          <!-- ① 사용 정지 — [Java] th:if="${company.status == 'normal'}" -->
+          <button type="button" class="rss-btn adm-btn--delete" id="btnSuspend"
+                  onclick="openSuspendModal()">사용 정지</button>
+          <!-- ① 사용정지 설정 — [Java] th:if="${company.status == 'suspend'}" -->
+          <button type="button" class="rss-btn adm-btn--delete" id="btnSuspendSetting"
+                  onclick="openSuspendModal()" style="display:none;">사용정지 설정</button>
+          <!-- ① 승인 — [Java] th:if="${company.status == 'pending'}" -->
+          <button type="button" class="rss-btn adm-btn--save" id="btnApprove"
+                  onclick="approveCompany()" style="display:none;">승인</button>
+          <!-- ① 반려 — [Java] th:if="${company.status == 'pending'}" -->
+          <button type="button" class="rss-btn adm-btn--reject" id="btnReject"
+                  onclick="rejectCompany()" style="display:none;">반려</button>
+        </div>
+
+        <!-- ■ 가운데: 저장 / 취소 -->
+        <div style="display:flex;gap:8px;align-items:center;">
+          <!-- ③ 저장 -->
+          <button type="button" class="rss-btn adm-btn--save" onclick="saveCompany()">저장</button>
+          <!-- ④ 취소 -->
+          <button type="button" class="rss-btn adm-btn--cancel" onclick="goBack()">× 취소</button>
+        </div>
+
+        <!-- ■ 오른쪽: 비밀번호 변경 -->
+        <div style="display:flex;gap:8px;align-items:center;">
+          <!-- ⑤ 비밀번호 변경 — adm-common-v2.css adm-btn--pw-change 적용 -->
+          <button type="button" class="rss-btn adm-btn--pw-change" onclick="openPwModal()">비밀번호 변경</button>
+        </div>
+
       </div>
 
       <!-- ══════════════════════════════════════════════════
