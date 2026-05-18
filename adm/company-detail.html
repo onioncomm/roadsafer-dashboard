@@ -756,6 +756,26 @@ function openAddrSearch() {
   // [Java] 카카오 주소 API 연동
   alert('주소 찾기 기능은 Java 연동 후 처리됩니다.');
 }
+
+/* ── 상태별 버튼 분기 ──────────────────────────────
+   URL 파라미터 status 값에 따라 하단 버튼을 토글
+   - pending : 승인(btnApprove) + 반려(btnReject)
+   - normal  : 사용 정지(btnSuspend)
+   - suspend : 사용정지 설정(btnSuspendSetting)
+   저장 / 취소 / 비밀번호 변경은 항상 표시
+──────────────────────────────────────────────── */
+function initCompanyButtons(status) {
+  document.getElementById('btnSuspend').style.display        = (status === 'normal')  ? '' : 'none';
+  document.getElementById('btnSuspendSetting').style.display = (status === 'suspend') ? '' : 'none';
+  document.getElementById('btnApprove').style.display        = (status === 'pending') ? '' : 'none';
+  document.getElementById('btnReject').style.display         = (status === 'pending') ? '' : 'none';
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  var params = new URLSearchParams(location.search);
+  var status = params.get('status') || 'normal';
+  initCompanyButtons(status);
+});
 </script>
 
 </body>
