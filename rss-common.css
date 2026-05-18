@@ -1657,6 +1657,8 @@ input[type="date"].rss-input:disabled {
 .rss-col-reason { width: 20%; }
 /* 관리 열 wide — 버튼 2개 이상 필요 시 */
 .rss-col-mgmt--wide { width: 18%; }
+/* 공개 여부 열 — 공개/비공개 배지 표시용 */
+.rss-col-open { width: 5%; }
 
 /* 긴급 행 강조 */
 .rss-table tr.row-urgent td           { background: #fff7f7; }
