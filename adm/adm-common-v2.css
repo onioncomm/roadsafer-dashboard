@@ -1355,7 +1355,30 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23217346' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/%3E%3Cpolyline points='7 10 12 15 17 10'/%3E%3Cline x1='12' y1='15' x2='12' y2='3'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-size: contain;
-}/* 날짜 셀 줄바꾸음 방지 */
+}
+/* 등록 버튼 — plus 아이콘, amber(관리자: blue) 배경
+   사용법: <a class="rss-btn adm-btn--register" href="...">등록</a> */
+.adm-btn--register {
+  background: var(--rss-amber);
+  border-color: var(--rss-amber);
+  color: #ffffff;
+}
+.adm-btn--register:hover {
+  background: var(--rss-amber-dark);
+  border-color: var(--rss-amber-dark);
+}
+.adm-btn--register::before {
+  content: '';
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-right: 5px;
+  vertical-align: middle;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='12' y1='5' x2='12' y2='19'/%3E%3Cline x1='5' y1='12' x2='19' y2='12'/%3E%3C/svg%3E");
+}
+/* 날짜 셀 줄바꾸음 방지 */
 .rss-col-date,
 .rss-table td.nowrap {
   white-space: nowrap;
