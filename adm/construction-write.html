@@ -66,7 +66,7 @@
 
                 <!-- 발주업체 — M1-4-1 발주업체찾기 팝업 연동 -->
                 <tr>
-                  <th scope="row">발주업체<span class="required">*</span></th>
+                  <th scope="row">발주업체명<span class="required">*</span></th>
                   <td>
                     <div class="adm-find-group">
                       <!-- [Java] th:value="${construction.orderCorpNm}" -->
@@ -87,7 +87,7 @@
 
                 <!-- 담당자명 — 용어사전 §10-2 order_contact → orderContactNm -->
                 <tr>
-                  <th scope="row">담당자명<span class="required">*</span></th>
+                  <th scope="row">담당자<span class="required">*</span></th>
                   <td>
                     <!-- [Java] th:value="${construction.orderContactNm}" -->
                     <input type="text" id="orderContactNm" name="orderContactNm"
@@ -596,7 +596,7 @@
             <table class="adm-form-table">
               <tbody>
                 <tr>
-                  <th scope="row">차단업체</th>
+                  <th scope="row">차단업체명</th>
                   <td>
                     <!-- 선택된 차단업체 태그 목록 -->
                     <!-- [Java] th:each="corp : ${construction.blockCorpList}" -->
