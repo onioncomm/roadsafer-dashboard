@@ -575,7 +575,7 @@
      openBlockReqEditModal() 호출 시 표시
      [Java] 실제 데이터: GET /adm/construction/block-req?seq={constructionSeq}
 ══════════════════════════════════════════════════ -->
-<div id="blockReqModalBackdrop" class="adm-modal-backdrop" role="dialog" aria-modal="true"
+<div id="blockReqModalBackdrop" class="adm-modal-overlay" role="dialog" aria-modal="true"
      aria-labelledby="blockReqModalTitle" style="display:none;">
   <div class="adm-modal-box" style="max-width:640px; max-height:90vh; overflow-y:auto;">
     <div class="adm-modal-box__head">
@@ -671,7 +671,7 @@
         </div>
       </form>
     </div>
-    <div class="adm-modal-box__footer">
+    <div class="adm-modal-box__foot">
       <button type="button" class="rss-btn rss-btn--cancel" onclick="closeBlockReqModal()">취소</button>
       <button type="button" class="rss-btn adm-btn--save" onclick="submitBlockReqForm()">저장</button>
     </div>
@@ -684,7 +684,7 @@
      mode: 'complete' | 'modify' | 'cancel'
      [Java] 실제 데이터: GET /adm/construction/daily-prog?seq={seq}&dt={dt}
 ══════════════════════════════════════════════════ -->
-<div id="admDailyProgModalBackdrop" class="adm-modal-backdrop" role="dialog" aria-modal="true"
+<div id="admDailyProgModalBackdrop" class="adm-modal-overlay" role="dialog" aria-modal="true"
      aria-labelledby="admDailyProgModalTitle" style="display:none;">
   <div class="adm-modal-box" style="max-width:520px;">
     <div class="adm-modal-box__head">
@@ -767,7 +767,7 @@
         </table>
       </div>
     </div>
-    <div class="adm-modal-box__footer">
+    <div class="adm-modal-box__foot">
       <button type="button" class="rss-btn rss-btn--cancel" onclick="closeAdmDailyProgModal()">취소</button>
       <button type="button" class="rss-btn adm-btn--save" onclick="submitAdmDailyProg()">저장</button>
     </div>
@@ -877,7 +877,7 @@
 </div>
 
 <!-- 공사 취소 확인 모달 (공통 confirm 패턴) -->
-<div id="constCancelModalBackdrop" class="adm-modal-backdrop" role="dialog" aria-modal="true"
+<div id="constCancelModalBackdrop" class="adm-modal-overlay" role="dialog" aria-modal="true"
      aria-labelledby="constCancelModalTitle" style="display:none;">
   <div class="adm-modal-box" style="max-width:400px;">
     <div class="adm-modal-box__head">
@@ -891,7 +891,7 @@
         <textarea id="constCancelReason" class="rss-input rss-textarea" placeholder="취소 사유를 입력하세요."></textarea>
       </div>
     </div>
-    <div class="adm-modal-box__footer">
+    <div class="adm-modal-box__foot">
       <button type="button" class="rss-btn rss-btn--cancel" onclick="closeConstCancelModal()">닫기</button>
       <button type="button" class="rss-btn adm-btn--reject" onclick="submitConstCancel()">공사 취소</button>
     </div>
@@ -899,7 +899,7 @@
 </div>
 
 <!-- 공사 종료 확인 모달 -->
-<div id="constCompleteModalBackdrop" class="adm-modal-backdrop" role="dialog" aria-modal="true"
+<div id="constCompleteModalBackdrop" class="adm-modal-overlay" role="dialog" aria-modal="true"
      aria-labelledby="constCompleteModalTitle" style="display:none;">
   <div class="adm-modal-box" style="max-width:380px;">
     <div class="adm-modal-box__head">
@@ -909,7 +909,7 @@
     <div class="adm-modal-box__body" style="padding:20px;">
       <p style="color:#374151;">해당 공사를 종료 처리하시겠습니까?<br>발주업체와 차단업체에 알림이 발송됩니다.</p>
     </div>
-    <div class="adm-modal-box__footer">
+    <div class="adm-modal-box__foot">
       <button type="button" class="rss-btn rss-btn--cancel" onclick="closeConstCompleteModal()">닫기</button>
       <button type="button" class="rss-btn adm-btn--save" onclick="submitConstComplete()">종료 처리</button>
     </div>
@@ -982,7 +982,7 @@ document.querySelectorAll('.rss-tab').forEach(function(tab) {
   if (status === 'MATCHING') {
     /* 매칭전: 안내문+버튼 표시, 테이블 숨김 */
     if (notice)    notice.style.display    = '';
-    if (tableWrap) tableWrap.style.display = 'none';
+    if (tableWrap) tableWrap.classList.remove('open');
     if (fileArea)  fileArea.style.display  = 'none';
   } else {
     /* 매칭전 외: 안내문+버튼 숨김, 테이블 표시 */
@@ -1010,11 +1010,11 @@ function onBlockCorpAssigned(blockCorpSeq, blockCorpNm) {
 
 /* ── M1-2-1: 차단정보 등록/수정 모달 ─────────────── */
 function openBlockReqEditModal() {
-  document.getElementById('blockReqModalBackdrop').style.display = 'flex';
+  document.getElementById('blockReqModalBackdrop').classList.add('open');
   lucide.createIcons();
 }
 function closeBlockReqModal() {
-  document.getElementById('blockReqModalBackdrop').style.display = 'none';
+  document.getElementById('blockReqModalBackdrop').classList.remove('open');
 }
 function submitBlockReqForm() {
   /* [Java] POST /adm/construction/block-req/save */
@@ -1052,11 +1052,11 @@ function openAdmDailyProgModal(dt, mode) {
   var d = new Date(dt);
   document.getElementById('admDailyProgDate').textContent =
     d.getFullYear() + '년 ' + (d.getMonth()+1) + '월 ' + d.getDate() + '일';
-  document.getElementById('admDailyProgModalBackdrop').style.display = 'flex';
+  document.getElementById('admDailyProgModalBackdrop').classList.add('open');
   lucide.createIcons();
 }
 function closeAdmDailyProgModal() {
-  document.getElementById('admDailyProgModalBackdrop').style.display = 'none';
+  document.getElementById('admDailyProgModalBackdrop').classList.remove('open');
 }
 function calcDailyProgTotal() {
   /* [Java] 단가 × 수량 자동 계산 — 실제 단가는 서버에서 주입 */
@@ -1101,14 +1101,14 @@ function openDailyProgModal(dt, progCd, amount) {
     document.getElementById('dailyProgCancelAmt').textContent = amount.toLocaleString() + '원';
   } else {
     itemSection.style.display   = 'block';
-    cancelSection.style.display = 'none';
+    cancelSection.classList.remove('open');
     document.getElementById('dailyProgPayTotal').textContent  = amount.toLocaleString();
   }
-  document.getElementById('dailyProgModalBackdrop').style.display = 'flex';
+  document.getElementById('dailyProgModalBackdrop').classList.add('open');
   lucide.createIcons();
 }
 function closeDailyProgModal() {
-  document.getElementById('dailyProgModalBackdrop').style.display = 'none';
+  document.getElementById('dailyProgModalBackdrop').classList.remove('open');
 }
 function navigateDailyProg(dir) {
   /* [Java] GET /api/construction/daily-prog/nav?seq={seq}&dt={dt}&dir={dir} */
@@ -1117,11 +1117,11 @@ function navigateDailyProg(dir) {
 
 /* ── 공사 취소 모달 ─────────────────────────────── */
 function openConstCancelModal() {
-  document.getElementById('constCancelModalBackdrop').style.display = 'flex';
+  document.getElementById('constCancelModalBackdrop').classList.add('open');
   lucide.createIcons();
 }
 function closeConstCancelModal() {
-  document.getElementById('constCancelModalBackdrop').style.display = 'none';
+  document.getElementById('constCancelModalBackdrop').classList.remove('open');
 }
 function submitConstCancel() {
   var reason = document.getElementById('constCancelReason').value.trim();
@@ -1134,11 +1134,11 @@ function submitConstCancel() {
 
 /* ── 공사 종료 모달 ─────────────────────────────── */
 function openConstCompleteModal() {
-  document.getElementById('constCompleteModalBackdrop').style.display = 'flex';
+  document.getElementById('constCompleteModalBackdrop').classList.add('open');
   lucide.createIcons();
 }
 function closeConstCompleteModal() {
-  document.getElementById('constCompleteModalBackdrop').style.display = 'none';
+  document.getElementById('constCompleteModalBackdrop').classList.remove('open');
 }
 function submitConstComplete() {
   /* [Java] POST /adm/construction/complete */
