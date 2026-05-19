@@ -151,8 +151,7 @@
 
           <!-- 하단 버튼: .rss-page-actions = 가운데 정렬 (공통 규칙) -->
           <div class="rss-page-actions">
-            <a href="construction-list.html" class="rss-btn rss-btn--outline px-10">
-              <i data-lucide="list" style="width:14px;height:14px;"></i>목록
+            <a href="construction-list.html" class="rss-btn rss-btn--list">목록
             </a>
           </div>
         </div><!-- /tab-info -->
@@ -263,16 +262,10 @@
           ══════════════════════════════════════════════════ -->
           <div class="rss-page-actions">
             <!-- 수정 버튼: 항상 표시 → construction-apply.html로 이동 -->
-            <a href="construction-apply.html" class="rss-btn rss-btn--outline">
-              <i data-lucide="pencil" style="width:14px;height:14px;"></i> 수정
-            </a>
+            <a href="construction-apply.html" class="rss-btn rss-btn--edit">수정</a>
             <!-- 차단신청 취소 버튼: 예정(SCHEDULED) 상태일 때만 표시 -->
             <!-- [Java] th:if="${blockReq.status == 'SCHEDULED'}" -->
-            <button type="button"
-                    class="rss-btn rss-btn--outline-cancel"
-                    onclick="RSS.action.openCancelSimpleModal()">
-              <i data-lucide="x-circle" style="width:14px;height:14px;"></i> 차단신청 취소
-            </button>
+            <button type="button" class="rss-btn rss-btn--delete" onclick="RSS.action.openCancelSimpleModal()">차단신청 취소</button>
           </div>
 
         </div><!-- /tab-block -->
@@ -590,8 +583,7 @@
 
           <!-- 하단 버튼: 목록으로 이동 -->
           <div class="rss-page-actions">
-            <a href="construction-list.html" class="rss-btn rss-btn--outline px-10">
-              <i data-lucide="list" style="width:14px;height:14px;"></i>목록
+            <a href="construction-list.html" class="rss-btn rss-btn--list">목록
             </a>
           </div>
 
