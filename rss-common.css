@@ -88,6 +88,15 @@ button { cursor: pointer; font-family: inherit; }
   color: var(--rss-amber-dark);
   text-decoration: underline;
 }
+/* 긴급 공사 링크 — 붉은색 굵은 글씨 */
+.rss-link.urgent {
+  color: var(--rss-danger-dark);
+  font-weight: 700;
+}
+.rss-link.urgent:hover {
+  color: var(--rss-danger);
+  text-decoration: underline;
+}
 input, textarea, select { font-family: inherit; }
 img { max-width: 100%; display: block; }
 
@@ -1730,6 +1739,8 @@ input[type="date"].rss-input:disabled {
 .rss-table tr.row-urgent td           { background: #fff7f7; }
 .rss-table tr.row-urgent:hover td     { background: #fff0f0; }
 .rss-table tr.row-urgent .rss-col-nm  { color: #dc2626; font-weight: 700; }
+/* 긴급 행 개별 셀 텍스트 강조 — td.urgent 클래스 */
+.rss-table tr.row-urgent td.urgent    { color: #dc2626; font-weight: 600; }
 
 
 /* ─── 필터 영역 (좌측) ──────────────────────────────────────

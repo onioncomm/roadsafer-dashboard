@@ -22,8 +22,7 @@
     }
 
     /* ── 공사 정보 테이블 col 스타일 ── */
-    /* 링크 스타일: rss-common.css .rss-link 공통 클래스 사용 */
-    .rss-link.urgent { color: #dc2626 !important; font-weight: 700; }
+    /* 링크 스타일: rss-common.css .rss-link.urgent 공통 클래스 사용 */
 
     /* ── 반응형 ── */
     @media (max-width: 768px) {
@@ -132,15 +131,15 @@
                   </a>
                 </td>
                 <!-- [Java] th:text="${info.orderCompanyNm}" -->
-                <td style="color:#dc2626;font-weight:600;">한국개발</td>
+                <td class="urgent">한국개발</td>
                 <!-- [Java] th:text="${info.startDt} + ' ~ ' + ${info.endDt} + '(' + ${info.workDays} + '일)'" -->
-                <td class="rss-col-period" style="color:#dc2626;font-weight:600;">2026-07-01 ~ 2026-07-03(3일)</td>
+                <td class="rss-col-period urgent">2026-07-01 ~ 2026-07-03(3일)</td>
                 <!-- [Java] th:text="${info.roadNm}" -->
-                <td style="color:#dc2626;font-weight:600;">호남고속도로</td>
+                <td class="urgent">호남고속도로</td>
                 <!-- [Java] th:text="${info.direction}" -->
-                <td style="color:#dc2626;font-weight:600;">순천</td>
+                <td class="urgent">순청</td>
                 <!-- [Java] th:text="${info.equipSummary}" -->
-                <td class="rss-col-equip" style="color:#dc2626;font-weight:600;">TMA1 : 1대, TMA3 : 2대, PLCS : 2대</td>
+                <td class="rss-col-equip urgent">TMA1 : 1대, TMA3 : 2대, PLCS : 2대</td>
               </tr>
 
               <tr>
