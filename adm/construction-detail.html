@@ -528,12 +528,27 @@
         </div>
       </div><!-- /rss-page-actions tab-info -->
       <!-- 하단 버튼: 탭2 차단 정보 -->
+      <!--
+        상태별 하단 버튼 규칙 (tab-block)
+        ──────────────────────────────────────────────────
+        MATCHING  : [목록] 버튼만 표시
+        SCHEDULED : [차단 정보 수정] [차단신청 취소] [목록]
+        PROGRESS  : [차단 정보 수정] [차단신청 취소] [목록]
+        COMPLETE  : [목록] 버튼만 표시
+        CANCEL    : [목록] 버튼만 표시
+        ──────────────────────────────────────────────────
+        [Java] th:if 로 상태별 분기 시:
+          차단 정보 수정 버튼: th:if="${construction.status == 'SCHEDULED' or construction.status == 'PROGRESS'}"
+          차단신청 취소 버튼: th:if="${construction.status == 'SCHEDULED' or construction.status == 'PROGRESS'}"
+      -->
       <div class="rss-page-actions" style="justify-content:space-between;display:none;" data-tab-actions="tab-block">
-        <div style="display:flex;gap:8px;align-items:center;">
-          <!-- [Java] th:if="${blockReq != null}" -->
-          <button type="button" class="rss-btn rss-btn--edit" onclick="openBlockReqEditModal()">수정</button>
-          <!-- [Java] th:if="${blockReq != null and blockReq.status == 'SCHEDULED'}" -->
-          <button type="button" class="rss-btn adm-btn--delete" onclick="openBlockReqCancelConfirm()">차단신청 취소</button>
+        <div style="display:flex;gap:8px;align-items:center;" id="blockTabBtns">
+          <!-- [Java] th:if="${construction.status == 'SCHEDULED' or construction.status == 'PROGRESS'}" -->
+          <button type="button" class="rss-btn rss-btn--edit" id="btnBlockReqEdit"
+                  onclick="openBlockReqEditModal()">차단 정보 수정</button>
+          <!-- [Java] th:if="${construction.status == 'SCHEDULED' or construction.status == 'PROGRESS'}" -->
+          <button type="button" class="rss-btn adm-btn--delete" id="btnBlockReqCancel"
+                  onclick="openBlockReqCancelConfirm()">차단신청 취소</button>
         </div>
         <div style="display:flex;gap:8px;align-items:center;">
           <a href="construction-list.html" class="rss-btn rss-btn--list">목록</a>
@@ -954,11 +969,15 @@ document.querySelectorAll('.rss-tab').forEach(function(tab) {
   var tabBlock = document.getElementById('tab-block');
   if (!tabBlock) return;
   /* [Java] th:data-status="${construction.status}" 로 주입 */
-  var status = tabBlock.getAttribute('data-status') || 'SCHEDULED';
+  /* 더미 데이터: URL 파라미터 status 우선 적용 (Java 연동 후 제거) */
+  var urlStatus = new URLSearchParams(location.search).get('status');
+  var status = urlStatus || tabBlock.getAttribute('data-status') || 'SCHEDULED';
   var notice   = document.getElementById('blockCorpAssignNotice');
   var tableWrap = tabBlock.querySelector('.rss-table-wrap');
   var fileArea  = tabBlock.querySelector('[onclick="downloadAllBlockFiles()"]');
   if (fileArea) fileArea = fileArea.closest('div');
+
+  var showBtns = (status === 'SCHEDULED' || status === 'PROGRESS');
 
   if (status === 'MATCHING') {
     /* 매칭전: 안내문+버튼 표시, 테이블 숨김 */
@@ -971,6 +990,14 @@ document.querySelectorAll('.rss-tab').forEach(function(tab) {
     if (tableWrap) tableWrap.style.display = '';
     if (fileArea)  fileArea.style.display  = '';
   }
+
+  /* 하단 버튼: 차단 정보 수정 / 차단신청 취소
+     SCHEDULED, PROGRESS 일 때만 표시
+     MATCHING, COMPLETE, CANCEL 일 때는 숨김 */
+  var btnEdit   = document.getElementById('btnBlockReqEdit');
+  var btnCancel = document.getElementById('btnBlockReqCancel');
+  if (btnEdit)   btnEdit.style.display   = showBtns ? '' : 'none';
+  if (btnCancel) btnCancel.style.display = showBtns ? '' : 'none';
 })();
 
 /* ── 차단업체 지정 콜백 ────────────────────────────────────────────── */
