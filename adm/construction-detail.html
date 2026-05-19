@@ -37,22 +37,33 @@
            [DB] 테이블: rs_construction
            [Java] model.addAttribute("construction", constructionVO)
       ══════════════════════════════════════════════════ -->
-      <div class="adm-detail-wrap">
-        <!-- ── 탭 네비게이션 ── -->
-        <div class="rss-tabs adm-tabs" role="tablist">
-          <!-- [Java] th:classappend="${activeTab == 'tab-info'} ? 'active'" -->
-          <button class="rss-tab active" role="tab" data-tab="tab-info"   aria-selected="true">공사 정보</button>
-          <button class="rss-tab"        role="tab" data-tab="tab-block"  aria-selected="false">차단 정보</button>
-          <button class="rss-tab"        role="tab" data-tab="tab-status" aria-selected="false">진행 상황</button>
+      <!-- ══════════════════════════════════════════════════
+           공사 상세 — write-section 표준 구조
+           탭 네비게이션: write-section__head
+           탭 내용:       write-section__body > rss-tab-panel
+      ══════════════════════════════════════════════════ -->
+      <section class="write-section" aria-labelledby="constructionDetailTitle">
+        <!-- ── 탭 네비게이션 (소제목 영역) ── -->
+        <div class="write-section__head">
+          <i data-lucide="hard-hat" style="width:16px;height:16px;color:var(--rss-amber);flex-shrink:0;"></i>
+          <h2 class="write-section__title" id="constructionDetailTitle">공사 상세</h2>
+          <!-- 탭 네비게이션 -->
+          <div class="rss-tabs adm-tabs" role="tablist" style="border-bottom:none; margin-left:8px; padding:0;">
+            <!-- [Java] th:classappend="${activeTab == 'tab-info'} ? 'active'" -->
+            <button class="rss-tab active" role="tab" data-tab="tab-info"   aria-selected="true">공사 정보</button>
+            <button class="rss-tab"        role="tab" data-tab="tab-block"  aria-selected="false">차단 정보</button>
+            <button class="rss-tab"        role="tab" data-tab="tab-status" aria-selected="false">진행 상황</button>
+          </div>
         </div>
+        <!-- ── 탭 내용 (흰색 배경 박스) ── -->
+        <div class="write-section__body" style="padding:0;">
 
         <!-- ══════════════════════════════════════════════════
              탭 1: 공사 정보 (M1-1)
              [DB] 테이블: rs_construction
              [Java] ${construction} — 공사 VO
         ══════════════════════════════════════════════════ -->
-        <div id="tab-info" class="rss-tab-panel active">
-          <div class="adm-tab-panel-body">
+          <div id="tab-info" class="rss-tab-panel active" style="padding:24px;">
             <!-- 상태 행 -->
             <div class="adm-detail-status-row">
               <span class="adm-detail-status-label">상태 :</span>
@@ -172,16 +183,14 @@
                 </a>
               </div>
             </div>
-          </div>
-        </div><!-- /tab-info -->
+          </div><!-- /tab-info -->
 
         <!-- ══════════════════════════════════════════════════
              탭 2: 차단 정보 (M1-2)
              [DB] 테이블: rs_construction_block_req
              [Java] ${blockReq} — 차단신청 VO
         ══════════════════════════════════════════════════ -->
-        <div id="tab-block" class="rss-tab-panel">
-          <div class="adm-tab-panel-body">
+          <div id="tab-block" class="rss-tab-panel" style="padding:24px;">
             <!-- 관리자 전용: 차단업체 미지정 안내 + 강제 지정 버튼 -->
             <!-- [Java] th:if="${blockReq == null or blockReq.blockCorpSeq == null}" -->
             <div class="rss-notice adm-notice--flex" id="blockCorpAssignNotice">
@@ -276,7 +285,7 @@
 
             <!-- 파일 일괄 다운로드 -->
             <!-- [Java] th:if="${blockReq != null and blockReq.fileList.size() > 0}" -->
-            <div class="adm-action-row--right">
+            <div style="margin-top:12px; text-align:right;">
               <button type="button" class="rss-btn rss-btn--outline" onclick="downloadAllBlockFiles()">
                 <i data-lucide="download" style="width:14px;height:14px;margin-right:4px;"></i>
                 파일 일괄 다운로드
@@ -301,23 +310,22 @@
                 </a>
               </div>
             </div>
-          </div>
-        </div><!-- /tab-block -->
+          </div><!-- /tab-block -->
 
         <!-- ══════════════════════════════════════════════════
              탭 3: 진행 상황 (M1-3)
              [DB] 테이블: rs_daily_prog
              [Java] ${dailyProgList} / ${construction.startDt} / ${construction.endDt}
         ══════════════════════════════════════════════════ -->
-        <div id="tab-status" class="rss-tab-panel">
-          <!-- 현재 합계 금액 (관리자 전용) -->
-          <div class="adm-prog-total">
+          <div id="tab-status" class="rss-tab-panel" style="padding:0 24px 24px;">
+            <!-- 현재 합계 금액 (관리자 전용) -->
+            <div class="adm-prog-total">
             <span class="adm-prog-total__label">현재 합계</span>
             <!-- [Java] th:text="${#numbers.formatInteger(construction.totalAmt, 3, 'COMMA')} + '원'" -->
             <strong class="adm-prog-total__amount">7,900,000원</strong>
           </div>
 
-          <div class="adm-tab-panel-body adm-tab-panel-body--status">
+            <div>
             <!-- 캘린더 테이블 (PC) -->
             <div class="rss-cal-table-wrap">
               <!--
@@ -523,9 +531,10 @@
                 </a>
               </div>
             </div>
-          </div>
-        </div><!-- /tab-status -->
-      </div><!-- /adm-detail-wrap -->
+            </div>
+          </div><!-- /tab-status -->
+        </div><!-- /write-section__body -->
+      </section><!-- /write-section 공사 상세 -->
     </main>
     <div id="rss-footer-wrap"></div>
   </div><!-- /adm-main -->
