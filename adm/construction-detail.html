@@ -400,14 +400,14 @@
                       <div class="rss-cal-today-btns">
                         <button type="button"
                                 class="rss-cal-btn-done"
-                                onclick="openAdmDailyProgModal('2026-06-27', 'complete')">완료</button>
+                                onclick="openAdmDailyProgCompleteModal('2026-06-27')">완료</button>
                         <button type="button"
                                 class="rss-cal-btn-done"
                                 style="background:#64748b;"
-                                onclick="openAdmDailyProgModal('2026-06-27', 'modify')">수정</button>
+                                onclick="openAdmDailyProgModifyModal('2026-06-27')">수정</button>
                         <button type="button"
                                 class="rss-cal-btn-cancel"
-                                onclick="openAdmDailyProgModal('2026-06-27', 'cancel')">취소</button>
+                                onclick="openAdmDailyProgCancelModal('2026-06-27')">취소</button>
                       </div>
                     </td>
                   </tr>
@@ -500,12 +500,12 @@
                   <span class="rss-cal-badge rss-cal-badge--scheduled">예정</span>
                   <div class="rss-cal-list-btns">
                     <button type="button" class="rss-cal-btn-done"
-                            onclick="openAdmDailyProgModal('2026-06-27','complete')">완료</button>
+                            onclick="openAdmDailyProgCompleteModal('2026-06-27')">완료</button>
                     <button type="button" class="rss-cal-btn-done"
                             style="background:#64748b;"
-                            onclick="openAdmDailyProgModal('2026-06-27','modify')">수정</button>
+                            onclick="openAdmDailyProgModifyModal('2026-06-27')">수정</button>
                     <button type="button" class="rss-cal-btn-cancel"
-                            onclick="openAdmDailyProgModal('2026-06-27','cancel')">취소</button>
+                            onclick="openAdmDailyProgCancelModal('2026-06-27')">취소</button>
                   </div>
                 </div>
               </div>
@@ -771,6 +771,88 @@
       <button type="button" class="rss-btn rss-btn--cancel" onclick="closeAdmDailyProgModal()">취소</button>
       <button type="button" class="rss-btn adm-btn--save" onclick="submitAdmDailyProg()">저장</button>
     </div>
+
+<!-- ══════════════════════════════════════════════════
+     공사 완료 처리 모달
+     openAdmDailyProgCompleteModal(dt) 호출 시 표시
+══════════════════════════════════════════════════ -->
+<div id="admDailyProgCompleteModalBackdrop" class="adm-modal-overlay" role="dialog" aria-modal="true"
+     aria-labelledby="admDailyProgCompleteModalTitle">
+  <div class="adm-modal-box" style="max-width:520px;">
+    <div class="adm-modal-box__head">
+      <h3 class="adm-modal-box__title" id="admDailyProgCompleteModalTitle">공사 완료 처리</h3>
+      <button type="button" class="adm-modal-box__close" onclick="closeAdmDailyProgCompleteModal()" aria-label="닫기"></button>
+    </div>
+    <div class="adm-modal-box__body" style="padding:20px;">
+      <div style="font-size:var(--rss-font-md); font-weight:700; color:#1e293b; margin-bottom:16px;">
+        <i data-lucide="calendar" style="width:16px;height:16px;margin-right:6px;vertical-align:middle;"></i>
+        <span id="admDailyProgCompleteDate">2026년 6월 27일</span>
+      </div>
+      <div class="rss-form-row">
+        <label class="rss-form-label" for="admDailyCompleteTimeSlot">시간대</label>
+        <select id="admDailyCompleteTimeSlot" class="rss-select" style="width:160px;">
+          <option value="day">주간</option>
+          <option value="night">야간</option>
+        </select>
+      </div>
+      <div class="rss-table-wrap" style="margin-top:12px;">
+        <table class="rss-table">
+          <colgroup>
+            <col style="width:80px;" />
+            <col style="width:120px;" />
+            <col />
+          </colgroup>
+          <thead>
+            <tr><th>품목</th><th>투입수량</th><th>금액</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>TMA1</td><td><input type="number" class="rss-input rss-input--sm" value="1" min="0" style="width:70px;"></td><td>600,000</td></tr>
+            <tr><td>TMA3</td><td><input type="number" class="rss-input rss-input--sm" value="2" min="0" style="width:70px;"></td><td>2,000,000</td></tr>
+            <tr><td>PLCS</td><td><input type="number" class="rss-input rss-input--sm" value="2" min="0" style="width:70px;"></td><td>1,800,000</td></tr>
+            <tr><td>신호수</td><td><input type="number" class="rss-input rss-input--sm" value="0" min="0" style="width:70px;"></td><td>0</td></tr>
+          </tbody>
+          <tfoot>
+            <tr><td colspan="2">지급액</td><td><strong>4,400,000</strong></td></tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+    <div class="adm-modal-box__foot">
+      <button type="button" class="rss-btn rss-btn--cancel" onclick="closeAdmDailyProgCompleteModal()">취소</button>
+      <button type="button" class="rss-btn adm-btn--save" onclick="submitAdmDailyProgComplete()">저장</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     공사 취소 처리 모달
+     openAdmDailyProgCancelModal(dt) 호출 시 표시
+══════════════════════════════════════════════════ -->
+<div id="admDailyProgCancelModalBackdrop" class="adm-modal-overlay" role="dialog" aria-modal="true"
+     aria-labelledby="admDailyProgCancelModalTitle">
+  <div class="adm-modal-box" style="max-width:520px;">
+    <div class="adm-modal-box__head">
+      <h3 class="adm-modal-box__title" id="admDailyProgCancelModalTitle">공사 취소 처리</h3>
+      <button type="button" class="adm-modal-box__close" onclick="closeAdmDailyProgCancelModal()" aria-label="닫기"></button>
+    </div>
+    <div class="adm-modal-box__body" style="padding:20px;">
+      <div style="font-size:var(--rss-font-md); font-weight:700; color:#1e293b; margin-bottom:16px;">
+        <i data-lucide="calendar" style="width:16px;height:16px;margin-right:6px;vertical-align:middle;"></i>
+        <span id="admDailyProgCancelDate">2026년 6월 27일</span>
+      </div>
+      <div class="rss-form-row">
+        <label class="rss-form-label" for="admDailyProgCancelReason">취소 사유</label>
+        <textarea id="admDailyProgCancelReason" class="rss-input rss-textarea"
+                  placeholder="취소 사유를 입력하세요." style="min-height:100px;"></textarea>
+      </div>
+    </div>
+    <div class="adm-modal-box__foot">
+      <button type="button" class="rss-btn rss-btn--cancel" onclick="closeAdmDailyProgCancelModal()">취소</button>
+      <button type="button" class="rss-btn adm-btn--save" onclick="submitAdmDailyProgCancel()">저장</button>
+    </div>
+  </div>
+</div>
+
   </div>
 </div>
 
@@ -1042,12 +1124,11 @@ function downloadAllBlockFiles() {
 var _admDailyProgDate = null;
 var _admDailyProgMode = null;
 
-function openAdmDailyProgModal(dt, mode) {
+function openAdmDailyProgModifyModal(dt) {
   _admDailyProgDate = dt;
-  _admDailyProgMode = mode;
-  /* 모달 타이틀 분기 */
-  var titles = { complete: '공사 완료 처리', modify: '공사 정보 수정', cancel: '공사 취소 처리' };
-  document.getElementById('admDailyProgModalTitle').textContent = titles[mode] || '공사 정보 수정';
+  _admDailyProgMode = 'modify';
+  /* 공사 정보 수정 모달 */
+  document.getElementById('admDailyProgModalTitle').textContent = '공사 정보 수정';
   /* 날짜 표시 */
   var d = new Date(dt);
   document.getElementById('admDailyProgDate').textContent =
@@ -1146,6 +1227,47 @@ function submitConstComplete() {
   closeConstCompleteModal();
   location.reload();
 }
+
+/* ── 공사 완료 처리 모달 ─────────────────────────────── */
+function openAdmDailyProgCompleteModal(dt) {
+  _admDailyProgDate = dt;
+  var d = new Date(dt);
+  document.getElementById('admDailyProgCompleteDate').textContent =
+    d.getFullYear() + '년 ' + (d.getMonth()+1) + '월 ' + d.getDate() + '일';
+  document.getElementById('admDailyProgCompleteModalBackdrop').classList.add('open');
+  lucide.createIcons();
+}
+function closeAdmDailyProgCompleteModal() {
+  document.getElementById('admDailyProgCompleteModalBackdrop').classList.remove('open');
+}
+function submitAdmDailyProgComplete() {
+  /* [Java] POST /adm/construction/complete */
+  alert('공사가 완료 처리되었습니다.');
+  closeAdmDailyProgCompleteModal();
+  location.reload();
+}
+
+/* ── 공사 취소 처리 모달 ─────────────────────────────── */
+function openAdmDailyProgCancelModal(dt) {
+  _admDailyProgDate = dt;
+  var d = new Date(dt);
+  document.getElementById('admDailyProgCancelDate').textContent =
+    d.getFullYear() + '년 ' + (d.getMonth()+1) + '월 ' + d.getDate() + '일';
+  document.getElementById('admDailyProgCancelModalBackdrop').classList.add('open');
+  lucide.createIcons();
+}
+function closeAdmDailyProgCancelModal() {
+  document.getElementById('admDailyProgCancelModalBackdrop').classList.remove('open');
+}
+function submitAdmDailyProgCancel() {
+  var reason = document.getElementById('admDailyProgCancelReason').value.trim();
+  if (!reason) { alert('취소 사유를 입력하세요.'); return; }
+  /* [Java] POST /adm/construction/daily-prog/cancel */
+  alert('공사가 취소되었습니다.');
+  closeAdmDailyProgCancelModal();
+  location.reload();
+}
+
 </script>
 </body>
 </html>
